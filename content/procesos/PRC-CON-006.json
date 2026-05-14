@@ -1,0 +1,243 @@
+{
+  "code": "PRC-CON-006",
+  "title": "Cerrar servicio",
+  "part": "compartidos",
+  "purpose": "PRC-CON-006 produce el cierre formal del servicio: todos los entregables comprometidos han sido confirmados por el cliente, la documentación del programa PDP está actualizada y entregada, el expediente del cliente está completo, los accesos compartidos están cerrados y el servicio está liquidado administrativa y financieramente.",
+  "scope": "Este procedimiento aplica al cierre de cualquier servicio de consultoría de PDP Expert: diagnóstico, soporte continuo (Oficina externa de protección de datos o DPO Externo) y secondment. Se activa cuando se confirma la finalización contractual: vencimiento del período, decisión de no renovación, o terminación anticipada por cualquiera de las partes. Cierra cuando el expediente del cliente está completo en el repositorio del servicio, los accesos están cerrados y el área administrativa confirma el cierre financiero. Si el cliente contrata un nuevo servicio al cerrar el actual, este procedimiento se ejecuta hasta su fin antes de activar PRC-CON-001 para el nuevo servicio, salvo que aplique la excepción 2.",
+  "sort_order": 6,
+  "responsibilities": [
+    {
+      "role": "Gerente de Proyecto",
+      "responsibility": "Coordina y ejecuta las actividades de cierre. Verifica completitud de entregables. Entrega la documentación al cliente. Facilita el registro de lecciones aprendidas con el equipo.",
+      "authority": "Declara el cierre operativo del servicio."
+    },
+    {
+      "role": "Jefa de Operaciones",
+      "responsibility": "Supervisa el cierre. Coordina con el área administrativa el cierre financiero. Solicita el cierre de accesos.",
+      "authority": "Autoriza el cierre del repositorio y de los accesos digitales."
+    },
+    {
+      "role": "Consultor GRC / Consultor DPO",
+      "responsibility": "Elabora el informe final de estado del programa PDP según el tipo de servicio.",
+      "authority": "Valida el contenido técnico del informe final antes de entregarlo al cliente."
+    },
+    {
+      "role": "Gerente de Tecnología y Seguridad de la Información",
+      "responsibility": "Ejecuta el cierre de accesos del cliente al entorno de trabajo.",
+      "authority": "N/A — ejecuta la solicitud de la Jefa de Operaciones."
+    }
+  ],
+  "inputs": [
+    {
+      "input": "Confirmación de finalización contractual o no renovación",
+      "origin": "Cliente o Jefa de Operaciones",
+      "condition": "Comunicación formal por escrito."
+    },
+    {
+      "input": "Repositorio del servicio",
+      "origin": "Servicio activo",
+      "condition": "Actualizado con los entregables del período."
+    },
+    {
+      "input": "Plan de trabajo del servicio",
+      "origin": "PRC-CON-002 o PRC-CON-005",
+      "condition": "Versión vigente con estado de avance de cada entregable."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": 1,
+      "title": "Terminación anticipada por el cliente",
+      "situation": "El cliente decide terminar el servicio antes del vencimiento contractual.",
+      "detection": "Comunicación formal del cliente al Gerente de Proyecto o a la Jefa de Operaciones.",
+      "handling": "El Gerente de Proyecto informa a la Jefa de Operaciones de inmediato. La Jefa de Operaciones evalúa con el área administrativa si corresponde la emisión de un documento de terminación anticipada. El procedimiento de cierre se ejecuta íntegramente desde la verificación de entregables, documentando el estado real al momento de la terminación. El informe final refleja el avance a la fecha de cierre, no el avance proyectado al fin del contrato."
+    },
+    {
+      "id": 2,
+      "title": "Cliente que cierra un servicio e inicia otro simultáneamente",
+      "situation": "El cliente cierra un tipo de servicio pero contrata otro de forma simultánea.",
+      "detection": "Información en el formulario de traspaso del nuevo servicio o comunicación del área comercial.",
+      "handling": "Se ejecuta este procedimiento hasta la actividad 4 inclusive. Los accesos del cliente no se cierran hasta que el nuevo servicio esté activado y el nuevo entorno esté disponible. Las actividades 5 y 6 se ejecutan una vez que PRC-CON-001 del nuevo servicio ha sido completado."
+    }
+  ],
+  "controls": [
+    {
+      "control": "Verificación de entregables antes del cierre",
+      "activity": "actividad 1",
+      "executor": "Gerente de Proyecto",
+      "frequency": "Cada cierre",
+      "failure_action": "No elabora el informe final hasta confirmar completitud. Escala a Jefa de Operaciones si hay entregable bloqueado."
+    },
+    {
+      "control": "Confirmación escrita de recepción de documentación",
+      "activity": "actividad 3",
+      "executor": "Gerente de Proyecto",
+      "frequency": "Cada cierre",
+      "failure_action": "Reenvía y solicita acuse explícito. Si el cliente no responde en 5 días hábiles, escala a Jefa de Operaciones."
+    },
+    {
+      "control": "Registro de lecciones aprendidas antes del cierre de accesos",
+      "activity": "actividad 4",
+      "executor": "Gerente de Proyecto",
+      "frequency": "Cada cierre",
+      "failure_action": "No solicita el cierre de accesos hasta que las lecciones estén registradas."
+    }
+  ],
+  "outputs": [
+    {
+      "output": "Informe final de estado del programa PDP",
+      "recipient": "Cliente y repositorio del servicio",
+      "format": "Documento (.docx)"
+    },
+    {
+      "output": "Acuse de recibo de documentación por el cliente",
+      "recipient": "Expediente del cliente",
+      "format": "Correo electrónico"
+    },
+    {
+      "output": "Registro de lecciones aprendidas",
+      "recipient": "Repositorio interno del equipo",
+      "format": "Documento en repositorio interno"
+    },
+    {
+      "output": "Confirmación de cierre de accesos",
+      "recipient": "Expediente interno",
+      "format": "Correo o registro del Gerente de Tecnología y Seguridad de la Información"
+    },
+    {
+      "output": "Confirmación de cierre administrativo",
+      "recipient": "Expediente interno",
+      "format": "Comunicación del área administrativa"
+    }
+  ],
+  "risks": [],
+  "indicators": [
+    {
+      "indicator": "Completitud del cierre",
+      "calculation": "Cierres con los cinco elementos completados (informe entregado, acuse del cliente, lecciones registradas, accesos cerrados, cierre admin confirmado) / Total de cierres del período",
+      "frequency": "Semestral",
+      "responsible": "Jefa de Operaciones",
+      "acceptable_value": "100%"
+    },
+    {
+      "indicator": "Registro de lecciones aprendidas",
+      "calculation": "Cierres con registro de lecciones completado / Total de cierres del período",
+      "frequency": "Semestral",
+      "responsible": "Jefa de Operaciones",
+      "acceptable_value": "100%"
+    }
+  ],
+  "activities": [
+    {
+      "sort_order": 1,
+      "type": "event_start",
+      "number": null,
+      "title": "Finalización contractual confirmada o decisión de no renovación comunicada formalmente.",
+      "trigger": null,
+      "executor": null,
+      "description": null,
+      "result": null,
+      "evidence": null,
+      "outcomes": null
+    },
+    {
+      "sort_order": 2,
+      "type": "activity",
+      "number": 1,
+      "title": "Verificar completitud de entregables",
+      "trigger": "Finalización contractual confirmada.",
+      "executor": "Gerente de Proyecto",
+      "description": "El Gerente de Proyecto revisa el plan de trabajo y confirma que todos los entregables comprometidos contractualmente han sido entregados y recibidos formalmente por el cliente. Identifica si existen entregables pendientes o en curso.",
+      "result": "Estado de entregables verificado.",
+      "evidence": "Plan de trabajo con estado actualizado por entregable.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 3,
+      "type": "decision",
+      "number": null,
+      "title": "Todos los entregables comprometidos están completos",
+      "trigger": null,
+      "executor": null,
+      "description": null,
+      "result": null,
+      "evidence": null,
+      "outcomes": [
+        {"condition": "Entregables completos", "next": "Continúa con actividad 2."},
+        {"condition": "Entregables pendientes", "next": "El Gerente de Proyecto gestiona la completitud de los pendientes antes de continuar. Escala a la Jefa de Operaciones si hay riesgo de incumplimiento de plazo."}
+      ]
+    },
+    {
+      "sort_order": 4,
+      "type": "activity",
+      "number": 2,
+      "title": "Elaborar informe final de estado",
+      "trigger": "Entregables verificados como completos.",
+      "executor": "Consultor GRC o Consultor DPO según tipo de servicio",
+      "description": "El consultor responsable elabora el informe ejecutivo final del estado del programa PDP al cierre del servicio. El informe incluye: estado general de cumplimiento del programa, avances logrados durante el período, hallazgos abiertos con recomendaciones para la continuidad, y próximos pasos sugeridos. El Gerente de Proyecto revisa el informe antes de entregarlo al cliente en sesión directa con el consultor.",
+      "result": "Informe final elaborado y revisado internamente.",
+      "evidence": "Informe final en repositorio del servicio, versión aprobada para entrega.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 5,
+      "type": "activity",
+      "number": 3,
+      "title": "Entregar documentación al cliente",
+      "trigger": "Informe final revisado internamente.",
+      "executor": "Gerente de Proyecto",
+      "description": "El Gerente de Proyecto entrega al cliente el informe final de estado y toda la documentación del programa PDP actualizada durante el servicio, en el repositorio acordado contractualmente. Solicita acuse de recibo expreso por escrito al punto de contacto del cliente.",
+      "result": "Documentación entregada y recibida formalmente por el cliente.",
+      "evidence": "Acuse de recibo del cliente.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 6,
+      "type": "activity",
+      "number": 4,
+      "title": "Registrar lecciones aprendidas",
+      "trigger": "Documentación entregada al cliente.",
+      "executor": "Gerente de Proyecto con el equipo asignado",
+      "description": "El Gerente de Proyecto realiza una sesión interna con el equipo asignado para registrar las lecciones aprendidas del servicio: qué funcionó bien, qué generó dificultades y qué se haría diferente. Registra el resultado en el repositorio interno del equipo.",
+      "result": "Lecciones aprendidas registradas.",
+      "evidence": "Registro de lecciones aprendidas en el repositorio interno del equipo.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 7,
+      "type": "activity",
+      "number": 5,
+      "title": "Cerrar accesos del cliente",
+      "trigger": "Lecciones aprendidas registradas.",
+      "executor": "Jefa de Operaciones (solicita) / Gerente de Tecnología y Seguridad de la Información (ejecuta)",
+      "description": "La Jefa de Operaciones solicita al Gerente de Tecnología y Seguridad de la Información el cierre de los accesos del cliente al entorno de trabajo del servicio. Verifica que los accesos hayan sido efectivamente cerrados antes de proceder con el cierre administrativo.",
+      "result": "Accesos del cliente cerrados.",
+      "evidence": "Confirmación de cierre de accesos.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 8,
+      "type": "activity",
+      "number": 6,
+      "title": "Coordinar cierre administrativo y financiero",
+      "trigger": "Accesos del cliente cerrados.",
+      "executor": "Jefa de Operaciones",
+      "description": "La Jefa de Operaciones coordina con el área administrativa y financiera la liquidación del servicio: facturas pendientes, conciliación de horas o cupos utilizados según el tipo de servicio y cierre del expediente financiero del cliente.",
+      "result": "Cierre administrativo y financiero completado.",
+      "evidence": "Confirmación escrita del área administrativa del cierre financiero.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 9,
+      "type": "event_end",
+      "number": null,
+      "title": "Servicio cerrado — informe final entregado y recibido por el cliente, lecciones aprendidas registradas, accesos cerrados y cierre administrativo confirmado.",
+      "trigger": null,
+      "executor": null,
+      "description": null,
+      "result": null,
+      "evidence": null,
+      "outcomes": null
+    }
+  ]
+}

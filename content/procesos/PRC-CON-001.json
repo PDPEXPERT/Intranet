@@ -1,0 +1,267 @@
+{
+  "code": "PRC-CON-001",
+  "title": "Activar servicio",
+  "part": "compartidos",
+  "purpose": "PRC-CON-001 produce el entorno de trabajo configurado, el equipo formalmente designado y el acuerdo de trabajo establecido con el cliente, que permiten al servicio contratado ejecutarse desde el primer día.",
+  "scope": "Este procedimiento aplica a la activación de cualquier servicio de consultoría de PDP Expert: diagnóstico, soporte continuo (Oficina externa de protección de datos o DPO Externo) y secondment. Se activa cuando el área comercial remite el Formulario de Traspaso Comercial a la Jefa de Operaciones. Cierra cuando la reunión de kick-off ha sido realizada y el acta queda registrada en el repositorio del servicio. No cubre la ejecución del diagnóstico inicial ni la elaboración del plan de trabajo, que son objeto de PRC-CON-002. El área comercial no tiene ninguna actividad en este procedimiento a partir de la remisión del formulario de traspaso.",
+  "sort_order": 1,
+  "responsibilities": [
+    {
+      "role": "Jefa de Operaciones",
+      "responsibility": "Valida el traspaso comercial. Designa al Gerente de Proyecto y al equipo asignado. Solicita y verifica la creación del entorno de trabajo. Configura la plataforma de gestión del proyecto.",
+      "authority": "Rechaza traspasos incompletos o con contrato sin firma completa. Designa y reasigna equipo."
+    },
+    {
+      "role": "Gerente de Proyecto",
+      "responsibility": "Agenda y conduce la reunión de kick-off. Levanta el acta de la sesión.",
+      "authority": "Define el calendario de trabajo con el cliente en el kick-off."
+    },
+    {
+      "role": "Gerente de Tecnología y Seguridad de la Información",
+      "responsibility": "Genera el entorno de trabajo del cliente conforme a la estructura estándar por tipo de servicio.",
+      "authority": "N/A — ejecuta la solicitud de la Jefa de Operaciones."
+    }
+  ],
+  "inputs": [
+    {
+      "input": "Formulario de Traspaso Comercial",
+      "origin": "Área comercial",
+      "condition": "Completado con: datos de identificación del cliente, tipo de servicio contratado, alcance definido y confirmación de contrato firmado por ambas partes."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": 1,
+      "title": "Traspaso recibido por canal informal",
+      "situation": "El área comercial solicita la activación del servicio por canal informal, sin remitir el Formulario de Traspaso Comercial completo.",
+      "detection": "La Jefa de Operaciones recibe la comunicación sin el formulario por el canal establecido.",
+      "handling": "La Jefa de Operaciones no activa el servicio ni ejecuta ninguna actividad de consultoría. Informa al área comercial que debe remitir el formulario por el canal establecido antes de continuar."
+    },
+    {
+      "id": 2,
+      "title": "Cliente con diagnóstico previo de otro proveedor",
+      "situation": "El formulario de traspaso indica que el cliente ya tiene un diagnóstico realizado por otro consultor.",
+      "detection": "Campo específico del formulario o información adjunta al traspaso.",
+      "handling": "La Jefa de Operaciones lo anota en la designación del equipo. El Gerente de Proyecto lo menciona en el kick-off y acuerda con el cliente si ese diagnóstico se toma como punto de partida, lo que requiere revisión previa por el Consultor GRC antes de ejecutar PRC-CON-002, o si se realiza un diagnóstico nuevo."
+    }
+  ],
+  "controls": [
+    {
+      "control": "Verificación de completitud del formulario y firma del contrato",
+      "activity": "actividad 1",
+      "executor": "Jefa de Operaciones",
+      "frequency": "Cada traspaso recibido",
+      "failure_action": "No activa el servicio. Devuelve al área comercial con detalle de lo que falta."
+    },
+    {
+      "control": "Verificación de acceso de todo el equipo al entorno de trabajo",
+      "activity": "actividad 3",
+      "executor": "Jefa de Operaciones",
+      "frequency": "Cada activación, después de designar el equipo",
+      "failure_action": "Solicita corrección al Gerente de Tecnología y Seguridad de la Información antes de continuar."
+    },
+    {
+      "control": "Cumplimiento del plazo de kick-off (5 días hábiles)",
+      "activity": "actividad 5",
+      "executor": "Gerente de Proyecto",
+      "frequency": "Cada activación",
+      "failure_action": "Si el cliente no confirma disponibilidad en el plazo, escala a la Jefa de Operaciones."
+    },
+    {
+      "control": "Registro del acta de kick-off en el repositorio del servicio",
+      "activity": "actividad 6",
+      "executor": "Gerente de Proyecto",
+      "frequency": "Cada kick-off",
+      "failure_action": "Si el acta no queda registrada en las 24 horas siguientes a la reunión, la Jefa de Operaciones la solicita."
+    }
+  ],
+  "outputs": [
+    {
+      "output": "Acta de kick-off",
+      "recipient": "Repositorio del servicio",
+      "format": "Documento en repositorio del servicio"
+    },
+    {
+      "output": "Comunicación de designación del equipo",
+      "recipient": "Equipo de consultoría asignado",
+      "format": "Correo electrónico"
+    },
+    {
+      "output": "Entorno de trabajo del cliente",
+      "recipient": "Equipo asignado y cliente",
+      "format": "Repositorio digital y canal de comunicación"
+    },
+    {
+      "output": "Plataforma de gestión del proyecto configurada",
+      "recipient": "Equipo asignado",
+      "format": "Plataforma de gestión del proyecto"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Activación sin contrato firmado por ambas partes",
+      "description": "El área comercial presiona para iniciar el servicio antes de tener el contrato completamente ejecutado.",
+      "activity": "actividad 1",
+      "mitigation": "La Jefa de Operaciones no activa el servicio bajo ninguna circunstancia sin contrato firmado por ambas partes. No hay excepción a esta regla."
+    },
+    {
+      "risk": "Designación de equipo sin disponibilidad real",
+      "description": "Se designa un consultor que no tiene capacidad disponible para asumir el servicio en el momento de activación.",
+      "activity": "actividad 2",
+      "mitigation": "La Jefa de Operaciones verifica disponibilidad antes de designar. Si no hay disponibilidad, escala al Integrador antes de confirmar el inicio del servicio."
+    },
+    {
+      "risk": "Entorno de trabajo no disponible a tiempo para el kick-off",
+      "description": "El entorno digital del cliente no está listo cuando se realiza el kick-off, impidiendo compartir información en la sesión.",
+      "activity": "actividades 3 y 6",
+      "mitigation": "La solicitud de creación del entorno se hace inmediatamente después de verificar el traspaso, sin esperar a que el equipo esté designado. El control de acceso se ejecuta después de la designación."
+    },
+    {
+      "risk": "Kick-off realizado sin acta",
+      "description": "La reunión se realiza pero no queda documentada, perdiendo los compromisos y el calendario acordados.",
+      "activity": "actividad 6",
+      "mitigation": "El Gerente de Proyecto es responsable del acta antes de cerrar la actividad. El control verifica el registro en las 24 horas siguientes."
+    }
+  ],
+  "indicators": [
+    {
+      "indicator": "Oportunidad del kick-off",
+      "calculation": "Kick-offs realizados dentro de los 5 días hábiles / Total de activaciones del período",
+      "frequency": "Trimestral",
+      "responsible": "Jefa de Operaciones",
+      "acceptable_value": "100%"
+    },
+    {
+      "indicator": "Tasa de traspasos devueltos por incompletos",
+      "calculation": "Traspasos rechazados / Total de traspasos recibidos",
+      "frequency": "Trimestral",
+      "responsible": "Jefa de Operaciones",
+      "acceptable_value": "Tendencia a 0%"
+    }
+  ],
+  "activities": [
+    {
+      "sort_order": 1,
+      "type": "event_start",
+      "number": null,
+      "title": "Formulario de Traspaso Comercial recibido por la Jefa de Operaciones",
+      "trigger": null,
+      "executor": null,
+      "description": null,
+      "result": null,
+      "evidence": null,
+      "outcomes": null
+    },
+    {
+      "sort_order": 2,
+      "type": "activity",
+      "number": 1,
+      "title": "Verificar completitud del traspaso comercial",
+      "trigger": "Formulario de Traspaso Comercial recibido.",
+      "executor": "Jefa de Operaciones",
+      "description": "La Jefa de Operaciones verifica que el formulario contiene: datos de identificación del cliente, tipo de servicio contratado, alcance definido, y contrato con firma de ambas partes. Verifica también que la información sea suficiente para designar el equipo adecuado.",
+      "result": "Traspaso verificado.",
+      "evidence": "Formulario de Traspaso Comercial recibido con verificación completada.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 3,
+      "type": "decision",
+      "number": null,
+      "title": "Traspaso completo y contrato con firma de ambas partes",
+      "trigger": null,
+      "executor": null,
+      "description": null,
+      "result": null,
+      "evidence": null,
+      "outcomes": [
+        {"condition": "Traspaso completo", "next": "Continúa con actividades 2 y 3 (en paralelo)."},
+        {"condition": "Traspaso incompleto o contrato sin firma completa", "next": "Evento de fin 2."}
+      ]
+    },
+    {
+      "sort_order": 4,
+      "type": "activity",
+      "number": 2,
+      "title": "Designar equipo asignado",
+      "trigger": "Traspaso verificado como completo.",
+      "executor": "Jefa de Operaciones",
+      "description": "La Jefa de Operaciones designa formalmente al Gerente de Proyecto. Designa los consultores que integran el equipo según el tipo de servicio, la jurisdicción del cliente y la disponibilidad del equipo. Notifica al equipo designado con la información del cliente y el tipo de servicio.",
+      "result": "Equipo asignado y notificado.",
+      "evidence": "Comunicación de designación al equipo con los datos del cliente y tipo de servicio.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 5,
+      "type": "activity",
+      "number": 3,
+      "title": "Generar entorno de trabajo del cliente",
+      "trigger": "Traspaso verificado como completo.",
+      "executor": "Jefa de Operaciones (solicita) / Gerente de Tecnología y Seguridad de la Información (ejecuta)",
+      "description": "La Jefa de Operaciones solicita al Gerente de Tecnología y Seguridad de la Información la creación del entorno de trabajo del cliente: repositorio de documentos y canal de comunicación del equipo, conforme a la estructura estándar por tipo de servicio. Una vez designado el equipo (actividad 2), la Jefa de Operaciones verifica que todos los miembros asignados tengan acceso al entorno generado.",
+      "result": "Entorno de trabajo disponible y accesible para todos los miembros del equipo asignado.",
+      "evidence": "Confirmación de acceso verificado para el equipo.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 6,
+      "type": "activity",
+      "number": 4,
+      "title": "Configurar plataforma de gestión del proyecto",
+      "trigger": "Traspaso verificado como completo.",
+      "executor": "Jefa de Operaciones",
+      "description": "La Jefa de Operaciones configura la plataforma de gestión del proyecto del cliente con la información básica del servicio: alcance contratado y ficha de contexto del cliente.",
+      "result": "Plataforma de gestión del proyecto configurada con información básica del cliente.",
+      "evidence": "Plataforma de gestión del proyecto activa con ficha de contexto cargada.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 7,
+      "type": "activity",
+      "number": 5,
+      "title": "Agendar reunión de kick-off",
+      "trigger": "Equipo designado y notificado (actividad 2).",
+      "executor": "Gerente de Proyecto",
+      "description": "El Gerente de Proyecto contacta al punto de contacto designado por el cliente para agendar la reunión de kick-off. La reunión debe realizarse dentro de los 5 días hábiles siguientes a la designación del equipo.",
+      "result": "Kick-off agendado dentro del plazo.",
+      "evidence": "Invitación de calendario enviada y confirmada por el cliente.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 8,
+      "type": "activity",
+      "number": 6,
+      "title": "Realizar reunión de kick-off",
+      "trigger": "Kick-off agendado.",
+      "executor": "Gerente de Proyecto",
+      "description": "El Gerente de Proyecto conduce la reunión. Confirma el alcance contratado y las expectativas del cliente. Presenta al equipo de trabajo de PDP Expert. Define los canales de comunicación y el punto de contacto interno del cliente. Acuerda el calendario de trabajo: para soporte continuo y DPO, fija el día y hora de las sesiones recurrentes de seguimiento; para diagnóstico y secondment, establece las fechas clave del proyecto. Solicita la documentación inicial al cliente cuando el tipo de servicio lo requiere. Levanta acta de la sesión en el repositorio del servicio con los compromisos acordados y sus responsables.",
+      "result": "Kick-off realizado y documentado.",
+      "evidence": "Acta de kick-off en el repositorio del servicio.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 9,
+      "type": "event_end",
+      "number": null,
+      "title": "Servicio activado — equipo designado, entorno operativo, plataforma de gestión configurada y kick-off realizado con acta registrada.",
+      "trigger": null,
+      "executor": null,
+      "description": null,
+      "result": null,
+      "evidence": null,
+      "outcomes": null
+    },
+    {
+      "sort_order": 10,
+      "type": "event_end",
+      "number": null,
+      "title": "Traspaso devuelto al área comercial — formulario incompleto o contrato sin firma de ambas partes. El servicio no se activa hasta recibir el traspaso completo.",
+      "trigger": null,
+      "executor": null,
+      "description": null,
+      "result": null,
+      "evidence": null,
+      "outcomes": null
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+[
+  {
+    "caller_code": "PRC-CON-004",
+    "callee_code": "PRC-CON-001",
+    "context": "Activación del servicio de soporte continuo al inicio (Fase I, actividad 1)."
+  },
+  {
+    "caller_code": "PRC-CON-004",
+    "callee_code": "PRC-CON-002",
+    "context": "Diagnóstico inicial y elaboración del PIC al inicio del servicio de soporte continuo (Fase I, actividad 2)."
+  },
+  {
+    "caller_code": "PRC-CON-004",
+    "callee_code": "PRC-CON-003",
+    "context": "Atención de requerimientos puntuales del cliente de forma recurrente durante la ejecución del servicio (Fase II, actividad 7)."
+  },
+  {
+    "caller_code": "PRC-CON-004",
+    "callee_code": "PRC-CON-006",
+    "context": "Cierre del servicio de soporte continuo (Fase III, actividad 11)."
+  },
+  {
+    "caller_code": "PRC-CON-005",
+    "callee_code": "PRC-CON-001",
+    "context": "Activación del servicio de supervisión DPO cuando opera como servicio independiente (Fase I, actividad 1)."
+  },
+  {
+    "caller_code": "PRC-CON-005",
+    "callee_code": "PRC-CON-002",
+    "context": "Diagnóstico inicial y elaboración del PAT DPO (Fase I, actividad 2). También invocado en la revisión anual para actualizar el perfil del programa PDP (Fase II, actividad 7)."
+  },
+  {
+    "caller_code": "PRC-CON-005",
+    "callee_code": "PRC-CON-003",
+    "context": "Atención de requerimientos de supervisión del cliente de forma recurrente (Fase II, actividad 9)."
+  },
+  {
+    "caller_code": "PRC-CON-005",
+    "callee_code": "PRC-CON-006",
+    "context": "Cierre del servicio de supervisión DPO cuando opera como servicio independiente (Fase III, actividad 10)."
+  },
+  {
+    "caller_code": "PRC-CON-007",
+    "callee_code": "PRC-CON-001",
+    "context": "Activación del servicio de secondment al inicio (Fase I, actividad 1)."
+  },
+  {
+    "caller_code": "PRC-CON-007",
+    "callee_code": "PRC-CON-002",
+    "context": "Diagnóstico inicial cuando el cliente no tiene diagnóstico vigente (Fase I, actividad 3)."
+  },
+  {
+    "caller_code": "PRC-CON-007",
+    "callee_code": "PRC-CON-006",
+    "context": "Cierre del servicio de secondment (Fase III, actividad 9)."
+  }
+]

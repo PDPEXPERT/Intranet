@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   Marca PDP Expert — Variables de diseño
+   Fuente única de verdad para colores y tipografía.
+   Para cambiar la paleta, editar solo aquí.
+   ============================================= */
+
+@layer base {
+  :root {
+    /*
+     * Canales RGB separados por espacio para que Tailwind componga opacidad
+     * via la sintaxis "color/<opacity>" (ej. bg-primary/20, text-on-primary/70).
+     * Equivalencias hex de marca PDP Expert:
+     *   primary       #143953 -> 20 57 83
+     *   accent        #4FA1D9 -> 79 161 217
+     *   accent-light  #74B1E1 -> 116 177 225
+     *   neutral       #C6C6C6 -> 198 198 198
+     *   neutral-dark  #1D1D1B -> 29 29 27
+     *   surface       #FFFFFF -> 255 255 255
+     *   on-primary    #FFFFFF -> 255 255 255
+     *   success       #70AD47 -> 112 173 71
+     *   warning       #FFD966 -> 255 217 102
+     *   danger        #C00000 -> 192 0 0
+     *   pending       #F4B942 -> 244 185 66
+     *   muted         #C6C6C6 -> 198 198 198
+     */
+    --color-primary: 20 57 83;
+    --color-accent: 79 161 217;
+    --color-accent-light: 116 177 225;
+    --color-neutral: 198 198 198;
+    --color-neutral-dark: 29 29 27;
+    --color-surface: 255 255 255;
+    --color-on-primary: 255 255 255;
+    --color-success: 112 173 71;
+    --color-warning: 255 217 102;
+    --color-danger: 192 0 0;
+    --color-pending: 244 185 66;
+    --color-muted: 198 198 198;
+  }
+}
+
+/* Google Fonts: Montserrat (headings) + Poppins (UI/body) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Poppins:wght@300;400;500;600&display=swap');

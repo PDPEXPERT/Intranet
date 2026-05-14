@@ -1,0 +1,208 @@
+{
+  "code": "PRC-CON-002",
+  "title": "Ejecutar diagnóstico y plan de trabajo",
+  "part": "servicio",
+  "purpose": "PRC-CON-002 produce el informe de diagnóstico del cliente con sus componentes aplicables, el perfil inicial de madurez del programa PDP, el perfil objetivo y el Plan de Implementación y Cumplimiento validados formalmente por el cliente. Estos documentos constituyen la planificación directriz de los servicios de soporte continuo, supervisión DPO y secondment.",
+  "scope": "Este procedimiento aplica en dos escenarios: (a) cuando el alcance contratado incluye diagnóstico como servicio independiente, y (b) cuando el diagnóstico es la fase de inicio de un servicio de soporte continuo, DPO Externo o secondment, en cuyo caso es invocado por PRC-CON-004, PRC-CON-005 o PRC-CON-007. Se activa una vez completado PRC-CON-001: el equipo está designado y el kick-off ha sido realizado. Cierra cuando el informe de diagnóstico y el PIC han sido validados formalmente por el cliente y registrados en el repositorio del servicio. El procedimiento contempla tres componentes de diagnóstico: (a) contexto de la organización y del tratamiento; (b) programa PDP; (c) madurez en seguridad. Los componentes que se ejecutan en cada servicio se definen conforme al alcance contratado. No cubre la ejecución del soporte continuo, la supervisión DPO ni el secondment, que son objeto de sus propios procedimientos.",
+  "sort_order": 2,
+  "responsibilities": [
+    {
+      "role": "Gerente de Proyecto",
+      "responsibility": "Coordina el proceso: remite requerimientos de información, agenda entrevistas y la presentación al cliente, gestiona la validación formal y el registro final.",
+      "authority": "Define el calendario del diagnóstico con el cliente. Declara el cierre del procedimiento al recibir la validación formal."
+    },
+    {
+      "role": "Consultor GRC",
+      "responsibility": "Ejecuta el diagnóstico del programa PDP conforme a SOP-DX-001. Integra el informe de diagnóstico. Elabora el PIC.",
+      "authority": "Determina el perfil inicial y el perfil objetivo. Valida el contenido técnico del informe."
+    },
+    {
+      "role": "Consultor Técnico",
+      "responsibility": "Ejecuta el diagnóstico de madurez en seguridad cuando el alcance lo incluye.",
+      "authority": "Entrega resultados al Consultor GRC para integración en el informe."
+    },
+    {
+      "role": "Consultora Legal",
+      "responsibility": "Revisa aspectos jurídicos del contexto de tratamiento cuando el alcance o la complejidad del contexto lo requieren.",
+      "authority": "Identifica y documenta riesgos jurídicos en el diagnóstico de contexto."
+    },
+    {
+      "role": "Analista Legal",
+      "responsibility": "Apoya en tareas de preparación y documentación según asignación del Consultor GRC.",
+      "authority": "N/A — ejecuta tareas asignadas."
+    },
+    {
+      "role": "Revisor de calidad",
+      "responsibility": "Revisa el informe de diagnóstico y el PIC antes de su presentación al cliente.",
+      "authority": "Devuelve entregables para corrección si identifica problemas materiales de calidad técnica."
+    },
+    {
+      "role": "Jefa de Operaciones",
+      "responsibility": "Supervisa el avance y los plazos del diagnóstico.",
+      "authority": "Escala al Integrador si hay bloqueos que impidan el cumplimiento del plazo."
+    }
+  ],
+  "inputs": [
+    {
+      "input": "Acta de kick-off con calendario acordado",
+      "origin": "PRC-CON-001",
+      "condition": "Debe incluir las fechas acordadas para entrevistas y entrega de insumos."
+    },
+    {
+      "input": "Requerimiento de información organizacional",
+      "origin": "Plantilla estándar PDP Expert",
+      "condition": "Cubre: descripción de la organización, portafolio de servicios, organigrama, inventario de procesos, inventario de terceras partes y proveedores, y documentación PDP existente. Utilizado por el Consultor GRC en las actividades 3 y 4."
+    },
+    {
+      "input": "Requerimiento de información TI",
+      "origin": "Plantilla estándar PDP Expert",
+      "condition": "Cubre: inventario de activos de soporte (sistemas y aplicaciones), inventario de proveedores TI e inventario de LLMs o IA en uso. Utilizado por el Consultor GRC en la actividad 3."
+    },
+    {
+      "input": "Cuestionarios de levantamiento de amenazas (técnico y operativo)",
+      "origin": "Plantilla estándar PDP Expert",
+      "condition": "Cuestionario técnico (para el área TI) y cuestionario operativo (para cada área operativa relevante). Utilizados por el Consultor GRC en la actividad 3. Solo cuando el alcance incluye el componente de contexto."
+    },
+    {
+      "input": "Requerimiento de información de seguridad",
+      "origin": "Plantilla estándar PDP Expert",
+      "condition": "Cuestionario de controles de seguridad mapeados a la norma técnica aplicable. Utilizado por el Consultor Técnico en la actividad 5, no por el Consultor GRC. Solo cuando el alcance incluye el componente de seguridad."
+    },
+    {
+      "input": "Cuestionario de requisitos principales (37 preguntas)",
+      "origin": "Herramienta estándar PDP Expert",
+      "condition": "Enviado al cliente con antelación mínima de 3 días hábiles a la entrevista de levantamiento."
+    },
+    {
+      "input": "Herramienta de evaluación preliminar v.2.2",
+      "origin": "Plantilla estándar PDP Expert",
+      "condition": "Archivo Excel con hojas: Instrucciones, Línea base de cumplimiento, Inventario de evidencias y Catálogo de tipos documentales."
+    },
+    {
+      "input": "Plantilla de informe de diagnóstico",
+      "origin": "Repositorio de plantillas PDP Expert",
+      "condition": "Versión vigente al momento de ejecución."
+    },
+    {
+      "input": "Plantilla del Plan de Implementación y Cumplimiento",
+      "origin": "Repositorio de plantillas PDP Expert",
+      "condition": "Versión vigente al momento de ejecución, en formato para entrega al cliente y en Excel para gestión interna."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": 1,
+      "title": "Alcance contratado es diagnóstico independiente sin servicio de implementación posterior",
+      "situation": "El cliente contrató únicamente el diagnóstico, sin soporte continuo ni secondment.",
+      "detection": "Tipo de servicio en el formulario de traspaso comercial.",
+      "handling": "El procedimiento se ejecuta en su totalidad. Al completar la actividad 11, el Gerente de Proyecto confirma por escrito el cierre e invoca PRC-CON-006."
+    },
+    {
+      "id": 2,
+      "title": "Cliente con diagnóstico previo de otro consultor",
+      "situation": "El cliente ingresa al servicio con un diagnóstico realizado externamente a PDP Expert.",
+      "detection": "Formulario de traspaso comercial o comunicación del área comercial.",
+      "handling": "El Consultor GRC revisa el diagnóstico previo y evalúa si es válido, está actualizado y puede tomarse como punto de partida confiable. Si es válido, el procedimiento se ajusta para partir de ese diagnóstico; el Gerente de Proyecto acuerda con el cliente el alcance de los componentes complementarios que apliquen. Si el diagnóstico previo no es válido o está desactualizado, se ejecuta PRC-CON-002 completo."
+    },
+    {
+      "id": 3,
+      "title": "Componente de seguridad no incluido en el alcance contratado",
+      "situation": "El contrato no incluye el diagnóstico de madurez en seguridad.",
+      "detection": "Tipo de servicio y alcance en el formulario de traspaso comercial.",
+      "handling": "La actividad 5 se omite. El cuestionario de controles de seguridad no se remite al cliente. El informe de diagnóstico no incluye la sección (c)."
+    },
+    {
+      "id": 4,
+      "title": "Insumos del cliente de calidad insuficiente para el diagnóstico del programa PDP",
+      "situation": "El cliente remite respuestas superficiales al cuestionario de requisitos principales o no suministra evidencias antes de la entrevista.",
+      "detection": "El Gerente de Proyecto o el Consultor GRC identifica que las respuestas no permiten ejecutar un levantamiento de calidad.",
+      "handling": "El Gerente de Proyecto gestiona con el cliente la profundización de insumos antes de realizar la entrevista. Si faltan evidencias críticas correspondientes a los elementos E1 a E3, el Consultor GRC no ejecuta el skill de determinación del perfil inicial hasta recibirlas."
+    }
+  ],
+  "controls": [
+    {
+      "control": "Verificación de antelación mínima del cuestionario al cliente (3 días hábiles antes de la entrevista)",
+      "activity": "actividad 1",
+      "executor": "Gerente de Proyecto",
+      "frequency": "Cada diagnóstico",
+      "failure_action": "Reprograma la entrevista de levantamiento para cumplir el plazo mínimo."
+    },
+    {
+      "control": "Revisión cruzada del inventario de evidencias por segundo consultor antes del cálculo del perfil",
+      "activity": "actividad 4",
+      "executor": "Segundo consultor (distinto del que diligenció el inventario)",
+      "frequency": "Antes de ejecutar el skill",
+      "failure_action": "No ejecuta el skill hasta completar la revisión cruzada."
+    },
+    {
+      "control": "Revisión interna de entregables antes de la presentación al cliente",
+      "activity": "actividades 6 y 7",
+      "executor": "Revisor de calidad",
+      "frequency": "Cada diagnóstico",
+      "failure_action": "Devuelve al Consultor GRC con observaciones específicas para corrección."
+    },
+    {
+      "control": "Validación formal del cliente por escrito",
+      "activity": "actividad 10",
+      "executor": "Gerente de Proyecto",
+      "frequency": "Cada diagnóstico",
+      "failure_action": "Reenvía la solicitud. Si el cliente no responde en 5 días hábiles, escala a la Jefa de Operaciones."
+    },
+    {
+      "control": "Registro de todos los entregables en el repositorio antes del cierre",
+      "activity": "actividad 11",
+      "executor": "Gerente de Proyecto",
+      "frequency": "Cada diagnóstico",
+      "failure_action": "No cierra el procedimiento ni invoca PRC-CON-006 hasta confirmar el repositorio completo."
+    }
+  ],
+  "outputs": [
+    {"output": "Informe de diagnóstico (versión validada)", "recipient": "Cliente y repositorio del servicio", "format": "Documento (.docx)"},
+    {"output": "Plan de Implementación y Cumplimiento (versión definitiva)", "recipient": "Cliente y repositorio del servicio", "format": "Documento (.pdf) + archivo de planificación (.xlsx)"},
+    {"output": "Perfil inicial de madurez del programa PDP", "recipient": "Repositorio del servicio", "format": "Archivo Excel (3 hojas: perfil de 115 requisitos, hallazgos por elemento, riesgos principales)"},
+    {"output": "Herramienta de evaluación preliminar diligenciada", "recipient": "Repositorio del servicio", "format": "Archivo Excel"},
+    {"output": "Inventario de tratamientos", "recipient": "Repositorio del servicio", "format": "Archivo Excel"},
+    {"output": "Diagrama de flujo de datos", "recipient": "Repositorio del servicio", "format": "Documento o imagen en repositorio del servicio"},
+    {"output": "Acta o correo de validación formal del cliente", "recipient": "Expediente del cliente", "format": "Correo electrónico o acta firmada"},
+    {"output": "Registro de lecciones aprendidas del diagnóstico", "recipient": "Repositorio interno del equipo", "format": "Documento en repositorio interno"}
+  ],
+  "risks": [
+    {"risk": "Interlocutor del cliente sin competencia técnica suficiente", "description": "El punto de contacto del cliente no puede responder el cuestionario con el nivel de detalle requerido para un levantamiento de calidad.", "activity": "actividad 4", "mitigation": "El Gerente de Proyecto gestiona con el cliente la participación de las personas adecuadas en la entrevista de levantamiento (responsable de cumplimiento, DPO interno, responsables de área). Si no es posible antes de la fecha acordada, reprograma la entrevista."},
+    {"risk": "Perfil inicial determinado con evidencias insuficientes o no válidas", "description": "El perfil se calcula antes de que el inventario de evidencias haya sido revisado cruzadamente, o con evidencias que no superan las tres preguntas de validez.", "activity": "actividad 4", "mitigation": "La revisión cruzada es un control obligatorio antes del skill. El Consultor GRC no ejecuta el skill si hay evidencias pendientes de validación para los elementos E1 a E3."},
+    {"risk": "Informe o PIC con brechas de calidad que llegan al cliente", "description": "Entregables con hallazgos genéricos, niveles inconsistentes con evidencias o iniciativas mal calibradas se presentan al cliente sin revisión interna suficiente.", "activity": "actividades 6, 7, 8", "mitigation": "La revisión del Revisor de calidad es obligatoria antes de agendar la sesión de presentación. El Gerente de Proyecto no agenda la presentación hasta recibir aprobación del Revisor."},
+    {"risk": "Ajustes post-presentación sin control de versión", "description": "El cliente solicita cambios al PIC y estos se incorporan sin dejar trazabilidad de la versión presentada y la versión ajustada.", "activity": "actividad 9", "mitigation": "El Gerente de Proyecto conserva la versión presentada en el repositorio y genera una versión ajustada identificada. La validación formal (actividad 10) siempre referencia la versión definitiva por su identificador de versión."},
+    {"risk": "PIC no validado formalmente antes del inicio de la ejecución", "description": "El servicio de soporte continuo o secondment comienza a ejecutarse sin validación formal del PIC por el cliente.", "activity": "actividad 10", "mitigation": "El procedimiento invocador (PRC-CON-004, PRC-CON-005, PRC-CON-007) no avanza a la fase de ejecución hasta que el Gerente de Proyecto confirma la validación formal del PIC."}
+  ],
+  "indicators": [
+    {"indicator": "Cumplimiento del plazo de entrega del diagnóstico", "calculation": "Diagnósticos entregados al cliente dentro del plazo contractual / Total de diagnósticos del período", "frequency": "Semestral", "responsible": "Jefa de Operaciones", "acceptable_value": "≥ 90%"},
+    {"indicator": "Tasa de revisión cruzada completada antes del skill", "calculation": "Diagnósticos con revisión cruzada documentada / Total de diagnósticos ejecutados", "frequency": "Semestral", "responsible": "Jefa de Operaciones", "acceptable_value": "100%"},
+    {"indicator": "Tasa de validación formal del cliente obtenida", "calculation": "Diagnósticos con validación formal del cliente registrada en el repositorio / Total de diagnósticos del período", "frequency": "Semestral", "responsible": "Jefa de Operaciones", "acceptable_value": "100%"}
+  ],
+  "activities": [
+    {"sort_order": 1, "type": "event_start", "number": null, "title": "Kick-off realizado y acta registrada en el repositorio del servicio (PRC-CON-001 completado).", "trigger": null, "executor": null, "description": null, "result": null, "evidence": null, "outcomes": null},
+    {"sort_order": 2, "type": "activity", "number": 1, "title": "Remitir requerimientos de información al cliente", "trigger": "Kick-off realizado.", "executor": "Gerente de Proyecto", "description": "El Gerente de Proyecto remite al punto de contacto del cliente los requerimientos de información que aplican conforme al alcance contratado: organizacional y TI. Cuando el alcance incluye el componente de seguridad, el cuestionario de controles de seguridad se remite por separado al punto de contacto del área TI del cliente. Junto a los requerimientos, remite el cuestionario de requisitos principales (37 preguntas) con instrucciones de preparación para la entrevista. El cuestionario de requisitos principales debe llegar al cliente con antelación mínima de 3 días hábiles a la entrevista de levantamiento del programa PDP.", "result": "Requerimientos de información enviados al cliente.", "evidence": "Correo de remisión al cliente con los requerimientos e instrucciones de preparación.", "outcomes": null},
+    {"sort_order": 3, "type": "activity", "number": 2, "title": "Recibir y registrar insumos del cliente", "trigger": "Insumos del cliente recibidos.", "executor": "Gerente de Proyecto", "description": "El Gerente de Proyecto recibe los documentos y el cuestionario de requisitos principales diligenciado por el cliente. Inventaría los documentos con nombre, descripción breve y estado aparente. Verifica que los insumos críticos para el diagnóstico estén presentes antes de continuar.", "result": "Insumos del cliente inventariados.", "evidence": "Inventario de insumos recibidos en el repositorio del servicio.", "outcomes": null},
+    {"sort_order": 4, "type": "decision", "number": null, "title": "Insumos suficientes para ejecutar el diagnóstico", "trigger": null, "executor": null, "description": null, "result": null, "evidence": null, "outcomes": [
+      {"condition": "Insumos suficientes", "next": "Continúa con las actividades 3, 4 y 5 (se ejecutan en paralelo según disponibilidad del equipo y el calendario)."},
+      {"condition": "Insumos insuficientes o de calidad insuficiente", "next": "El Gerente de Proyecto gestiona con el cliente la completitud antes de continuar. No se ejecuta la entrevista de levantamiento sin los insumos mínimos."}
+    ]},
+    {"sort_order": 5, "type": "activity", "number": 3, "title": "Ejecutar diagnóstico del contexto de la organización y del tratamiento", "trigger": "Insumos del cliente recibidos.", "executor": "Consultor GRC. Participan la Consultora Legal y el Analista Legal cuando el alcance o la complejidad del contexto lo requieren.", "description": "El Consultor GRC levanta el inventario de tratamientos de datos personales, diagrama el flujo de datos en los sistemas de la organización e identifica las amenazas principales. La identificación de amenazas se realiza mediante dos instrumentos: el cuestionario técnico, aplicado al área TI del cliente, y el cuestionario operativo, aplicado a cada área operativa relevante; los resultados se consolidan en el listado final de amenazas. El inventario de tratamientos registra por cada tratamiento: finalidad, categorías de datos, categorías y volumen de titulares, tipo de operaciones, activos de soporte involucrados y posición jurídica de la organización. Los tratamientos se agrupan aplicando criterios de homogeneidad de finalidad, categorías de datos y de titulares, tipo de operaciones y tecnología involucrada.", "result": "Inventario de tratamientos, diagrama de flujo de datos y listado de amenazas completados.", "evidence": "Inventario de tratamientos (Excel), diagrama de flujo de datos y listado de amenazas en el repositorio del servicio.", "outcomes": null},
+    {"sort_order": 6, "type": "activity", "number": 4, "title": "Ejecutar diagnóstico del programa PDP", "trigger": "Insumos del cliente recibidos. Cuestionario de requisitos principales enviado al cliente con la antelación mínima requerida.", "executor": "Consultor GRC", "description": "El Consultor GRC ejecuta el diagnóstico del programa PDP conforme al SOP-DX-001. La secuencia comprende: (1) ejecutar la entrevista de levantamiento recorriendo las 37 preguntas del cuestionario con el punto de contacto del cliente; (2) revisar las evidencias suministradas aplicando la lógica de las tres preguntas en cascada (P1/P2/P3) y la marca binaria de validez; (3) diligenciar la herramienta de evaluación preliminar en sus dos hojas (línea base de cumplimiento e inventario de evidencias); (4) ejecutar la revisión cruzada del inventario por un segundo consultor antes del cálculo del perfil; (5) ejecutar el skill de determinación del perfil inicial; (6) revisar y validar el resultado generado.", "result": "Perfil inicial de madurez del programa PDP determinado y validado.", "evidence": "Herramienta de evaluación preliminar v.2.2 diligenciada. Archivo Excel del perfil inicial con tres hojas (perfil de los 115 requisitos, hallazgos por elemento, riesgos principales).", "outcomes": null},
+    {"sort_order": 7, "type": "activity", "number": 5, "title": "Ejecutar diagnóstico de seguridad", "trigger": "Requerimiento de información de TI y SI remitido por el Gerente de Proyecto al cliente.", "executor": "Consultor Técnico", "description": "Aplicabilidad: solo cuando el alcance contratado incluye este componente. El Gerente de Proyecto remite al cliente el requerimiento de información de TI y seguridad de la información. Una vez que el cliente responde, el Consultor Técnico valida la información recibida. Si identifica inconsistencias o requiere ampliar información, solicita una reunión con el área de tecnología y seguridad del cliente para verificar y completar los datos. El objetivo de la evaluación es identificar los controles de seguridad actualmente implementados en la organización. El Consultor Técnico diligencia directamente las secciones del informe de diagnóstico que le corresponden.", "result": "Secciones de seguridad del informe de diagnóstico diligenciadas por el Consultor Técnico.", "evidence": "Secciones de seguridad completadas en el informe de diagnóstico en el repositorio del servicio.", "outcomes": null},
+    {"sort_order": 8, "type": "activity", "number": 6, "title": "Redactar informe de diagnóstico", "trigger": "Componentes aplicables del diagnóstico completados.", "executor": "Consultor GRC (coordina e integra)", "description": "El Consultor GRC redacta el informe de diagnóstico conforme a la plantilla estándar, integrando los resultados de los componentes ejecutados. El informe incluye las secciones que corresponden al alcance contratado: (a) contexto de la organización y del tratamiento; (b) resultados del programa PDP, con el perfil inicial de los 115 requisitos, el perfil objetivo, la brecha por elemento, los hallazgos integradores y los riesgos principales; (c) seguridad, con los controles actualmente implementados y los hallazgos identificados. Cuando el alcance no incluye algún componente, la sección correspondiente se omite del informe.", "result": "Informe de diagnóstico redactado.", "evidence": "Informe de diagnóstico en el repositorio del servicio (versión para revisión interna).", "outcomes": null},
+    {"sort_order": 9, "type": "activity", "number": 7, "title": "Elaborar Plan de Implementación y Cumplimiento", "trigger": "Informe de diagnóstico redactado.", "executor": "Consultor GRC", "description": "El Consultor GRC elabora el Plan de Implementación y Cumplimiento (PIC) a partir del perfil inicial, la brecha identificada y los hallazgos del informe. El PIC se estructura en 5 líneas de trabajo y aproximadamente 20 iniciativas, con responsables, plazos y dependencias. Las iniciativas se ordenan conforme al nivel de riesgo y a las prioridades acordadas con el cliente en el kick-off. El PIC se prepara en formato de entrega al cliente y en archivo Excel para la gestión interna del servicio.", "result": "PIC elaborado.", "evidence": "PIC en el repositorio del servicio (versión para revisión interna).", "outcomes": null},
+    {"sort_order": 10, "type": "activity", "number": 8, "title": "Revisar internamente el informe y el PIC", "trigger": "Informe de diagnóstico y PIC elaborados.", "executor": "Revisor de calidad", "description": "El Revisor de calidad verifica la coherencia técnica y la calidad del informe y del PIC antes de presentarlos al cliente. Verifica que los niveles de madurez asignados sean consistentes con las evidencias; que los hallazgos reflejen la realidad observada y no sean genéricos; que las iniciativas del PIC sean coherentes con la brecha identificada.", "result": "Entregables revisados internamente.", "evidence": "Nota o registro de revisión interna en el repositorio del servicio.", "outcomes": null},
+    {"sort_order": 11, "type": "decision", "number": null, "title": "Entregables aprobados por el Revisor de calidad", "trigger": null, "executor": null, "description": null, "result": null, "evidence": null, "outcomes": [
+      {"condition": "Aprobados", "next": "Continúa con actividad 9."},
+      {"condition": "Con observaciones materiales", "next": "El Revisor de calidad devuelve al Consultor GRC con las observaciones específicas. El Consultor GRC incorpora las correcciones y retorna a la actividad 8."}
+    ]},
+    {"sort_order": 12, "type": "activity", "number": 9, "title": "Presentar informe y PIC al cliente", "trigger": "Entregables aprobados internamente.", "executor": "Gerente de Proyecto y Consultor GRC", "description": "El Gerente de Proyecto agenda la sesión de presentación con el cliente. El Consultor GRC presenta: el perfil inicial, el perfil objetivo, la brecha por elemento, los hallazgos principales y el PIC. El Gerente de Proyecto modera la sesión y documenta las observaciones del cliente.", "result": "Informe y PIC presentados al cliente.", "evidence": "Registro de la sesión de presentación en el repositorio del servicio.", "outcomes": null},
+    {"sort_order": 13, "type": "decision", "number": null, "title": "El cliente requiere ajustes al informe o al PIC", "trigger": null, "executor": null, "description": null, "result": null, "evidence": null, "outcomes": [
+      {"condition": "Sin ajustes", "next": "Continúa con actividad 10."},
+      {"condition": "Con ajustes", "next": "El Consultor GRC incorpora los ajustes acordados. El Gerente de Proyecto somete la versión ajustada a validación formal del cliente por escrito."}
+    ]},
+    {"sort_order": 14, "type": "activity", "number": 10, "title": "Obtener validación formal del cliente", "trigger": "Informe y PIC en versión definitiva.", "executor": "Gerente de Proyecto", "description": "El Gerente de Proyecto solicita la validación formal por escrito del informe y del PIC al punto de contacto del cliente. La validación puede materializarse por correo electrónico o en acta de presentación firmada, conforme a lo acordado contractualmente.", "result": "Informe y PIC validados formalmente por el cliente.", "evidence": "Correo o acta de validación del cliente.", "outcomes": null},
+    {"sort_order": 15, "type": "activity", "number": 11, "title": "Registrar entregables en el repositorio del servicio", "trigger": "Validación formal del cliente recibida.", "executor": "Gerente de Proyecto", "description": "El Gerente de Proyecto registra en el repositorio del servicio: informe de diagnóstico en su versión validada, PIC versión definitiva, inventario de tratamientos, diagrama de flujo de datos, herramienta de evaluación preliminar diligenciada, perfil inicial de madurez y evidencias levantadas durante el diagnóstico. Entrega formalmente al cliente el PIC en versión definitiva (documento PDF y archivo Excel de planificación), si esta entrega no fue realizada al cierre de la sesión de presentación. Registra también las lecciones aprendidas del proceso de diagnóstico antes de cerrar el procedimiento.", "result": "Expediente del diagnóstico completo y registrado.", "evidence": "Repositorio del servicio actualizado con todos los entregables del diagnóstico. Registro de lecciones aprendidas.", "outcomes": null},
+    {"sort_order": 16, "type": "event_end", "number": null, "title": "Diagnóstico completado — informe y PIC validados por el cliente y registrados en el repositorio del servicio.", "trigger": null, "executor": null, "description": "Si el alcance es diagnóstico independiente: se invoca PRC-CON-006 para cerrar el servicio. Si el diagnóstico es la fase de inicio de un servicio de soporte continuo, supervisión DPO o secondment: el procedimiento invocador retoma la ejecución desde este punto. Cuando el procedimiento fue ejecutado como revisión anual invocado por PRC-CON-005, el resultado es un perfil actualizado respecto al perfil de referencia previo; el procedimiento invocador retoma desde este punto con el perfil actualizado y el PIC revisado.", "result": null, "evidence": null, "outcomes": null}
+  ]
+}
