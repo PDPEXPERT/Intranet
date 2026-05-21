@@ -53,5 +53,15 @@
     "caller_code": "PRC-CON-007",
     "callee_code": "PRC-CON-006",
     "context": "Cierre del servicio de secondment (Fase III, actividad 9)."
+  },
+  {
+    "caller_code": "PRC-CON-004",
+    "callee_code": "PRC-CON-008",
+    "context": "Levantamiento inicial del RAT como parte de la implementación del Programa PDP durante la ejecución del servicio de soporte continuo (Fase II)."
+  },
+  {
+    "caller_code": "PRC-CON-007",
+    "callee_code": "PRC-CON-008",
+    "context": "Levantamiento inicial del RAT como parte de la implementación del Programa PDP durante la ejecución del servicio de secondment (Fase II)."
   }
 ]
