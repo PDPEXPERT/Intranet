@@ -20,7 +20,7 @@ export default function QueEsCalidad() {
       <WikiLede>
         La calidad no es un valor fijo ni universal: es cumplir con lo que el cliente necesita y
         espera. Un mismo producto puede ser &quot;de calidad&quot; o &quot;de mala calidad&quot;
-        segun que busque quien lo usa — no existe una vara objetiva independiente del cliente.
+        segun que busque quien lo usa, no existe una vara objetiva independiente del cliente.
       </WikiLede>
 
       <WikiSection title="Definiciones clasicas" first>
@@ -111,7 +111,7 @@ export default function QueEsCalidad() {
       </WikiSection>
 
       <WikiSources>
-        Material de referencia sobre gestion de calidad — definiciones de Juran, Deming,
+        Material de referencia sobre gestion de calidad: definiciones de Juran, Deming,
         Feigenbaum, Crosby, y BS 4778 / ISO 8402 / ISO 9000:2000 Quality Management Systems.
       </WikiSources>
     </article>

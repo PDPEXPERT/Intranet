@@ -8,15 +8,31 @@ Portal interno para consultores de PDP Expert. Permite entender rápidamente qu�
 |---|---|---|
 | Frontend | Next.js 14 (static export) + TypeScript + Tailwind CSS | Genera HTML/CSS/JS puros, sin SSR |
 | Backend | Supabase (PostgreSQL + Auth + REST API) | 100% del backend; sin API routes de Next.js |
-| Hosting | Hostinger (intranet.pdpexpert.com) | Hosting compartido, archivos estáticos |
-| CI/CD | GitHub Actions → FTP deploy | Build automático en push a main |
+| Hosting | GitHub Pages (intranet.pdpexpert.com) | Dominio personalizado sobre GitHub Pages |
+| CI/CD | GitHub Actions → GitHub Pages | Build automático en push a main |
 
-## Contenido de v1
+## Contenido
 
-1. **Repositorio de procesos** (prioridad #1) — Los 7 procedimientos de consultoría (PRC-CON-001 a PRC-CON-007) con sus actividades, responsabilidades, controles, riesgos e indicadores. Almacenados en Supabase, con búsqueda full-text en español.
+1. **Procedimientos** — 9 procedimientos de consultoría (PRC-CON-001 a PRC-CON-009) con sus actividades, responsabilidades, controles, riesgos e indicadores. Almacenados en Supabase, con búsqueda full-text en español.
 2. **PGF** — Privacy Governance Framework como micrositio estático navegable. No usa Supabase.
 3. **Biblioteca** — Página estática con categorías y links a recursos existentes.
-4. **MMI** — Link a PDF. Sin implementación dedicada en v1.
+4. **Excellence Wiki** — Wiki de conocimiento para la excelencia operativa. Contenido estático en archivos TSX, sin Supabase.
+
+## Flujos de contenido
+
+### Agregar un procedimiento
+
+1. Crear `content/procesos/PRC-CON-XXX.json` siguiendo la estructura de los existentes
+2. Si invoca otros procedimientos, agregar entradas en `content/procesos/_invocations.json`
+3. `npm run sync` — sube los datos a Supabase
+4. `git commit && git push origin main` — dispara el deploy
+
+### Agregar un tema al Excellence Wiki
+
+1. Crear `src/content/excellence/topics/nombre-del-tema.tsx` con el contenido usando los componentes `Wiki*` de `src/components/excellence/wiki.tsx`
+2. Agregar una entrada en `src/content/excellence/registry.ts` (slug, label, category)
+3. Importar y registrar el componente en `src/app/(app)/excellence/[slug]/page.tsx`
+4. `git commit && git push origin main` — dispara el deploy
 
 ## Estructura del repositorio
 
@@ -36,14 +52,21 @@ intranet/
 │   │       │   ├── page.tsx  # Índice
 │   │       │   └── [code]/   # Detalle por código
 │   │       ├── pgf/          # Privacy Governance Framework (estático)
-│   │       └── biblioteca/   # Índice de recursos (estático)
+│   │       ├── biblioteca/   # Índice de recursos (estático)
+│   │       └── excellence/   # Excellence Wiki (estático)
+│   │           ├── page.tsx  # Índice de temas
+│   │           └── [slug]/   # Detalle por tema
 │   ├── components/
 │   │   ├── layout/           # AppLayout, Sidebar, TopBar, Breadcrumbs
 │   │   ├── ui/               # Button, Table, Badge, SearchInput, CollapsibleSection
-│   │   ├── procedures/       # Componentes específicos de procedimientos
-│   │   ├── pgf/              # Componentes específicos del PGF
+│   │   ├── procedures/       # Componentes de procedimientos
+│   │   ├── excellence/       # Primitivas del wiki (WikiSection, WikiTable, etc.)
 │   │   ├── AuthGuard.tsx
 │   │   └── AuthRedirectIfSession.tsx
+│   ├── content/
+│   │   └── excellence/       # Contenido del wiki
+│   │       ├── registry.ts   # Registro de temas (slug, label, category)
+│   │       └── topics/       # Un archivo .tsx por tema
 │   └── lib/
 │       ├── supabase.ts       # Cliente Supabase
 │       ├── types.ts          # Tipos TS de procedures, activities, etc.
@@ -57,6 +80,8 @@ intranet/
 │       ├── PRC-CON-005.json
 │       ├── PRC-CON-006.json
 │       ├── PRC-CON-007.json
+│       ├── PRC-CON-008.json
+│       ├── PRC-CON-009.json
 │       └── _invocations.json # Relaciones de invocación entre procedimientos
 ├── scripts/
 │   └── sync-procesos.js      # Lee content/procesos/*.json → upsert en Supabase
@@ -66,7 +91,7 @@ intranet/
 ├── docs/                     # Documentación técnica del proyecto
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml        # Build + FTP deploy a Hostinger
+│       └── deploy.yml        # Build + deploy a GitHub Pages
 ├── .env.local.example        # Variables de entorno requeridas
 ├── package.json
 ├── tsconfig.json
@@ -136,7 +161,7 @@ Full-text search en español usando `to_tsvector('spanish', ...)` sobre:
 - `procedures.title` y `procedures.purpose`
 - `activities.title`, `activities.executor` y `activities.description`
 
-El PGF y la Biblioteca no participan en la búsqueda en v1.
+El PGF, la Biblioteca y el Excellence Wiki no participan en la búsqueda en v1.
 
 ## Autenticación
 
@@ -147,7 +172,7 @@ Login con Supabase Auth. Un solo rol: "consultor autenticado". Todo el contenido
 `src/app/` usa dos route groups de Next.js:
 
 - `(auth)/` agrupa páginas públicas (solo `login`). Su `layout.tsx` redirige a `/` si ya hay sesión. No tiene sidebar.
-- `(app)/` agrupa páginas protegidas (home, procesos, pgf, biblioteca). Su `layout.tsx` envuelve con `AuthGuard` y monta el `AppLayout` (sidebar + topbar). Si no hay sesión, redirige a `/login`.
+- `(app)/` agrupa páginas protegidas (home, procesos, pgf, biblioteca, excellence). Su `layout.tsx` envuelve con `AuthGuard` y monta el `AppLayout` (sidebar + topbar). Si no hay sesión, redirige a `/login`.
 
 Los paréntesis del nombre del grupo no aparecen en la URL: `/`, `/procesos`, `/login`, etc. siguen siendo los paths reales. La separación existe solo para que cada grupo de páginas tenga su propio layout y guard sin chequeos de pathname repartidos por el código.
 
@@ -179,24 +204,9 @@ npm run sync
 | NEXT_PUBLIC_SUPABASE_ANON_KEY | Cliente (browser) | Clave pública (anon) de Supabase |
 | SUPABASE_SERVICE_ROLE_KEY | Solo scripts (server) | Clave de servicio para sync. No exponer en cliente. |
 
-## Flujo de sync
-
-```
-Editar JSON en content/procesos/ → npm run sync → Supabase actualizado → Intranet consume de Supabase
-```
-
-En v1 el sync se ejecuta manualmente. En el futuro puede automatizarse con GitHub Actions en push a main.
-
 ## Deployment
 
-Push a `main` → GitHub Action ejecuta `next build` → archivos estáticos (`out/`) se suben a Hostinger vía FTP.
-
-## Fases de implementación
-
-1. **Modelo de datos + sync** — Crear tablas en Supabase, convertir MAN-CON-001 a JSON, implementar script de sync.
-2. **Auth** — Login con Supabase Auth, protección de rutas client-side.
-3. **Procedimientos** — Páginas de procedimientos, mapa de invocaciones, búsqueda Cmd+K.
-4. **PGF + Biblioteca + Home** — Contenido estático.
+Push a `main` → GitHub Actions ejecuta `next build` → archivos estáticos (`out/`) se publican en GitHub Pages → disponibles en `intranet.pdpexpert.com`.
 
 ## Decisiones de arquitectura
 

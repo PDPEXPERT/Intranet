@@ -9,9 +9,7 @@ export default function ExcellencePage() {
       <header className="space-y-2">
         <h1 className="font-heading text-2xl font-bold text-primary">Excellence Wiki</h1>
         <p className="font-body text-sm text-neutral-dark/80">
-          Base de conocimiento del equipo para operar con excelencia. Se alimenta de forma
-          continua a medida que el equipo identifica conceptos, marcos y practicas que vale la
-          pena documentar.
+          En este entorno encontraras informacion util para lograr la excelencia operacional.
         </p>
       </header>
 

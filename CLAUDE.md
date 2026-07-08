@@ -135,7 +135,19 @@ Fase 3: Backend completo (tablas migradas, datos sincronizados, búsqueda funcio
 3. ~~Crear sync script~~ ✓
 4. ~~Ejecutar migración en Supabase SQL Editor~~ ✓
 5. ~~Correr `npm run sync` y verificar datos~~ ✓
-6. Diseñar y construir la interfaz de la intranet (layout, navegación, secciones)
-7. UI de procedimientos (lista + detalle)
+6. ~~Diseñar y construir la interfaz de la intranet (layout, navegación, secciones)~~ ✓
+7. ~~UI de procedimientos (lista + detalle)~~ ✓
 8. PGF como micrositio estático
 9. Biblioteca como índice con links
+
+## Mantenimiento del README
+
+El README es la fuente de verdad sobre el estado del proyecto. Actualízalo (o sugiere actualizarlo) cuando:
+
+- Se agrega un procedimiento (contador, lista de JSONs)
+- Se agrega una sección nueva al intranet (Excellence Wiki y similares)
+- Cambia el mecanismo de deploy o hosting
+- Cambia la estructura de tablas o el modelo de datos
+- Se documenta un nuevo flujo de contenido
+
+Si el cambio ya está aprobado y ejecutado, ofrecer actualizar el README en el mismo turno, sin esperar que el usuario lo pida.
