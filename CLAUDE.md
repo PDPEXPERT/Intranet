@@ -102,13 +102,13 @@ Fase 3: Backend completo (tablas migradas, datos sincronizados, búsqueda funcio
 ### Completado
 
 **Datos y contenido (2026-05-13)**
-1. **7 JSONs de procedimientos + `_invocations.json`** en `content/procesos/`. Cada JSON tiene los campos del procedure + un array `activities` con el flujo completo. `_invocations.json` tiene las 11 relaciones entre procedimientos.
+1. **8 JSONs de procedimientos + `_invocations.json`** en `content/procesos/`. Cada JSON tiene los campos del procedure + un array `activities` con el flujo completo. `_invocations.json` tiene las 13 relaciones entre procedimientos.
 2. **Migración SQL** en `supabase/migrations/001_create_procedures_tables.sql`. Crea las 3 tablas, FKs con cascade, CHECK constraints, full-text search en español con `unaccent` (config `spanish_unaccent`), columnas `fts` generadas con pesos A/B/C, índices GIN, trigger `updated_at`, y función `search_procedures(query)`.
 3. **Sync script** en `scripts/sync-procesos.js`. Lee `.env.local` automáticamente. Upsert de procedures por `code`, delete+insert de activities por `procedure_id`, delete+insert de invocations resolviendo `caller_code`/`callee_code` → UUIDs. Se ejecuta con `npm run sync`.
 
 **Migración y sync ejecutados (2026-05-13)**
 4. **Migración ejecutada en Supabase SQL Editor** — sin errores. Tablas sin RLS (decisión v1).
-5. **Sync ejecutado** con `npm run sync` — 7 procedures, 92 activities, 11 invocations. Verificado con query de conteo directo en Supabase.
+5. **Sync ejecutado** con `npm run sync` — 8 procedures, 109 activities, 13 invocations. Último sync: 2026-05-21 (agregó PRC-CON-008).
 
 **Supabase en producción:**
 - Proyecto: `Intranet` en org PDPEXPERT's Org
@@ -126,6 +126,7 @@ Fase 3: Backend completo (tablas migradas, datos sincronizados, búsqueda funcio
 - PRC-CON-005.json — Ejecutar supervisión DPO (servicio, 14 rows: 10 actividades + 1 decisión + 2 event_start + 1 event_end, 3 fases)
 - PRC-CON-006.json — Cerrar servicio (compartidos, 9 rows: 6 actividades + 1 decisión + 1 event_start + 1 event_end)
 - PRC-CON-007.json — Gestionar secondment (servicio, 13 rows: 9 actividades + 1 decisión + 2 event_start + 1 event_end, 3 fases)
+- PRC-CON-008.json — Levantar registro de actividades de tratamiento (servicio, 17 rows: 12 actividades + 2 decisiones + 1 event_start + 2 event_end). Parte III — Procedimientos técnicos de consultoría.
 
 ### Pendiente (en orden, DA-016)
 

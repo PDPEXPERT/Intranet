@@ -70,8 +70,8 @@ export function ProcedureList() {
           Procedimientos de consultoria
         </h1>
         <p className="font-body text-sm text-neutral-dark/80">
-          Los 7 procedimientos que dirigen la operacion: 2 compartidos a todos
-          los servicios y 5 especificos del tipo de servicio. Cada procedimiento
+          Los procedimientos que dirigen la operacion: compartidos a todos los
+          servicios y especificos del tipo de servicio. Cada procedimiento
           incluye proposito, responsabilidades, controles, riesgos, indicadores
           y el flujo de actividades.
         </p>

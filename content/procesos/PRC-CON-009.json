@@ -1,0 +1,271 @@
+{
+  "code": "PRC-CON-009",
+  "title": "Levantar registro de actividades de tratamiento en DATUM",
+  "part": "servicio",
+  "purpose": "Producir un registro de actividades de tratamiento de datos personales completo con información operativa y legal, levantado por primera vez en la plataforma DATUM de PDP Expert y validado por el cliente, que constituye la línea base del Programa de Protección de Datos y habilita la ejecución de los demás procedimientos del Programa que dependen del RAT.",
+  "scope": "Aplica al levantamiento inicial (masivo) del RAT en un cliente nuevo de PDP Expert, en cualquier jurisdicción de operación. Se activa cuando el equipo de consultoría recibe del cliente la información organizacional estructurada (inventario de procedimientos, roles, terceros y activos). Termina cuando todos los asientos del registro están diligenciados — información operativa levantada con usuarios clave e información legal completada por el consultor — y el cliente ha validado el registro. No cubre: (a) la administración continua del RAT — altas, bajas, cambios y revisiones periódicas posteriores al levantamiento inicial —, que es objeto del procedimiento PRC-PDP-018; ni (b) la configuración técnica de la plataforma DATUM — selección de jurisdicción, carga de bases de licitud predeterminadas —, que es objeto del procedimiento de setup técnico del área de tecnología.",
+  "sort_order": 9,
+  "responsibilities": [
+    {
+      "role": "Consultor GRC",
+      "responsibility": "Ejecuta las actividades que requieren criterio especializado: validación de procedimientos que tratan datos personales (actividad 2), definición del inventario de actividades de tratamiento con aplicación de factores de riesgo (actividad 3), validación del inventario con el cliente (actividad 4), definición de catálogos (actividad 5), capacitación a usuarios clave (actividad 8) y validación final del registro con el cliente (actividad 12). Supervisa las actividades ejecutadas por el Analista Legal en materia de clasificación de catálogos y la revisión de calidad de la información levantada (actividad 10).",
+      "authority": "Valida o corrige la clasificación de procedimientos. Aprueba el inventario de tratamientos y los catálogos antes de presentarlos al cliente. Determina si la información operativa cumple el mínimo de calidad requerido."
+    },
+    {
+      "role": "Analista Legal",
+      "responsibility": "Ejecuta actividades transversales del levantamiento: recepción y verificación de la información organizacional (actividad 1), preparación inicial de catálogos bajo supervisión del Consultor GRC (actividad 5), administración de la validación de catálogos con el cliente (actividad 6), carga de catálogos e inventario en la plataforma (actividad 7), administración del envío y seguimiento de formularios a usuarios clave (actividad 9) y completar la información legal del tratamiento (actividad 11).",
+      "authority": "N/A — ejecuta bajo supervisión del Consultor GRC en las actividades que requieren criterio especializado."
+    },
+    {
+      "role": "Consultor Tecnico",
+      "responsibility": "Interviene a requerimiento en la revisión de calidad de la información operativa (actividad 10): valida la información de activos de soporte, confirma datos de infraestructura tecnológica reportados por usuarios clave, y verifica información sobre volumetría, ubicación de almacenamiento, transferencias internacionales y conservación.",
+      "authority": "N/A — interviene a requerimiento del Consultor GRC."
+    }
+  ],
+  "inputs": [
+    {
+      "input": "Información organizacional estructurada del cliente",
+      "origin": "Cliente (coordinada por el lider interno)",
+      "condition": "Inventario de procedimientos (macroproceso, proceso, subproceso, objeto, alcance, dueño, indicación de manejo de datos personales), inventario de roles, inventario de terceros e inventario de activos, todos en los formatos previstos y completos."
+    }
+  ],
+  "exceptions": [
+    {
+      "id": 1,
+      "title": "Información organizacional incompleta",
+      "situation": "El cliente entrega los formatos de levantamiento con campos faltantes o sin usar el formato previsto.",
+      "detection": "El Analista Legal detecta la incompletitud en la actividad 1.",
+      "handling": "El Analista Legal notifica al líder interno del cliente indicando qué formatos o campos faltan antes de avanzar. No se inicia la actividad 2 hasta recibir la información completa."
+    }
+  ],
+  "controls": [
+    {
+      "control": "Verificación de completitud de la información organizacional",
+      "activity": "actividad 1",
+      "executor": "Analista Legal",
+      "frequency": "Cada levantamiento",
+      "failure_action": "No avanzar a la actividad 2. Notificar al líder interno del cliente con detalle de lo que falta."
+    },
+    {
+      "control": "Validación del inventario de tratamientos con el cliente",
+      "activity": "actividad 4",
+      "executor": "Consultor GRC",
+      "frequency": "Cada levantamiento, antes de cargar en plataforma",
+      "failure_action": "Ajustar el inventario conforme a los comentarios del cliente y volver a presentar."
+    },
+    {
+      "control": "Revision de calidad de la informacion operativa levantada",
+      "activity": "actividad 10",
+      "executor": "Consultor GRC (con apoyo del Consultor Tecnico a requerimiento)",
+      "frequency": "Por cada tratamiento, a medida que se reciben los formularios",
+      "failure_action": "Devolver con comentarios al usuario clave para corrección antes de avanzar a la actividad 11."
+    }
+  ],
+  "outputs": [
+    {
+      "output": "Registro de actividades de tratamiento levantado, completo y validado",
+      "recipient": "Cliente y repositorio del servicio",
+      "format": "RAT en plataforma DATUM con aceptación formal del cliente"
+    }
+  ],
+  "risks": [
+    {
+      "risk": "Usuarios clave no disponibles o con conocimiento insuficiente de la operación",
+      "description": "Retraso en el diligenciamiento de formularios o información operativa de baja calidad que obliga a reenvíos y retrasos en el cierre.",
+      "activity": "actividad 9",
+      "mitigation": "El Consultor GRC instruye al líder interno sobre el perfil requerido de usuario clave durante la actividad 4. El Analista Legal hace seguimiento activo del estado de diligenciamiento."
+    },
+    {
+      "risk": "Inventario de procedimientos del cliente incompleto o desactualizado",
+      "description": "Tratamientos relevantes quedan fuera del alcance del RAT inicial, generando un registro incompleto.",
+      "activity": "actividad 2",
+      "mitigation": "El Consultor GRC identifica en la actividad 2 actividades no documentadas en procedimientos (videovigilancia, control biométrico, entre otras) y las incorpora al alcance antes de definir el inventario."
+    }
+  ],
+  "indicators": [
+    {
+      "indicator": "Tasa de formularios diligenciados",
+      "calculation": "Formularios completados / Total de formularios enviados",
+      "frequency": "Semanal durante la actividad 9",
+      "responsible": "Analista Legal",
+      "acceptable_value": "100% al cierre de la actividad 9"
+    },
+    {
+      "indicator": "Tasa de tratamientos devueltos por baja calidad",
+      "calculation": "Tratamientos devueltos en actividad 10 / Total de tratamientos del inventario",
+      "frequency": "Por levantamiento",
+      "responsible": "Consultor GRC",
+      "acceptable_value": "Menor al 20%"
+    }
+  ],
+  "activities": [
+    {
+      "sort_order": 1,
+      "type": "event_start",
+      "number": null,
+      "title": "Inicio: información organizacional recibida",
+      "trigger": "El equipo de consultoría recibe del cliente la información organizacional estructurada en los formatos previstos.",
+      "executor": null,
+      "description": null,
+      "result": null,
+      "evidence": null,
+      "outcomes": null
+    },
+    {
+      "sort_order": 2,
+      "type": "activity",
+      "number": 1,
+      "title": "Recibir y verificar información organizacional del cliente",
+      "trigger": "Recepción de los formatos de levantamiento del cliente.",
+      "executor": "Analista Legal",
+      "description": "Verificar que el cliente ha entregado la información estructurada en los formatos previstos: inventario de procedimientos (macroproceso, proceso, subproceso, objeto, alcance, dueño, indicación de si maneja datos personales), inventario de roles (nombre, área, descripción), inventario de terceros (nombre, tax ID, domicilio legal, contacto, descripción de la relación) e inventario de activos (nombre, tipo, custodio; para software: si es nube, si almacena en el extranjero, si es sistema de IA). Si la información está incompleta, notificar al líder interno del cliente indicando qué formatos o campos faltan antes de avanzar.",
+      "result": "Información organizacional verificada como completa y en formato estructurado.",
+      "evidence": "Formatos de levantamiento de información organizacional completos.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 3,
+      "type": "activity",
+      "number": 2,
+      "title": "Validar procedimientos que tratan datos personales",
+      "trigger": "Información organizacional verificada (actividad 1).",
+      "executor": "Consultor GRC (puede delegar la ejecución inicial al Analista Legal bajo su supervisión)",
+      "description": "Revisar la indicación del cliente sobre qué procedimientos manejan datos personales. Validar o corregir esa clasificación. Identificar actividades no documentadas en procedimientos que implican tratamiento de datos personales (videovigilancia, control biométrico, entre otras). Someter la clasificación resultante a validación del líder interno del cliente.",
+      "result": "Lista confirmada de procedimientos y actividades que entran al alcance del RAT, validada por el líder interno del cliente.",
+      "evidence": "Inventario de procedimientos con columna de clasificación completada y validación del cliente.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 4,
+      "type": "activity",
+      "number": 3,
+      "title": "Definir inventario de actividades de tratamiento",
+      "trigger": "Lista confirmada de procedimientos con tratamiento de datos personales (actividad 2).",
+      "executor": "Consultor GRC",
+      "description": "A partir de los procedimientos validados, determinar cuántos registros (fichas) de tratamiento tendrá cada procedimiento. Se aplican los factores de riesgo y criterios documentados en FOR-CON-001 para decidir si un procedimiento genera múltiples fichas, una sola ficha, o se agrupa con otros procedimientos en una sola ficha. Para cada tratamiento resultante se documenta: nombre, finalidad, procesos asociados, justificación de la configuración adoptada y tratamientos explícitamente excluidos.",
+      "result": "Inventario de tratamientos: nombre, finalidad, procesos asociados, justificación de la configuración y tratamientos excluidos.",
+      "evidence": "FOR-CON-001 completado con el inventario de tratamientos propuesto.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 5,
+      "type": "activity",
+      "number": 4,
+      "title": "Validar inventario de actividades de tratamiento con el cliente",
+      "trigger": "Inventario de tratamientos propuesto (actividad 3).",
+      "executor": "Consultor GRC",
+      "description": "Presentar al líder interno del cliente los criterios aplicados y el inventario resultante. Explicar la configuración adoptada para cada tratamiento (por qué se agrupan o separan). Documentar la validación o los ajustes solicitados por el cliente en el mismo formato del inventario.",
+      "result": "Inventario de tratamientos validado por el cliente.",
+      "evidence": "Inventario de tratamientos con constancia de validación del cliente.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 6,
+      "type": "activity",
+      "number": 5,
+      "title": "Definir catálogos de categorías de titulares, datos y finalidades",
+      "trigger": "Inventario de procedimientos verificado (actividad 1) y contexto organizacional del cliente. Se beneficia de tener la actividad 2 resuelta.",
+      "executor": "Consultor GRC (puede delegar la preparación inicial al Analista Legal bajo su supervisión)",
+      "description": "Definir los tres catálogos a partir de las instrucciones y criterios de INS-CON-001: (a) Categorías de titulares: modelar en función del sector, tipo de organización y relaciones del cliente con entidades, aplicando criterios de diferenciación. (b) Categorías de datos: partir de la taxonomía estándar de PDP Expert y extender con categorías específicas del sector del cliente; las categorías de datos solo se amplían, no se eliminan. (c) Finalidades: usar el catálogo estándar de PDP Expert como base — inspirado en la taxonomía del W3C Data Privacy Vocabulary (DPV) — y revisar extensiones sectoriales aplicables.",
+      "result": "Catálogos propuestos de categorías de titulares, categorías de datos y finalidades.",
+      "evidence": "Catálogos propuestos en el formato de la plataforma DATUM.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 7,
+      "type": "activity",
+      "number": 6,
+      "title": "Validar catálogos con el cliente",
+      "trigger": "Catálogos propuestos (actividad 5).",
+      "executor": "Analista Legal (bajo supervisión del Consultor GRC)",
+      "description": "Presentar los catálogos al líder interno del cliente, explicando que son vocabulario disponible para describir los tratamientos y no una declaración de qué datos trata la organización. Obtener validación. Las categorías de datos normalmente solo se amplían; no se eliminan. Documentar los ajustes acordados.",
+      "result": "Catálogos validados por el cliente.",
+      "evidence": "Catálogos con constancia de validación del cliente.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 8,
+      "type": "activity",
+      "number": 7,
+      "title": "Cargar catálogos e inventario en la plataforma",
+      "trigger": "Catálogos validados (actividad 6) e inventario de tratamientos validado (actividad 4).",
+      "executor": "Analista Legal",
+      "description": "Registrar en la plataforma DATUM los catálogos validados y el inventario de tratamientos validado. Dejar el sistema configurado y listo para el levantamiento con usuarios clave.",
+      "result": "Plataforma configurada con catálogos e inventario cargados.",
+      "evidence": "Captura o reporte de la plataforma DATUM con catálogos e inventario cargados.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 9,
+      "type": "activity",
+      "number": 8,
+      "title": "Capacitar a usuarios clave",
+      "trigger": "Plataforma configurada (actividad 7) y usuarios clave designados por el líder interno.",
+      "executor": "Consultor GRC",
+      "description": "Realizar sesión de capacitación a los usuarios clave designados por el líder interno, antes del inicio del levantamiento. La sesión cubre dos componentes: (a) Introducción a la protección de datos personales: conceptos básicos orientados al rol del usuario clave — qué es un dato personal, qué es un dato sensible, qué significa tratar datos — con ejemplos concretos de su área. La sesión es ejecutiva y práctica; no es una formación teórica. (b) Cómo llenar el formulario: explicación operativa de cada campo del formulario de levantamiento, con ejemplos prácticos. La capacitación no cubre el uso de la plataforma DATUM por parte de los administradores del cliente; eso es objeto del procedimiento de onboarding técnico.",
+      "result": "Usuarios clave capacitados y en condiciones de diligenciar los formularios.",
+      "evidence": "Registro de asistencia a la sesión de capacitación.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 10,
+      "type": "activity",
+      "number": 9,
+      "title": "Levantar información operativa con usuarios clave",
+      "trigger": "Plataforma configurada (actividad 7) y usuarios clave capacitados (actividad 8).",
+      "executor": "Analista Legal (administración de formularios); usuarios clave del cliente (diligenciamiento)",
+      "description": "Enviar formularios a los usuarios clave de cada área para que describan la información operativa del tratamiento: categorías de titulares y datos involucrados, descripción del manejo de datos (data handling), activos de soporte utilizados. Administrar el envío, hacer seguimiento del estado de diligenciamiento y registrar qué formularios han sido completados.",
+      "result": "Formularios diligenciados por los usuarios clave.",
+      "evidence": "Formularios de levantamiento completados por área.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 11,
+      "type": "activity",
+      "number": 10,
+      "title": "Revisar calidad de la información levantada",
+      "trigger": "Formularios diligenciados por usuarios clave (actividad 9). Se ejecuta tratamiento por tratamiento; es posible avanzar con la actividad 11 en los tratamientos que ya cumplan el mínimo de calidad.",
+      "executor": "Consultor GRC (revisión de contenido); Consultor Técnico y área de TI del cliente (validación de activos, a requerimiento)",
+      "description": "Verificar que no haya campos vacíos ni inconsistencias en la información reportada por los usuarios clave. Validar con el área de TI del cliente la relación entre tratamientos y activos de soporte, confirmando: ubicación de almacenamiento, volumetría, transferencias internacionales y plazos de conservación. Si hay inconsistencias o campos incompletos, devolver con comentarios al usuario clave para corrección antes de avanzar al siguiente paso.",
+      "result": "Información operativa de cada tratamiento verificada como consistente y suficiente para el paso legal.",
+      "evidence": "Formularios revisados con anotaciones del Consultor GRC; confirmación del área de TI del cliente.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 12,
+      "type": "activity",
+      "number": 11,
+      "title": "Completar información legal del tratamiento",
+      "trigger": "Información operativa verificada de cada tratamiento (actividad 10). Puede ejecutarse en paralelo por tratamiento a medida que cada uno supera la actividad 10.",
+      "executor": "Analista Legal",
+      "description": "Diligenciar los campos legales del registro para cada tratamiento que haya superado la revisión de calidad de la actividad 10: bases de licitud, mecanismos jurídicos de transferencia internacional y demás campos legales aplicables según la jurisdicción del cliente.",
+      "result": "Registro de tratamiento con información operativa y legal completa.",
+      "evidence": "Ficha de tratamiento completa en la plataforma DATUM.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 13,
+      "type": "activity",
+      "number": 12,
+      "title": "Validar registro completo con el cliente",
+      "trigger": "Registro con información operativa y legal completa de todos los tratamientos (actividad 11).",
+      "executor": "Consultor GRC",
+      "description": "Presentar al líder interno del cliente el registro completo con información operativa y legal de todos los tratamientos. Obtener validación final del cliente con aceptación formal (mediante comunicación formal). Esta validación constituye el cierre formal del levantamiento inicial del RAT.",
+      "result": "Registro de actividades de tratamiento levantado, completo y validado. Línea base del Programa de Protección de Datos del cliente. Comunicación formal del cliente de aceptación.",
+      "evidence": "Correo o acta de cierre del cliente con aceptación formal del RAT.",
+      "outcomes": null
+    },
+    {
+      "sort_order": 14,
+      "type": "event_end",
+      "number": null,
+      "title": "Fin: RAT levantado y validado",
+      "trigger": "Validación formal del cliente recibida (actividad 12).",
+      "executor": null,
+      "description": null,
+      "result": null,
+      "evidence": null,
+      "outcomes": null
+    }
+  ]
+}
