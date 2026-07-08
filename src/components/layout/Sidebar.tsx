@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { listProcedures } from '@/lib/procedures';
 import type { ProcedureSummary } from '@/lib/types';
+import { TOPICS } from '@/content/excellence/registry';
 
 interface NavItem {
   href: string;
@@ -17,6 +18,7 @@ const TOP_NAV: NavItem[] = [
   { href: '/procesos', label: 'Procedimientos' },
   { href: '/pgf', label: 'PGF' },
   { href: '/biblioteca', label: 'Biblioteca' },
+  { href: '/excellence', label: 'Excellence Wiki' },
 ];
 
 function isActive(pathname: string, href: string): boolean {
@@ -40,6 +42,7 @@ export function Sidebar() {
   }, []);
 
   const inProcesos = pathname.startsWith('/procesos');
+  const inExcellence = pathname.startsWith('/excellence');
 
   useEffect(() => {
     if (!inProcesos) return;
@@ -65,7 +68,9 @@ export function Sidebar() {
       <nav className="flex-1 overflow-y-auto p-3 space-y-1">
         {TOP_NAV.map((item) => {
           const active = isActive(pathname, item.href);
-          const showSub = item.href === '/procesos' && inProcesos;
+          const showSub =
+            (item.href === '/procesos' && inProcesos) ||
+            (item.href === '/excellence' && inExcellence);
           return (
             <div key={item.href}>
               <Link
@@ -78,7 +83,7 @@ export function Sidebar() {
               >
                 {item.label}
               </Link>
-              {showSub && procedures.length > 0 && (
+              {showSub && item.href === '/procesos' && procedures.length > 0 && (
                 <div className="mt-1 mb-2 space-y-0.5">
                   {procedures.map((p) => {
                     const subActive = pathname.includes(`/procesos/${p.code}`);
@@ -96,6 +101,26 @@ export function Sidebar() {
                         <span className="block text-on-primary/50 truncate">
                           {p.title}
                         </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+              {showSub && item.href === '/excellence' && (
+                <div className="mt-1 mb-2 space-y-0.5">
+                  {TOPICS.map((t) => {
+                    const subActive = pathname.includes(`/excellence/${t.slug}`);
+                    return (
+                      <Link
+                        key={t.slug}
+                        href={`/excellence/${t.slug}/`}
+                        className={
+                          subActive
+                            ? 'block pl-8 pr-3 py-1.5 font-body text-xs text-on-primary border-l-2 border-accent'
+                            : 'block pl-8 pr-3 py-1.5 font-body text-xs text-on-primary/60 hover:text-on-primary'
+                        }
+                      >
+                        <span className="block text-on-primary/50 truncate">{t.label}</span>
                       </Link>
                     );
                   })}

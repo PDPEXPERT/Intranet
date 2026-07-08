@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { getTopicMeta } from '@/content/excellence/registry';
 
 interface Crumb {
   href: string | null;
@@ -33,7 +34,10 @@ function labelFor(segments: string[], idx: number): string {
   if (seg === 'procesos') return 'Procedimientos';
   if (seg === 'pgf') return 'PGF';
   if (seg === 'biblioteca') return 'Biblioteca';
+  if (seg === 'excellence') return 'Excellence Wiki';
   if (seg.startsWith('PRC-')) return seg;
+  const topic = getTopicMeta(seg);
+  if (topic) return topic.label;
   return seg;
 }
 
