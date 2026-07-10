@@ -11,6 +11,11 @@ export const TOPICS: TopicMeta[] = [
     label: 'Ciclo de desarrollo de producto',
     category: 'Desarrollo de Producto',
   },
+  {
+    slug: 'gestion-conocimiento',
+    label: 'Qué es la gestión del conocimiento',
+    category: 'Gestión del conocimiento',
+  },
 ];
 
 export function getTopicMeta(slug: string): TopicMeta | undefined {
