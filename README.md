@@ -16,7 +16,7 @@ Portal interno para consultores de PDP Expert. Permite entender rápidamente qu�
 1. **Procedimientos** — 9 procedimientos de consultoría (PRC-CON-001 a PRC-CON-009) con sus actividades, responsabilidades, controles, riesgos e indicadores. Almacenados en Supabase, con búsqueda full-text en español.
 2. **PGF** — Privacy Governance Framework como micrositio estático navegable. No usa Supabase.
 3. **Biblioteca** — Página estática con categorías y links a recursos existentes.
-4. **Excellence Wiki** — Wiki de conocimiento para la excelencia operativa. Contenido estático en archivos TSX, sin Supabase.
+4. **Excellence Wiki** — Wiki de conocimiento para la excelencia operativa. Contenido estático en archivos TSX, sin Supabase. Temas actuales, por categoría: Calidad (¿Qué es calidad?), Desarrollo de Producto (Ciclo de desarrollo de producto) y Gestión del conocimiento (Qué es la gestión del conocimiento, basado en ISO 30401).
 
 ## Flujos de contenido
 
