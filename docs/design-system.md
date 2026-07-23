@@ -1,5 +1,7 @@
 # Design System — Intranet PDP Expert
 
+> **PENDIENTE DE ACTUALIZAR (2026-07-22).** PA marcó este documento como desactualizado / con patrones deficientes. Puntos ya identificados en el sidebar colapsable: sigue mencionando PGF y Biblioteca (eliminados de la intranet), no documenta un toggle de colapso manual para escritorio (solo colapso automático en viewports < 768px), la regla "no iconos decorativos" choca con la necesidad de un sidebar colapsado a solo iconos, y "no usar animaciones ni transiciones" es demasiado rígido para una transición de ancho/margen de 200ms. No usar este documento como fuente de verdad sin revisión hasta que se reescriba.
+
 Fuente de verdad para decisiones de diseño de interfaz. Claude Code DEBE leer este archivo antes de crear o modificar cualquier componente UI.
 
 Los tokens de color y tipografía están en `src/app/globals.css` y `tailwind.config.ts`. Este documento no los repite. Define cómo se usan.
