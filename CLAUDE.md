@@ -9,9 +9,8 @@ Portal interno para consultores de PDP Expert. Next.js 14 (static export) + Type
 - **Hosting**: Hostinger (hosting compartido, solo archivos estáticos).
 - **Auth**: Supabase Auth con email. Un solo rol ("consultor autenticado"). Sin RLS en v1. Todo el contenido visible para cualquier usuario autenticado.
 - **Procedimientos en Supabase**: 3 tablas (`procedures`, `activities`, `procedure_invocations`). JSON de respaldo en `content/procesos/`.
-- **PGF**: Micrositio estático en `src/app/pgf/`. No usa Supabase.
-- **Biblioteca**: Página estática con links. No usa Supabase.
-- **Búsqueda**: Full-text search en español sobre procedures y activities en Supabase. PGF y Biblioteca fuera de búsqueda en v1.
+- **Búsqueda**: Full-text search en español sobre procedures y activities en Supabase.
+- **PGF y Biblioteca**: secciones eliminadas de la intranet (2026-07-22). Ya no existen como rutas.
 
 ## Modelo de datos (Supabase)
 
@@ -137,8 +136,7 @@ Fase 3: Backend completo (tablas migradas, datos sincronizados, búsqueda funcio
 5. ~~Correr `npm run sync` y verificar datos~~ ✓
 6. ~~Diseñar y construir la interfaz de la intranet (layout, navegación, secciones)~~ ✓
 7. ~~UI de procedimientos (lista + detalle)~~ ✓
-8. PGF como micrositio estático
-9. Biblioteca como índice con links
+8. ~~PGF y Biblioteca eliminados como secciones de la intranet~~ ✓ (2026-07-22)
 
 ## Mantenimiento del README
 

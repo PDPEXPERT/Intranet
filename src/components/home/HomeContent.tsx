@@ -20,18 +20,6 @@ const TILES: Tile[] = [
     description:
       'Los 7 procedimientos de consultoria con sus actividades, responsabilidades, controles, riesgos e indicadores.',
   },
-  {
-    href: '/pgf/',
-    title: 'Privacy Governance Framework',
-    description:
-      'Marco de gobierno en proteccion de datos personales. 7 componentes, integraciones y metodologia.',
-  },
-  {
-    href: '/biblioteca/',
-    title: 'Biblioteca',
-    description:
-      'Manuales internos, normativa aplicable y plantillas operativas para el trabajo de consultoria.',
-  },
 ];
 
 export function HomeContent() {
@@ -66,8 +54,7 @@ export function HomeContent() {
         </h1>
         <p className="font-body text-sm text-neutral-dark/80">
           Portal interno de PDP Expert. Aqui encuentras los procedimientos de
-          consultoria, el Privacy Governance Framework y la biblioteca de
-          recursos para tu trabajo diario.
+          consultoria para tu trabajo diario.
         </p>
       </section>
 

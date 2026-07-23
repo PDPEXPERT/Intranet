@@ -5,7 +5,7 @@ export interface TopicMeta {
 }
 
 export const TOPICS: TopicMeta[] = [
-  { slug: 'que-es-calidad', label: '¿Que es calidad?', category: 'Calidad' },
+  { slug: 'que-es-calidad', label: '¿Qué es calidad?', category: 'Calidad' },
   {
     slug: 'pdlc',
     label: 'Ciclo de desarrollo de producto',

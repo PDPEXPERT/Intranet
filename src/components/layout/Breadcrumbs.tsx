@@ -32,8 +32,6 @@ function buildCrumbs(pathname: string): Crumb[] {
 function labelFor(segments: string[], idx: number): string {
   const seg = segments[idx];
   if (seg === 'procesos') return 'Procedimientos';
-  if (seg === 'pgf') return 'PGF';
-  if (seg === 'biblioteca') return 'Biblioteca';
   if (seg === 'excellence') return 'Excellence Wiki';
   if (seg.startsWith('PRC-')) return seg;
   const topic = getTopicMeta(seg);

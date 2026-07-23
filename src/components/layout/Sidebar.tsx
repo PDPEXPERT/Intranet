@@ -16,9 +16,7 @@ interface NavItem {
 const TOP_NAV: NavItem[] = [
   { href: '/', label: 'Inicio' },
   { href: '/procesos', label: 'Procedimientos' },
-  { href: '/pgf', label: 'PGF' },
   { href: '/organigrama', label: 'Organigrama' },
-  { href: '/biblioteca', label: 'Biblioteca' },
   { href: '/excellence', label: 'Excellence Wiki' },
 ];
 

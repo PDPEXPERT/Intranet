@@ -14,10 +14,10 @@ Portal interno para consultores de PDP Expert. Permite entender rápidamente qu�
 ## Contenido
 
 1. **Procedimientos** — 9 procedimientos de consultoría (PRC-CON-001 a PRC-CON-009) con sus actividades, responsabilidades, controles, riesgos e indicadores. Almacenados en Supabase, con búsqueda full-text en español.
-2. **PGF** — Privacy Governance Framework como micrositio estático navegable. No usa Supabase.
-3. **Biblioteca** — Página estática con categorías y links a recursos existentes.
-4. **Excellence Wiki** — Wiki de conocimiento para la excelencia operativa. Contenido estático en archivos TSX, sin Supabase. Temas actuales, por categoría: Calidad (¿Qué es calidad?), Desarrollo de Producto (Ciclo de desarrollo de producto) y Gestión del conocimiento (Qué es la gestión del conocimiento, basado en ISO 30401).
-5. **Organigrama** — Visor de solo lectura de la estructura de cargos y ocupantes de PDP Expert. Datos en `content/organigrama/organigrama-pdp-expert_v1.0.json`, consumidos por import estático (sin Supabase, sin carga manual de archivo). Ver `content/organigrama/README.md` para el origen del dato y el modelo (puesto vs. ocupante).
+2. **Excellence Wiki** — Wiki de conocimiento para la excelencia operativa. Contenido estático en archivos TSX, sin Supabase. Temas actuales, por categoría: Calidad (¿Qué es calidad?), Desarrollo de Producto (Ciclo de desarrollo de producto) y Gestión del conocimiento (Qué es la gestión del conocimiento, basado en ISO 30401).
+3. **Organigrama** — Visor de solo lectura de la estructura de cargos y ocupantes de PDP Expert. Datos en `content/organigrama/organigrama-pdp-expert_v1.0.json`, consumidos por import estático (sin Supabase, sin carga manual de archivo). Ver `content/organigrama/README.md` para el origen del dato y el modelo (puesto vs. ocupante).
+
+> PGF y Biblioteca fueron secciones de la intranet y se eliminaron (2026-07-22).
 
 ## Flujos de contenido
 
@@ -58,9 +58,7 @@ intranet/
 │   │       ├── procesos/     # Procedimientos (consume Supabase)
 │   │       │   ├── page.tsx  # Índice
 │   │       │   └── [code]/   # Detalle por código
-│   │       ├── pgf/          # Privacy Governance Framework (estático)
 │   │       ├── organigrama/  # Organigrama (estático, import directo del JSON)
-│   │       ├── biblioteca/   # Índice de recursos (estático)
 │   │       └── excellence/   # Excellence Wiki (estático)
 │   │           ├── page.tsx  # Índice de temas
 │   │           └── [slug]/   # Detalle por tema
@@ -175,7 +173,7 @@ Full-text search en español usando `to_tsvector('spanish', ...)` sobre:
 - `procedures.title` y `procedures.purpose`
 - `activities.title`, `activities.executor` y `activities.description`
 
-El PGF, la Biblioteca y el Excellence Wiki no participan en la búsqueda en v1.
+El Excellence Wiki no participa en la búsqueda en v1.
 
 ## Autenticación
 
@@ -186,7 +184,7 @@ Login con Supabase Auth. Un solo rol: "consultor autenticado". Todo el contenido
 `src/app/` usa dos route groups de Next.js:
 
 - `(auth)/` agrupa páginas públicas (solo `login`). Su `layout.tsx` redirige a `/` si ya hay sesión. No tiene sidebar.
-- `(app)/` agrupa páginas protegidas (home, procesos, pgf, biblioteca, excellence). Su `layout.tsx` envuelve con `AuthGuard` y monta el `AppLayout` (sidebar + topbar). Si no hay sesión, redirige a `/login`.
+- `(app)/` agrupa páginas protegidas (home, procesos, organigrama, excellence). Su `layout.tsx` envuelve con `AuthGuard` y monta el `AppLayout` (sidebar + topbar). Si no hay sesión, redirige a `/login`.
 
 Los paréntesis del nombre del grupo no aparecen en la URL: `/`, `/procesos`, `/login`, etc. siguen siendo los paths reales. La separación existe solo para que cada grupo de páginas tenga su propio layout y guard sin chequeos de pathname repartidos por el código.
 
