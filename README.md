@@ -17,6 +17,7 @@ Portal interno para consultores de PDP Expert. Permite entender rápidamente qu�
 2. **PGF** — Privacy Governance Framework como micrositio estático navegable. No usa Supabase.
 3. **Biblioteca** — Página estática con categorías y links a recursos existentes.
 4. **Excellence Wiki** — Wiki de conocimiento para la excelencia operativa. Contenido estático en archivos TSX, sin Supabase. Temas actuales, por categoría: Calidad (¿Qué es calidad?), Desarrollo de Producto (Ciclo de desarrollo de producto) y Gestión del conocimiento (Qué es la gestión del conocimiento, basado en ISO 30401).
+5. **Organigrama** — Visor de solo lectura de la estructura de cargos y ocupantes de PDP Expert. Datos en `content/organigrama/organigrama-pdp-expert_v1.0.json`, consumidos por import estático (sin Supabase, sin carga manual de archivo). Ver `content/organigrama/README.md` para el origen del dato y el modelo (puesto vs. ocupante).
 
 ## Flujos de contenido
 
@@ -33,6 +34,12 @@ Portal interno para consultores de PDP Expert. Permite entender rápidamente qu�
 2. Agregar una entrada en `src/content/excellence/registry.ts` (slug, label, category)
 3. Importar y registrar el componente en `src/app/(app)/excellence/[slug]/page.tsx`
 4. `git commit && git push origin main` — dispara el deploy
+
+### Actualizar el organigrama
+
+1. Editar `content/organigrama/organigrama-pdp-expert_v1.0.json` (validar contra `organigrama.schema.json` si el cambio es grande)
+2. `git commit && git push origin main` — dispara el deploy. La página `/organigrama` toma el JSON en build time, sin paso de sincronización adicional
+3. Detalle completo del origen del dato y del modelo (puesto vs. ocupante) en `content/organigrama/README.md`
 
 ## Estructura del repositorio
 
@@ -52,6 +59,7 @@ intranet/
 │   │       │   ├── page.tsx  # Índice
 │   │       │   └── [code]/   # Detalle por código
 │   │       ├── pgf/          # Privacy Governance Framework (estático)
+│   │       ├── organigrama/  # Organigrama (estático, import directo del JSON)
 │   │       ├── biblioteca/   # Índice de recursos (estático)
 │   │       └── excellence/   # Excellence Wiki (estático)
 │   │           ├── page.tsx  # Índice de temas
@@ -60,6 +68,7 @@ intranet/
 │   │   ├── layout/           # AppLayout, Sidebar, TopBar, Breadcrumbs
 │   │   ├── ui/               # Button, Table, Badge, SearchInput, CollapsibleSection
 │   │   ├── procedures/       # Componentes de procedimientos
+│   │   ├── organigrama/      # OrgChart (árbol + panel de detalle)
 │   │   ├── excellence/       # Primitivas del wiki (WikiSection, WikiTable, etc.)
 │   │   ├── AuthGuard.tsx
 │   │   └── AuthRedirectIfSession.tsx
@@ -70,19 +79,24 @@ intranet/
 │   └── lib/
 │       ├── supabase.ts       # Cliente Supabase
 │       ├── types.ts          # Tipos TS de procedures, activities, etc.
-│       └── procedures.ts     # Helpers de fetch + búsqueda
+│       ├── procedures.ts     # Helpers de fetch + búsqueda
+│       └── organigrama.ts    # Tipos y helpers del organigrama (raices, hijosDe)
 ├── content/
-│   └── procesos/             # Un JSON por procedimiento (respaldo portable)
-│       ├── PRC-CON-001.json
-│       ├── PRC-CON-002.json
-│       ├── PRC-CON-003.json
-│       ├── PRC-CON-004.json
-│       ├── PRC-CON-005.json
-│       ├── PRC-CON-006.json
-│       ├── PRC-CON-007.json
-│       ├── PRC-CON-008.json
-│       ├── PRC-CON-009.json
-│       └── _invocations.json # Relaciones de invocación entre procedimientos
+│   ├── procesos/             # Un JSON por procedimiento (respaldo portable)
+│   │   ├── PRC-CON-001.json
+│   │   ├── PRC-CON-002.json
+│   │   ├── PRC-CON-003.json
+│   │   ├── PRC-CON-004.json
+│   │   ├── PRC-CON-005.json
+│   │   ├── PRC-CON-006.json
+│   │   ├── PRC-CON-007.json
+│   │   ├── PRC-CON-008.json
+│   │   ├── PRC-CON-009.json
+│   │   └── _invocations.json # Relaciones de invocación entre procedimientos
+│   └── organigrama/          # JSON del organigrama (fuente única, consumida por import estático)
+│       ├── organigrama-pdp-expert_v1.0.json
+│       ├── organigrama.schema.json
+│       └── README.md         # Origen del dato, modelo y flujo de actualización
 ├── scripts/
 │   └── sync-procesos.js      # Lee content/procesos/*.json → upsert en Supabase
 ├── supabase/

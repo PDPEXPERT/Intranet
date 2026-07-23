@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pdpexpert.local/schemas/organigrama.schema.json",
+  "title": "Organigrama",
+  "description": "Modelo para un organigrama completo de la organización: un solo JSON con todos los cargos (puestos/asientos), independiente de quién los ocupa. Extiende cargo.schema.json (plantilla de descriptivo de cargo) agregando el arreglo 'cargos' y, por cargo, el campo 'ocupante' (separado deliberadamente de cualquier dato de evaluación de personas). Inspirado en W3C Organization Ontology (org:Post, org:Membership, org:reportsTo) — ver 'Criterio - Migración organigrama a modelo de datos.md' en Gestión Organizacional.",
+  "type": "object",
+  "required": ["organizacion", "version", "fecha_actualizacion", "fuente", "cargos"],
+  "properties": {
+    "organizacion": { "type": "string" },
+    "version": { "type": "string" },
+    "fecha_actualizacion": { "type": "string", "format": "date" },
+    "fuente": { "type": "string", "description": "De dónde se extrajo/migró la información." },
+    "nota_metodologica": { "type": "string" },
+    "hallazgos_detectados": {
+      "type": "array",
+      "description": "Inconsistencias, ambigüedades o hallazgos detectados al construir el modelo, para revisión humana. No se resuelven aquí, se señalan.",
+      "items": { "type": "string" }
+    },
+    "cargos": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "description": "Un cargo/puesto. Mismos campos que cargo.schema.json (../plantillas/cargo.schema.json), más 'ocupante' y 'confianza_reporta_a'.",
+        "required": ["codigo_cargo", "titulo_cargo", "nivel_jerarquico", "mision_cargo", "estado", "version", "fecha_actualizacion", "ocupante"],
+        "properties": {
+          "codigo_cargo": { "type": "string", "pattern": "^CRG-[0-9]{4,}$" },
+          "titulo_cargo": { "type": "string" },
+          "area_departamento": { "type": "string" },
+          "nivel_jerarquico": {
+            "type": "string",
+            "enum": ["operativo", "coordinacion", "jefatura", "gerencia", "direccion"]
+          },
+          "reporta_a": {
+            "type": ["string", "null"],
+            "description": "codigo_cargo del cargo superior. Null si es el de mayor jerarquía."
+          },
+          "confianza_reporta_a": {
+            "type": ["string", "null"],
+            "enum": ["alta", "inferida", null],
+            "description": "Si la línea de reporte es explícita en la fuente ('alta') o inferida por posición/contenido ('inferida'). No forzar certeza donde la fuente es ambigua."
+          },
+          "cargos_que_supervisa": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": []
+          },
+          "mision_cargo": { "type": "string" },
+          "contexto_area": { "type": "string" },
+          "funciones_esenciales": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["descripcion", "critica"],
+              "properties": {
+                "descripcion": { "type": "string" },
+                "critica": { "type": "boolean" }
+              }
+            }
+          },
+          "entregables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["nombre"],
+              "properties": {
+                "nombre": { "type": "string" },
+                "frecuencia": { "type": "string" },
+                "descripcion": { "type": "string" }
+              }
+            }
+          },
+          "indicadores_desempeno": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nombre": { "type": "string" },
+                "descripcion": { "type": "string" }
+              }
+            }
+          },
+          "requisitos": {
+            "type": "object",
+            "properties": {
+              "formacion_requerida": { "type": "string" },
+              "experiencia_requerida": { "type": "string" },
+              "competencias_conocimientos": { "type": "array", "items": { "type": "string" } },
+              "herramientas_sistemas": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "interacciones_internas": { "type": "array", "items": { "type": "string" } },
+          "interacciones_externas": { "type": "array", "items": { "type": "string" } },
+          "version": { "type": "string" },
+          "estado": { "type": "string", "enum": ["vigente", "en_revision", "obsoleto"] },
+          "fecha_creacion": { "type": "string", "format": "date" },
+          "fecha_actualizacion": { "type": "string", "format": "date" },
+          "ocupante": {
+            "type": "object",
+            "description": "Modelo A (estructura) enlaza aquí solo la identidad del ocupante — nunca datos de evaluación (Modelo B: Analizador de Personas, CDC/GWC), que permanecen fuera de este archivo.",
+            "required": ["tipo"],
+            "properties": {
+              "tipo": { "type": "string", "enum": ["interno", "externalizado", "vacante"] },
+              "nombre_o_iniciales": { "type": ["string", "null"] },
+              "headcount": { "type": "integer", "minimum": 0 },
+              "proveedor": { "type": "string" },
+              "ubicacion": { "type": "string" }
+            }
+          },
+          "notas": { "type": "string" }
+        }
+      }
+    }
+  }
+}

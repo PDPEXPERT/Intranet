@@ -1,0 +1,1055 @@
+{
+  "organizacion": "PDP Expert",
+  "version": "1.0",
+  "fecha_actualizacion": "2026-07-22",
+  "fuente": "Organigrama de rendición de cuentas PDP EXPERT 2026 3t.xlsx (hoja 'Organigrama 26-1'), cruzado con Tomás_POC-agente-integrador_v0.1.md y descriptivo-cargo-integrador_v1.0.json",
+  "nota_metodologica": "Se separa el puesto/asiento (estructura EOS, independiente de quien lo ocupe) del ocupante (persona o proveedor externo), siguiendo el criterio ya documentado en 'Criterio - Migración organigrama a modelo de datos.md' (inspirado en W3C Organization Ontology: Post/Membership/reportsTo). No incluye datos del Analizador de Personas ni evaluaciones CDC/GWC (Modelo B): esos permanecen en el archivo fuente con acceso restringido, por separación de gobernanza de datos de personas.",
+  "hallazgos_detectados": [
+    "FB figura como ocupante de al menos tres asientos simultáneos: Gerente de Tecnología y Seguridad de la Información, Jefe de Growth y Ventas Ecuador. Es una concentración mayor a la duda ya registrada en el POC de Tomás ('FB en dos asientos') — a verificar con PA. (Marketing, que antes también figuraba con FB, se corrigió: reporta al Integrador y está externalizado a Pellegrinello.)",
+    "Ventas Chile y Gerente de Proyecto figuran con headcount 0 (vacantes) en el Excel fuente.",
+    "Las líneas de reporte de Consultor Legal, Consultor Técnico y Analista siguen inferidas por posición en el Excel, no explícitas — coherente con el diagnóstico ya hecho en 'Criterio - Migración organigrama a modelo de datos.md': el problema de fondo es falta de claridad de roles, no solo de formato. Coordinador PDP Academy y Asesor Legal Interno ya fueron confirmados por PA (reportan a Integrador y a Jefa Administrativa Contable, respectivamente).",
+    "'Back Office Externalizado (BMV)' no es un cargo: es el proveedor al que se externaliza parte de la función de Jefa Administrativa Contable y de Analista Administrativo Contable (corregido por PA; ya no aparece como nodo propio).",
+    "El diagnóstico completo del Integrador (rocas, involucramiento por subdominio, hallazgo CDC) vive en Tomás_POC-agente-integrador_v0.1.md; este JSON no lo duplica."
+  ],
+  "cargos": [
+    {
+      "codigo_cargo": "CRG-0002",
+      "titulo_cargo": "Visionario",
+      "area_departamento": "Alta Dirección",
+      "nivel_jerarquico": "direccion",
+      "reporta_a": null,
+      "confianza_reporta_a": null,
+      "cargos_que_supervisa": [
+        "CRG-0001"
+      ],
+      "mision_cargo": "Definir y custodiar la visión de largo plazo de PDP Expert, e impulsar la innovación y las relaciones estratégicas que la hacen posible.",
+      "contexto_area": "Rol de liderazgo superior EOS, interdependiente del Integrador (relación Yin/Yang: confianza y autonomía mutua, sin microgestión).",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Definir y custodiar la visión a largo plazo de la organización.",
+          "critica": true
+        },
+        {
+          "descripcion": "Resolver problemas complejos y tomar decisiones disruptivas.",
+          "critica": true
+        },
+        {
+          "descripcion": "Desarrollar relaciones estratégicas (clientes, socios, reguladores).",
+          "critica": true
+        },
+        {
+          "descripcion": "Definir e impulsar la cultura organizacional y los valores.",
+          "critica": true
+        },
+        {
+          "descripcion": "Impulsar la innovación y la alineación con la visión de largo plazo.",
+          "critica": true
+        },
+        {
+          "descripcion": "Detectar y crear nuevas oportunidades de negocio, incluida la determinación de requisitos de productos y servicios.",
+          "critica": true
+        },
+        {
+          "descripcion": "Liderar el desarrollo conceptual y funcional de soluciones tecnológicas.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [
+        "Integrador"
+      ],
+      "interacciones_externas": [
+        "Clientes estratégicos",
+        "Socios",
+        "Reguladores"
+      ],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": "PA",
+        "headcount": 1
+      }
+    },
+    {
+      "codigo_cargo": "CRG-0001",
+      "titulo_cargo": "Integrador (EOS)",
+      "area_departamento": "Alta Dirección",
+      "nivel_jerarquico": "direccion",
+      "reporta_a": "CRG-0002",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [
+        "CRG-0003",
+        "CRG-0004",
+        "CRG-0005",
+        "CRG-0006",
+        "CRG-0011",
+        "CRG-0017"
+      ],
+      "mision_cargo": "Integrar las funciones principales del negocio (comercial, operaciones y finanzas/administración) mediante liderazgo, gestión y exigencia de rendición de cuentas al equipo de liderazgo, para traducir la visión estratégica en ejecución medible y sostenible.",
+      "contexto_area": "Ocupado hoy por la misma persona que ejerce el rol de Visionario, además de funciones de consultoría y producto — riesgo organizacional en revisión (ver riesgo-concentracion-roles-PA_v0.1.md). Descriptivo de cargo completo y validado en descriptivo-cargo-integrador_v1.0.json.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Alineación transversal de áreas con la visión de la empresa.",
+          "critica": true
+        },
+        {
+          "descripcion": "Priorización de iniciativas clave del negocio.",
+          "critica": true
+        },
+        {
+          "descripcion": "Resolver conflictos interdepartamentales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisión y aseguramiento del cumplimiento de rocas, indicadores y procesos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Vigilancia de cumplimiento normativo y estándares operativos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Diseño de productos y servicios.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [
+        "Visionario",
+        "Equipo de liderazgo"
+      ],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": "PA",
+        "headcount": 1
+      },
+      "notas": "Ver descriptivo-cargo-integrador_v1.0.json (../descriptivo-cargo-integrador_v1.0.json) para el descriptivo completo y validado de este cargo."
+    },
+    {
+      "codigo_cargo": "CRG-0003",
+      "titulo_cargo": "Gerente de Tecnología y Seguridad de la Información",
+      "area_departamento": "Tecnología",
+      "nivel_jerarquico": "gerencia",
+      "reporta_a": "CRG-0001",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [
+        "CRG-0012"
+      ],
+      "mision_cargo": "Liderar la visión técnica y la arquitectura de la plataforma Datum (CTO), y sostener la seguridad de la información y el soporte de TI de la organización (CISO/TI).",
+      "contexto_area": "Cargo doble: CTO de Datum y CISO/TI de PDP Expert.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Definir y mantener la visión técnica y la arquitectura de la plataforma.",
+          "critica": true
+        },
+        {
+          "descripcion": "Liderar al equipo de desarrollo: contratación, desempeño, mentoría.",
+          "critica": true
+        },
+        {
+          "descripcion": "Priorizar el roadmap técnico y gestionar la deuda técnica.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisar calidad, seguridad de la información y cumplimiento técnico.",
+          "critica": true
+        },
+        {
+          "descripcion": "Garantizar escalabilidad, disponibilidad y desempeño del producto.",
+          "critica": true
+        },
+        {
+          "descripcion": "Evaluar decisiones de construir vs. comprar y selección de stack, proveedores e infraestructura.",
+          "critica": true
+        },
+        {
+          "descripcion": "Traducir objetivos de negocio en entregables técnicos y viceversa ante el CEO y stakeholders.",
+          "critica": true
+        },
+        {
+          "descripcion": "Dar soporte de TI y gestionar el mantenimiento de activos (hardware).",
+          "critica": true
+        },
+        {
+          "descripcion": "Sostener la seguridad de la información de la organización.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [
+        "Integrador",
+        "Desarrollador de Software"
+      ],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": "FB",
+        "headcount": 1
+      },
+      "notas": "FB también figura como ocupante de Jefe de Growth y, según el Excel fuente, de Ventas EC y Marketing. Concentración de roles no resuelta — ver hallazgos del archivo."
+    },
+    {
+      "codigo_cargo": "CRG-0004",
+      "titulo_cargo": "Jefe de Growth",
+      "area_departamento": "Comercial y Marketing",
+      "nivel_jerarquico": "jefatura",
+      "reporta_a": "CRG-0001",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [
+        "CRG-0009",
+        "CRG-0010",
+        "CRG-0011"
+      ],
+      "mision_cargo": "Diseñar y liderar la estrategia comercial y de marketing, y sostener la relación con clientes y el análisis de mercado.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Diseñar y alinear la estrategia comercial.",
+          "critica": true
+        },
+        {
+          "descripcion": "Branding, diseño y ejecución de campañas de marketing digital.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión de relaciones con clientes y postventa.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisión del área Comercial y Marketing.",
+          "critica": true
+        },
+        {
+          "descripcion": "Análisis de mercado y competencia.",
+          "critica": true
+        },
+        {
+          "descripcion": "Preparación y regularización de contratos.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [
+        "Integrador",
+        "Ventas CL",
+        "Ventas EC",
+        "Marketing"
+      ],
+      "interacciones_externas": [
+        "Clientes"
+      ],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": "FB",
+        "headcount": 1
+      },
+      "notas": "Mismas iniciales (FB) que Gerente de Tecnología y Seguridad de la Información — dato a verificar con PA, ya señalado como duda abierta en el POC de Tomás."
+    },
+    {
+      "codigo_cargo": "CRG-0005",
+      "titulo_cargo": "Jefa de Operaciones Consultoría",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "jefatura",
+      "reporta_a": "CRG-0001",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [
+        "CRG-0007",
+        "CRG-0008",
+        "CRG-0013",
+        "CRG-0014",
+        "CRG-0015",
+        "CRG-0016",
+        "CRG-0017"
+      ],
+      "mision_cargo": "Supervisar la ejecución de proyectos de consultoría y el cumplimiento de procesos, estándares de calidad, presupuesto y objetivos financieros.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Supervisión de la ejecución de proyectos de consultoría y conformidad con procesos y estándares de calidad.",
+          "critica": true
+        },
+        {
+          "descripcion": "Formación y desarrollo de competencias de consultores.",
+          "critica": true
+        },
+        {
+          "descripcion": "Evaluación de calidad de servicios y análisis de satisfacción del cliente.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisión de resultados operativos y de cumplimiento de presupuesto y objetivos financieros de los proyectos.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [
+        "Integrador",
+        "Consultor DPO",
+        "Consultor GRC Senior",
+        "Gerente de Proyecto"
+      ],
+      "interacciones_externas": [
+        "Clientes"
+      ],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": "MG",
+        "headcount": 1
+      }
+    },
+    {
+      "codigo_cargo": "CRG-0006",
+      "titulo_cargo": "Jefa Administrativa Contable",
+      "area_departamento": "Administración y Finanzas",
+      "nivel_jerarquico": "jefatura",
+      "reporta_a": "CRG-0001",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [
+        "CRG-0019",
+        "CRG-0020",
+        "CRG-0021",
+        "CRG-0018"
+      ],
+      "mision_cargo": "Sostener el cumplimiento fiscal, el flujo de caja, el control interno y la coordinación de Recursos Humanos de la organización.",
+      "contexto_area": "Supervisa también unidades externalizadas: Back Office (BMV) y Contabilidad Chile.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Cumplimiento y planificación fiscal.",
+          "critica": true
+        },
+        {
+          "descripcion": "Monitoreo del flujo de caja y optimización de recursos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisión de cuentas por pagar y por cobrar.",
+          "critica": true
+        },
+        {
+          "descripcion": "Coordinación de Recursos Humanos (contrataciones, nómina, bienestar) y proveedores.",
+          "critica": true
+        },
+        {
+          "descripcion": "Control interno, auditorías y cumplimiento normativo.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [
+        "Integrador",
+        "Analista Administrativo Contable",
+        "Asesor Legal Interno"
+      ],
+      "interacciones_externas": [
+        "BMV (proveedor de back office)",
+        "Contabilidad Chile (externalizada)"
+      ],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": "DP",
+        "headcount": 1
+      },
+      "notas": "Confirmado por PA: 'Back Office Externalizado (BMV)' no es un cargo aparte — es el proveedor (BMV) al que se externaliza parte de la función de este cargo y de Analista Administrativo Contable."
+    },
+    {
+      "codigo_cargo": "CRG-0007",
+      "titulo_cargo": "Consultor DPO",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "coordinacion",
+      "reporta_a": "CRG-0005",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Actuar como DPO externo de clientes y punto técnico-jurídico de referencia en protección de datos personales.",
+      "contexto_area": "Ubicación: Ecuador. Headcount actual: 2.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Asesoría técnica especializada — emitir pareceres jurídico-técnicos ante consultas de clientes sobre obligaciones de protección de datos personales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisión del cumplimiento — ejecutar actividades recurrentes de supervisión normativa y alertar sobre riesgos identificados.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión del riesgo en tratamiento de datos — supervisar y validar metodologías de gestión de riesgos en tratamientos de datos de clientes.",
+          "critica": true
+        },
+        {
+          "descripcion": "Interlocución con autoridades — actuar como punto de contacto con autoridades de protección de datos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Capacitación y cultura de privacidad — diseñar y ejecutar capacitaciones para clientes.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [
+        "Jefa de Operaciones Consultoría"
+      ],
+      "interacciones_externas": [
+        "Clientes",
+        "Autoridades de protección de datos"
+      ],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": null,
+        "headcount": 2,
+        "ubicacion": "EC"
+      }
+    },
+    {
+      "codigo_cargo": "CRG-0008",
+      "titulo_cargo": "Consultor GRC Senior",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "coordinacion",
+      "reporta_a": "CRG-0005",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Liderar el sistema de gestión integrado interno de PDP Expert (SGPDP, seguridad de la información y gobernanza de IA) y su equivalente para clientes.",
+      "contexto_area": "Headcount actual: 1.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Liderazgo del sistema de gestión integrado interno: implementar, mantener y mejorar continuamente el SGPDP, seguridad de la información y gobernanza de IA de PDP Expert.",
+          "critica": true
+        },
+        {
+          "descripcion": "Diseño y acompañamiento de implementación de SGPDP para clientes.",
+          "critica": true
+        },
+        {
+          "descripcion": "Soporte y mejora continua post-implementación del SGPDP de clientes.",
+          "critica": true
+        },
+        {
+          "descripcion": "Documentación y ejecución de metodologías de gestión del riesgo en tratamiento de datos personales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Evaluación de requisitos de protección de datos personales de sistemas de hardware y software.",
+          "critica": true
+        },
+        {
+          "descripcion": "Mejora continua del framework propietario de protección de datos de la firma.",
+          "critica": true
+        },
+        {
+          "descripcion": "Soporte para el desarrollo de productos de tecnología (requisitos, prueba y retroalimentación de soluciones).",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [
+        "Jefa de Operaciones Consultoría"
+      ],
+      "interacciones_externas": [
+        "Clientes"
+      ],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": null,
+        "headcount": 1
+      }
+    },
+    {
+      "codigo_cargo": "CRG-0009",
+      "titulo_cargo": "Ventas Chile",
+      "area_departamento": "Comercial y Marketing",
+      "nivel_jerarquico": "operativo",
+      "reporta_a": "CRG-0004",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Ejecutar el pipeline comercial y la generación de leads en Chile.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Ejecutar el pipeline comercial.",
+          "critica": true
+        },
+        {
+          "descripcion": "Generación de leads y desarrollo de estrategias de captación.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión de relaciones con clientes y postventa.",
+          "critica": true
+        },
+        {
+          "descripcion": "Creación de propuestas comerciales y cierre de ventas.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "vacante",
+        "nombre_o_iniciales": null,
+        "headcount": 0
+      }
+    },
+    {
+      "codigo_cargo": "CRG-0010",
+      "titulo_cargo": "Ventas Ecuador",
+      "area_departamento": "Comercial y Marketing",
+      "nivel_jerarquico": "operativo",
+      "reporta_a": "CRG-0004",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Gestionar la relación comercial con clientes y prospectos en Ecuador.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Gestión de relaciones con clientes y postventa.",
+          "critica": true
+        },
+        {
+          "descripcion": "Creación de propuestas comerciales y cierre de ventas.",
+          "critica": true
+        },
+        {
+          "descripcion": "Análisis de mercado y competencia.",
+          "critica": true
+        },
+        {
+          "descripcion": "Prospección y contacto inicial con clientes.",
+          "critica": true
+        },
+        {
+          "descripcion": "Agendamiento de reuniones.",
+          "critica": true
+        },
+        {
+          "descripcion": "Seguimiento comercial.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión y actualización del CRM.",
+          "critica": true
+        },
+        {
+          "descripcion": "Soporte administrativo comercial.",
+          "critica": true
+        },
+        {
+          "descripcion": "Precalificación de prospectos.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": "FB",
+        "headcount": 1
+      },
+      "notas": "Mismo ocupante (FB) que Jefe de Growth y Marketing, según el Excel fuente — concentración de roles a verificar con PA."
+    },
+    {
+      "codigo_cargo": "CRG-0011",
+      "titulo_cargo": "Marketing",
+      "area_departamento": "Comercial y Marketing",
+      "nivel_jerarquico": "operativo",
+      "reporta_a": "CRG-0001",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Ejecutar la generación de demanda y el branding de la organización.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Gestión integral de eventos presenciales y virtuales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Branding, y diseño y ejecución de campañas de marketing digital.",
+          "critica": true
+        },
+        {
+          "descripcion": "Generación de leads y desarrollo de estrategias de captación (campañas).",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "externalizado",
+        "nombre_o_iniciales": null,
+        "proveedor": "Pellegrinello"
+      },
+      "notas": "Confirmado por PA: reporta directamente al Integrador (no al Jefe de Growth) y la función está externalizada al proveedor Pellegrinello."
+    },
+    {
+      "codigo_cargo": "CRG-0012",
+      "titulo_cargo": "Desarrollador de Software",
+      "area_departamento": "Tecnología",
+      "nivel_jerarquico": "operativo",
+      "reporta_a": "CRG-0003",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Desarrollar y mantener los productos tecnológicos de la organización.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Desarrollo y mejora continua de productos tecnológicos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Investigación relacionada a producto.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión de proyectos tecnológicos, incluyendo pruebas piloto y lanzamientos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Documentar las hojas de ruta de desarrollo de soluciones.",
+          "critica": true
+        },
+        {
+          "descripcion": "Implementación de soluciones tecnológicas.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "externalizado",
+        "nombre_o_iniciales": "HM",
+        "headcount": 1,
+        "proveedor": "Externo"
+      }
+    },
+    {
+      "codigo_cargo": "CRG-0013",
+      "titulo_cargo": "Gerente de Proyecto",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "coordinacion",
+      "reporta_a": "CRG-0005",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Planificar y coordinar la ejecución de proyectos de consultoría de principio a fin.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Planificar y coordinar la ejecución de proyectos de principio a fin.",
+          "critica": true
+        },
+        {
+          "descripcion": "Monitorear el cumplimiento de cronogramas, entregables y presupuestos en los proyectos asignados.",
+          "critica": true
+        },
+        {
+          "descripcion": "Liderar la comunicación con clientes y equipos internos en los proyectos asignados.",
+          "critica": true
+        },
+        {
+          "descripcion": "Informar a la Jefa de Operaciones de Consultoría sobre los resultados operativos y financieros de los proyectos asignados.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "vacante",
+        "nombre_o_iniciales": null,
+        "headcount": 0
+      }
+    },
+    {
+      "codigo_cargo": "CRG-0014",
+      "titulo_cargo": "Consultor Legal",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "operativo",
+      "reporta_a": "CRG-0005",
+      "confianza_reporta_a": "inferida",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Emitir análisis y opiniones jurídicas sobre protección de datos personales para clientes.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Análisis jurídico — realizar análisis jurídicos profundos y emitir opiniones legales fundamentadas sobre protección de datos personales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Elaboración de instrumentos legales — redactar políticas de privacidad, contratos de tratamiento de datos, avisos y procedimientos legales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión de controversias regulatorias — atender requerimientos de autoridades, preparar descargos y gestionar procedimientos administrativos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Due diligence legal — evaluar legalidad de nuevos tratamientos, proyectos tecnológicos y validar bases de legitimación.",
+          "critica": true
+        },
+        {
+          "descripcion": "Identificación de tratamientos de datos personales y verificación de cumplimiento de requisitos legales.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": null,
+        "headcount": 2,
+        "ubicacion": "EC"
+      },
+      "notas": "Línea de reporte inferida por posición en el Excel, no explícita en la fuente."
+    },
+    {
+      "codigo_cargo": "CRG-0015",
+      "titulo_cargo": "Consultor Técnico",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "operativo",
+      "reporta_a": "CRG-0005",
+      "confianza_reporta_a": "inferida",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Evaluar el nivel de madurez en seguridad y riesgo de los proyectos de implementación de programas de protección de datos.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Evaluar nivel de madurez en seguridad y matriz de riesgos con su plan de tratamiento en los proyectos de implementación de PPDP, incluida la elaboración de informes.",
+          "critica": true
+        },
+        {
+          "descripcion": "Brindar soporte técnico de seguridad de datos personales y gestión del riesgo en proyectos.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": null,
+        "headcount": 1,
+        "ubicacion": "CL"
+      },
+      "notas": "Línea de reporte inferida por posición en el Excel, no explícita en la fuente."
+    },
+    {
+      "codigo_cargo": "CRG-0016",
+      "titulo_cargo": "Analista",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "operativo",
+      "reporta_a": "CRG-0005",
+      "confianza_reporta_a": "inferida",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Dar soporte operativo a los proyectos de consultoría y a la elaboración de entregables.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Preparar borradores de entregables (incluye la asistencia a reuniones asignadas en el proyecto).",
+          "critica": true
+        },
+        {
+          "descripcion": "Elaborar los boletines de novedades regulatorias.",
+          "critica": true
+        },
+        {
+          "descripcion": "Soporte en tareas del programa de protección de datos personales de clientes.",
+          "critica": true
+        },
+        {
+          "descripcion": "Ejecutar las tareas que se le asignen desde el área de consultoría.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": null,
+        "headcount": 3,
+        "ubicacion": "1 EC + 2 CL"
+      },
+      "notas": "Línea de reporte inferida por posición en el Excel, no explícita en la fuente."
+    },
+    {
+      "codigo_cargo": "CRG-0017",
+      "titulo_cargo": "Coordinador PDP Academy",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "coordinacion",
+      "reporta_a": "CRG-0001",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Coordinar la planificación y ejecución operativa de los cursos de PDP Academy.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Planificación de cursos de PDP Academy.",
+          "critica": true
+        },
+        {
+          "descripcion": "Ejecución de tareas administrativas con profesores, entidades de educación superior y otras partes interesadas (puede delegar tareas al Analista Administrativo Contable).",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": null,
+        "headcount": 1
+      },
+      "notas": "Confirmado por PA: reporta directamente al Integrador, no a la Jefa de Operaciones Consultoría."
+    },
+    {
+      "codigo_cargo": "CRG-0018",
+      "titulo_cargo": "Asesor Legal Interno",
+      "area_departamento": "Administración y Finanzas",
+      "nivel_jerarquico": "operativo",
+      "reporta_a": "CRG-0006",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Dar soporte legal interno a la organización, incluyendo asesoría al Integrador en decisiones con implicancias legales.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Revisión y validación jurídica de contratos con clientes, proveedores y aliados (servicios, encargo de tratamiento, NDA, SLA).",
+          "critica": true
+        },
+        {
+          "descripcion": "Soporte legal a operaciones multijurisdiccionales (Ecuador, Chile y expansión regional): constitución de entidades, habilitaciones, cumplimiento societario.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión de asuntos laborales y regulatorios internos: relaciones laborales, cumplimiento normativo, requerimientos de autoridades.",
+          "critica": true
+        },
+        {
+          "descripcion": "Asesoría en riesgos legales vinculados al negocio: propiedad intelectual de Datum y metodología PDP Expert, modelos de negocio nuevos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Soporte al Integrador en decisiones con implicancias legales: estructuras de alianza, acuerdos comerciales, escalamiento de conflictos.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": null,
+        "headcount": 1
+      },
+      "notas": "Confirmado por PA: reporta a la Jefa Administrativa Contable."
+    },
+    {
+      "codigo_cargo": "CRG-0019",
+      "titulo_cargo": "Analista Administrativo Contable",
+      "area_departamento": "Administración y Finanzas",
+      "nivel_jerarquico": "operativo",
+      "reporta_a": "CRG-0006",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Ejecutar tareas administrativo-contables de apoyo a la Jefatura Administrativa Contable.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Cumplimiento y planificación fiscal.",
+          "critica": true
+        },
+        {
+          "descripcion": "Monitoreo del flujo de caja y optimización de recursos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisión de cuentas por pagar y por cobrar.",
+          "critica": true
+        },
+        {
+          "descripcion": "Coordinación de Recursos Humanos (contrataciones, nómina, bienestar) y proveedores.",
+          "critica": true
+        },
+        {
+          "descripcion": "Control interno, auditorías y cumplimiento normativo.",
+          "critica": true
+        },
+        {
+          "descripcion": "Tareas administrativas que se le deleguen.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "interno",
+        "nombre_o_iniciales": "PM",
+        "headcount": 1
+      },
+      "notas": "Parte de esta función se externaliza al proveedor BMV, según confirmación de PA."
+    },
+    {
+      "codigo_cargo": "CRG-0021",
+      "titulo_cargo": "Contabilidad Chile (Externalizado)",
+      "area_departamento": "Administración y Finanzas",
+      "nivel_jerarquico": "operativo",
+      "reporta_a": "CRG-0006",
+      "confianza_reporta_a": "alta",
+      "cargos_que_supervisa": [],
+      "mision_cargo": "Proveer servicios contables externalizados para la operación en Chile.",
+      "contexto_area": "",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Registrar operaciones contables conforme a normativa local.",
+          "critica": true
+        },
+        {
+          "descripcion": "Coordinar declaraciones tributarias y reportes mensuales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Brindar soporte a auditorías externas.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestionar conciliaciones bancarias y balances.",
+          "critica": true
+        },
+        {
+          "descripcion": "Proveer información financiera precisa y oportuna a la dirección.",
+          "critica": true
+        }
+      ],
+      "entregables": [],
+      "indicadores_desempeno": [],
+      "requisitos": {},
+      "interacciones_internas": [],
+      "interacciones_externas": [],
+      "version": "1.0",
+      "estado": "vigente",
+      "fecha_creacion": "2026-07-22",
+      "fecha_actualizacion": "2026-07-22",
+      "ocupante": {
+        "tipo": "externalizado",
+        "nombre_o_iniciales": null,
+        "proveedor": "Externalizado (Chile)"
+      }
+    }
+  ]
+}
