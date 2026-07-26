@@ -10,10 +10,13 @@ import { TOPICS } from '@/content/excellence/registry';
 import { ABOUT_SECTIONS } from '@/content/sobre-nosotros/sections';
 import { useSidebar } from './SidebarContext';
 
+type SectionKey = 'sobre' | 'procesos' | 'excellence';
+
 interface NavItem {
   href: string;
   label: string;
   icon: (props: { className?: string }) => JSX.Element;
+  section?: SectionKey;
 }
 
 function IconHome({ className }: { className?: string }) {
@@ -72,9 +75,9 @@ function IconLogout({ className }: { className?: string }) {
 
 const TOP_NAV: NavItem[] = [
   { href: '/', label: 'Inicio', icon: IconHome },
-  { href: '/procesos', label: 'Procedimientos', icon: IconProcedures },
-  { href: '/sobre-nosotros', label: 'Sobre nosotros', icon: IconAbout },
-  { href: '/excellence', label: 'Excellence Wiki', icon: IconWiki },
+  { href: '/sobre-nosotros', label: 'Sobre nosotros', icon: IconAbout, section: 'sobre' },
+  { href: '/procesos', label: 'Procedimientos', icon: IconProcedures, section: 'procesos' },
+  { href: '/excellence', label: 'Excellence Wiki', icon: IconWiki, section: 'excellence' },
 ];
 
 function isActive(pathname: string, href: string): boolean {
@@ -82,11 +85,19 @@ function isActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+function sectionOf(pathname: string): SectionKey | null {
+  if (pathname.startsWith('/sobre-nosotros')) return 'sobre';
+  if (pathname.startsWith('/procesos')) return 'procesos';
+  if (pathname.startsWith('/excellence')) return 'excellence';
+  return null;
+}
+
 export function Sidebar() {
   const pathname = usePathname() ?? '/';
   const { collapsed, toggle } = useSidebar();
   const [email, setEmail] = useState<string>('');
   const [procedures, setProcedures] = useState<ProcedureSummary[]>([]);
+  const [openSections, setOpenSections] = useState<Set<SectionKey>>(new Set());
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -98,9 +109,14 @@ export function Sidebar() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  // Al entrar a una seccion, se abre su subnav; el usuario puede colapsarla.
+  useEffect(() => {
+    const sec = sectionOf(pathname);
+    if (!sec) return;
+    setOpenSections((prev) => (prev.has(sec) ? prev : new Set(prev).add(sec)));
+  }, [pathname]);
+
   const inProcesos = pathname.startsWith('/procesos');
-  const inExcellence = pathname.startsWith('/excellence');
-  const inSobre = pathname.startsWith('/sobre-nosotros');
 
   useEffect(() => {
     if (!inProcesos) return;
@@ -109,6 +125,15 @@ export function Sidebar() {
       .then(setProcedures)
       .catch(() => setProcedures([]));
   }, [inProcesos, procedures.length]);
+
+  function toggleSection(key: SectionKey) {
+    setOpenSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  }
 
   async function handleLogout() {
     await supabase.auth.signOut();
@@ -122,10 +147,10 @@ export function Sidebar() {
     >
       <div className="flex items-center justify-between p-4 border-b border-on-primary/10">
         {!collapsed && (
-          <div>
+          <Link href="/" className="min-w-0 hover:opacity-90">
             <div className="font-heading font-bold text-lg leading-tight">PDP Expert</div>
             <div className="font-body text-xs text-on-primary/70">Intranet</div>
-          </div>
+          </Link>
         )}
         <button
           type="button"
@@ -141,27 +166,67 @@ export function Sidebar() {
       <nav className="flex-1 overflow-y-auto p-3 space-y-1">
         {TOP_NAV.map((item) => {
           const active = isActive(pathname, item.href);
-          const showSub =
-            !collapsed &&
-            ((item.href === '/procesos' && inProcesos) ||
-              (item.href === '/excellence' && inExcellence) ||
-              (item.href === '/sobre-nosotros' && inSobre));
+          const linkHref = item.href === '/' ? '/' : `${item.href}/`;
+          const hasChildren = !!item.section;
+          const isOpen = hasChildren && item.section ? openSections.has(item.section) : false;
+          const showSub = !collapsed && hasChildren && isOpen;
           const Icon = item.icon;
           return (
             <div key={item.href}>
-              <Link
-                href={`${item.href}/`}
-                title={collapsed ? item.label : undefined}
-                className={
+              <div
+                className={`flex items-center rounded-md ${
                   active
-                    ? `flex items-center gap-3 rounded-md font-body text-sm font-medium bg-accent text-on-primary ${collapsed ? 'justify-center px-0 py-2' : 'px-3 py-2'}`
-                    : `flex items-center gap-3 rounded-md font-body text-sm font-medium text-on-primary/70 hover:bg-accent hover:text-on-primary ${collapsed ? 'justify-center px-0 py-2' : 'px-3 py-2'}`
-                }
+                    ? 'bg-accent text-on-primary'
+                    : 'text-on-primary/70 hover:bg-accent hover:text-on-primary'
+                }`}
               >
-                <Icon className="w-4 h-4 shrink-0" />
-                {!collapsed && <span>{item.label}</span>}
-              </Link>
-              {showSub && item.href === '/procesos' && procedures.length > 0 && (
+                <Link
+                  href={linkHref}
+                  title={collapsed ? item.label : undefined}
+                  className={`flex items-center gap-3 font-body text-sm font-medium flex-1 min-w-0 ${
+                    collapsed ? 'justify-center px-0 py-2' : 'px-3 py-2'
+                  }`}
+                >
+                  <Icon className="w-4 h-4 shrink-0" />
+                  {!collapsed && <span className="truncate">{item.label}</span>}
+                </Link>
+                {hasChildren && !collapsed && item.section && (
+                  <button
+                    type="button"
+                    onClick={() => toggleSection(item.section as SectionKey)}
+                    aria-label={isOpen ? `Colapsar ${item.label}` : `Expandir ${item.label}`}
+                    aria-expanded={isOpen}
+                    className="px-2 py-2 shrink-0 opacity-70 hover:opacity-100"
+                  >
+                    <IconChevron
+                      className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+                    />
+                  </button>
+                )}
+              </div>
+
+              {showSub && item.section === 'sobre' && (
+                <div className="mt-1 mb-2 space-y-0.5">
+                  {ABOUT_SECTIONS.map((s) => {
+                    const subActive = pathname.includes(`/sobre-nosotros/${s.slug}`);
+                    return (
+                      <Link
+                        key={s.slug}
+                        href={`/sobre-nosotros/${s.slug}/`}
+                        className={
+                          subActive
+                            ? 'block pl-8 pr-3 py-1.5 font-body text-xs text-on-primary border-l-2 border-accent'
+                            : 'block pl-8 pr-3 py-1.5 font-body text-xs text-on-primary/60 hover:text-on-primary'
+                        }
+                      >
+                        <span className="block text-on-primary/60 truncate">{s.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+
+              {showSub && item.section === 'procesos' && procedures.length > 0 && (
                 <div className="mt-1 mb-2 space-y-0.5">
                   {procedures.map((p) => {
                     const subActive = pathname.includes(`/procesos/${p.code}`);
@@ -176,15 +241,14 @@ export function Sidebar() {
                         }
                       >
                         <span className="font-medium">{p.code}</span>
-                        <span className="block text-on-primary/50 truncate">
-                          {p.title}
-                        </span>
+                        <span className="block text-on-primary/50 truncate">{p.title}</span>
                       </Link>
                     );
                   })}
                 </div>
               )}
-              {showSub && item.href === '/excellence' && (
+
+              {showSub && item.section === 'excellence' && (
                 <div className="mt-1 mb-2 space-y-0.5">
                   {TOPICS.map((t) => {
                     const subActive = pathname.includes(`/excellence/${t.slug}`);
@@ -199,26 +263,6 @@ export function Sidebar() {
                         }
                       >
                         <span className="block text-on-primary/50 truncate">{t.label}</span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-              {showSub && item.href === '/sobre-nosotros' && (
-                <div className="mt-1 mb-2 space-y-0.5">
-                  {ABOUT_SECTIONS.map((s) => {
-                    const subActive = pathname.includes(`/sobre-nosotros/${s.slug}`);
-                    return (
-                      <Link
-                        key={s.slug}
-                        href={`/sobre-nosotros/${s.slug}/`}
-                        className={
-                          subActive
-                            ? 'block pl-8 pr-3 py-1.5 font-body text-xs text-on-primary border-l-2 border-accent'
-                            : 'block pl-8 pr-3 py-1.5 font-body text-xs text-on-primary/60 hover:text-on-primary'
-                        }
-                      >
-                        <span className="block text-on-primary/50 truncate">{s.label}</span>
                       </Link>
                     );
                   })}

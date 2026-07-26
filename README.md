@@ -190,11 +190,12 @@ UNIQUE(caller_id, callee_id, context)
 
 ## Búsqueda
 
-Full-text search en español usando `to_tsvector('spanish', ...)` sobre:
-- `procedures.title` y `procedures.purpose`
-- `activities.title`, `activities.executor` y `activities.description`
+El buscador del `TopBar` busca en toda la intranet, combinando dos fuentes (`src/lib/search.ts`, resultados agrupados por área):
 
-El Excellence Wiki no participa en la búsqueda en v1.
+- **Procedimientos**: full-text en español en Supabase (`to_tsvector('spanish', ...)`) sobre `procedures.title`, `procedures.purpose`, `activities.title`, `activities.executor` y `activities.description`.
+- **Contenido estático** (índice ligero por título, nombre y descripción, resuelto en el cliente sobre el bundle): Sobre nosotros (subsecciones), Mapa de capacidades (capacidades L1/L2 y su objeto), Organigrama (títulos de cargo y ocupantes) y Excellence Wiki (temas).
+
+El cuerpo completo de los temas del Excellence Wiki (TSX) no se indexa; se busca por título y categoría.
 
 ## Autenticación
 
@@ -250,3 +251,4 @@ Push a `main` → GitHub Actions ejecuta `next build` → archivos estáticos (`
 | Fecha | Qué cambió |
 |---|---|
 | 2026-07-26 | Nueva sección **Sobre nosotros** (`/sobre-nosotros`) con landing (mensaje + tarjetas) y cinco subsecciones (Por qué, ¿Organización inteligente?, Qué, Quiénes, Cómo). Se retira "Organigrama" del menú de primer nivel y del route tree (`(app)/organigrama` eliminado); el organigrama ahora se monta dentro de "Quiénes", sin la línea "Fuente: ..." en el encabezado. Nuevo visor **CapabilityMap** en "Qué", alimentado por `content/capability-map/capability-map_v1.0.json` (fuente única para la interfaz; sin edición manual). Archivos nuevos: `content/capability-map/`, `src/components/capability-map/CapabilityMap.tsx`, `src/lib/capabilityMap.ts`, `src/content/sobre-nosotros/sections.ts`, `src/app/(app)/sobre-nosotros/**`. Editados: `Sidebar.tsx`, `Breadcrumbs.tsx`. |
+| 2026-07-26 | Sidebar: subnav de Sobre nosotros, Procedimientos y Excellence Wiki ahora **colapsable** (chevron por sección, se abre al entrar y se puede cerrar); reordenado a Inicio, Sobre nosotros, Procedimientos, Excellence Wiki; corregido el enlace de Inicio (apuntaba a `//`) y la marca del sidebar ahora enlaza a `/`. **Home** reescrita (tono profesional y cercano, tarjetas a las tres secciones; se retira el contenido desactualizado de solo procedimientos). **Buscador** ampliado a toda la intranet (`src/lib/search.ts`): full-text de procedimientos en Supabase más índice ligero de Sobre nosotros, Mapa de capacidades, Organigrama y Excellence Wiki, con resultados agrupados por área. |
