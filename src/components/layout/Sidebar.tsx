@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase';
 import { listProcedures } from '@/lib/procedures';
 import type { ProcedureSummary } from '@/lib/types';
 import { TOPICS } from '@/content/excellence/registry';
+import { ABOUT_SECTIONS } from '@/content/sobre-nosotros/sections';
 import { useSidebar } from './SidebarContext';
 
 interface NavItem {
@@ -33,13 +34,12 @@ function IconProcedures({ className }: { className?: string }) {
   );
 }
 
-function IconOrgChart({ className }: { className?: string }) {
+function IconAbout({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
-      <rect x="9" y="3" width="6" height="4" rx="1" />
-      <rect x="3" y="17" width="6" height="4" rx="1" />
-      <rect x="15" y="17" width="6" height="4" rx="1" />
-      <path d="M12 7v5M12 12H6v5M12 12h6v5" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 11v5" strokeLinecap="round" />
+      <path d="M12 8h.01" strokeLinecap="round" />
     </svg>
   );
 }
@@ -73,7 +73,7 @@ function IconLogout({ className }: { className?: string }) {
 const TOP_NAV: NavItem[] = [
   { href: '/', label: 'Inicio', icon: IconHome },
   { href: '/procesos', label: 'Procedimientos', icon: IconProcedures },
-  { href: '/organigrama', label: 'Organigrama', icon: IconOrgChart },
+  { href: '/sobre-nosotros', label: 'Sobre nosotros', icon: IconAbout },
   { href: '/excellence', label: 'Excellence Wiki', icon: IconWiki },
 ];
 
@@ -100,6 +100,7 @@ export function Sidebar() {
 
   const inProcesos = pathname.startsWith('/procesos');
   const inExcellence = pathname.startsWith('/excellence');
+  const inSobre = pathname.startsWith('/sobre-nosotros');
 
   useEffect(() => {
     if (!inProcesos) return;
@@ -143,7 +144,8 @@ export function Sidebar() {
           const showSub =
             !collapsed &&
             ((item.href === '/procesos' && inProcesos) ||
-              (item.href === '/excellence' && inExcellence));
+              (item.href === '/excellence' && inExcellence) ||
+              (item.href === '/sobre-nosotros' && inSobre));
           const Icon = item.icon;
           return (
             <div key={item.href}>
@@ -197,6 +199,26 @@ export function Sidebar() {
                         }
                       >
                         <span className="block text-on-primary/50 truncate">{t.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+              {showSub && item.href === '/sobre-nosotros' && (
+                <div className="mt-1 mb-2 space-y-0.5">
+                  {ABOUT_SECTIONS.map((s) => {
+                    const subActive = pathname.includes(`/sobre-nosotros/${s.slug}`);
+                    return (
+                      <Link
+                        key={s.slug}
+                        href={`/sobre-nosotros/${s.slug}/`}
+                        className={
+                          subActive
+                            ? 'block pl-8 pr-3 py-1.5 font-body text-xs text-on-primary border-l-2 border-accent'
+                            : 'block pl-8 pr-3 py-1.5 font-body text-xs text-on-primary/60 hover:text-on-primary'
+                        }
+                      >
+                        <span className="block text-on-primary/50 truncate">{s.label}</span>
                       </Link>
                     );
                   })}

@@ -1,0 +1,465 @@
+{
+  "version": "1.0",
+  "fecha": "2026-07-25",
+  "purpose": "Gobernar, Proteger y Maximizar los datos regulados",
+  "tiers": [
+    {
+      "key": "strat",
+      "name": "Estratégico y de Dirección",
+      "tag": "Definen el rumbo de largo plazo y las reglas bajo las que opera la organización.",
+      "capabilities": [
+        {
+          "code": "E1",
+          "name": "Gestión de Visión y Dirección Estratégica",
+          "description": "La capacidad de definir, custodiar y desplegar la dirección de largo plazo de la organización.",
+          "objeto": "Estrategia",
+          "subcapabilities": []
+        },
+        {
+          "code": "E2",
+          "name": "Gestión de Innovación y Desarrollo de Negocio",
+          "description": "La capacidad de identificar y desarrollar nuevas oportunidades, mercados y frentes de negocio.",
+          "objeto": "Oportunidad de negocio",
+          "subcapabilities": []
+        },
+        {
+          "code": "E3",
+          "name": "Gestión de Portafolio de Productos y Servicios",
+          "description": "La capacidad de definir y evolucionar la oferta de productos y servicios de la organización.",
+          "objeto": "Producto / Servicio",
+          "subcapabilities": []
+        },
+        {
+          "code": "E4",
+          "name": "Gestión de Alianzas Estratégicas y Relaciones Institucionales",
+          "description": "La capacidad de establecer y sostener relaciones con socios, aliados, reguladores y proveedores clave.",
+          "objeto": "Alianza",
+          "subcapabilities": []
+        },
+        {
+          "code": "E5",
+          "name": "Gestión de Activos de Conocimiento y Metodología",
+          "description": "La capacidad de crear, custodiar y evolucionar el conocimiento y los métodos propios de la firma.",
+          "objeto": "Activo de conocimiento",
+          "subcapabilities": [
+            {
+              "code": "E5.1",
+              "name": "Método Propietario",
+              "description": "Capacidad de mantener el marco metodológico y el cuerpo de conocimiento propio."
+            },
+            {
+              "code": "E5.2",
+              "name": "Captura y Explicitación del Conocimiento",
+              "description": "Capacidad de convertir el conocimiento tácito de la operación en modelos explícitos."
+            },
+            {
+              "code": "E5.3",
+              "name": "Ingeniería de Ontologías",
+              "description": "Capacidad de formalizar el conocimiento en ontologías que alimentan el producto."
+            }
+          ]
+        },
+        {
+          "code": "E6",
+          "name": "Gestión de Inteligencia y Vigilancia Regulatoria",
+          "description": "La capacidad de anticipar y comprender los cambios normativos que afectan a la organización y a sus clientes.",
+          "objeto": "Novedad / Norma regulatoria",
+          "subcapabilities": []
+        }
+      ]
+    },
+    {
+      "key": "core",
+      "name": "Núcleo (Core)",
+      "tag": "Generan y entregan valor directo al cliente. Son las tres líneas de negocio.",
+      "capabilities": [
+        {
+          "code": "N1",
+          "name": "Gestión de Marketing y Marca",
+          "description": "La capacidad de construir y proyectar la marca para atraer y sostener la demanda de los servicios.",
+          "objeto": "Marca",
+          "subcapabilities": [
+            {
+              "code": "N1.1",
+              "name": "Marca y Posicionamiento",
+              "description": "Capacidad de definir la identidad y el posicionamiento de la marca."
+            },
+            {
+              "code": "N1.2",
+              "name": "Contenido y Comunicación",
+              "description": "Capacidad de producir y difundir contenido hacia el mercado."
+            },
+            {
+              "code": "N1.3",
+              "name": "Generación de Demanda",
+              "description": "Capacidad de despertar interés y atraer interesados en los servicios."
+            },
+            {
+              "code": "N1.4",
+              "name": "Marketing de Producto (Datum)",
+              "description": "Capacidad de comunicar el valor de la plataforma al mercado."
+            },
+            {
+              "code": "N1.5",
+              "name": "Analítica y Desempeño de Marketing",
+              "description": "Capacidad de medir el desempeño de la actividad de marketing."
+            }
+          ]
+        },
+        {
+          "code": "N2",
+          "name": "Gestión Comercial y de Ventas",
+          "description": "La capacidad de convertir el interés del mercado en clientes mediante la gestión de oportunidades de venta.",
+          "objeto": "Oportunidad de venta",
+          "subcapabilities": [
+            {
+              "code": "N2.1",
+              "name": "Generación y Captación de Prospectos",
+              "description": "Capacidad de identificar y registrar interesados en los servicios."
+            },
+            {
+              "code": "N2.2",
+              "name": "Calificación y Dimensionamiento",
+              "description": "Capacidad de evaluar el ajuste y el alcance de cada oportunidad."
+            },
+            {
+              "code": "N2.3",
+              "name": "Propuestas y Cierre",
+              "description": "Capacidad de formular ofertas y concretar la venta."
+            },
+            {
+              "code": "N2.4",
+              "name": "Seguimiento e Inteligencia Comercial",
+              "description": "Capacidad de seguir y analizar las oportunidades de venta."
+            }
+          ]
+        },
+        {
+          "code": "N3",
+          "name": "Gestión de la Relación y la Cuenta del Cliente",
+          "description": "La capacidad de mantener y hacer crecer la relación comercial con cada cliente a lo largo de todos sus servicios.",
+          "objeto": "Cuenta del cliente",
+          "subcapabilities": [
+            {
+              "code": "N3.1",
+              "name": "Gestión de Cuentas",
+              "description": "Capacidad de coordinar la relación integral de un cliente con varios servicios."
+            },
+            {
+              "code": "N3.2",
+              "name": "Renovación y Continuidad Comercial",
+              "description": "Capacidad de sostener la vinculación del cliente en el tiempo."
+            },
+            {
+              "code": "N3.3",
+              "name": "Expansión y Venta Cruzada",
+              "description": "Capacidad de ampliar los servicios contratados por el cliente."
+            },
+            {
+              "code": "N3.4",
+              "name": "Satisfacción y Voz del Cliente",
+              "description": "Capacidad de conocer y atender la percepción del cliente sobre la relación."
+            }
+          ]
+        },
+        {
+          "code": "N4",
+          "name": "Gestión de Programas de Cumplimiento del Cliente",
+          "description": "La capacidad de llevar el sistema de cumplimiento del cliente desde su evaluación hasta su operación y aseguramiento.",
+          "objeto": "Sistema de cumplimiento del cliente",
+          "subcapabilities": [
+            {
+              "code": "N4.1",
+              "name": "Diagnóstico y Evaluación",
+              "description": "Capacidad de evaluar el estado del cumplimiento del cliente y definir su meta."
+            },
+            {
+              "code": "N4.2",
+              "name": "Diseño e Implementación del Programa",
+              "description": "Capacidad de construir el sistema de cumplimiento del cliente."
+            },
+            {
+              "code": "N4.3",
+              "name": "Operación del Programa",
+              "description": "Capacidad de operar y sostener el programa por cuenta del cliente."
+            },
+            {
+              "code": "N4.4",
+              "name": "Función DPO",
+              "description": "Capacidad de ejercer la función de delegado de protección de datos para el cliente."
+            },
+            {
+              "code": "N4.5",
+              "name": "Auditoría y Aseguramiento",
+              "description": "Capacidad de verificar de forma independiente el cumplimiento del cliente."
+            }
+          ]
+        },
+        {
+          "code": "N7",
+          "name": "Gestión de la Entrega y Nivel de Servicio",
+          "description": "La capacidad de asegurar que los servicios continuos se entreguen de forma sostenida y en los niveles acordados con el cliente.",
+          "objeto": "Servicio en operación",
+          "subcapabilities": [
+            {
+              "code": "N7.1",
+              "name": "Gestión de Niveles de Servicio",
+              "description": "Capacidad de acordar y controlar los niveles de servicio comprometidos."
+            },
+            {
+              "code": "N7.2",
+              "name": "Continuidad del Servicio",
+              "description": "Capacidad de mantener el servicio disponible sin interrupciones."
+            },
+            {
+              "code": "N7.3",
+              "name": "Gestión de Incidentes y Problemas",
+              "description": "Capacidad de resolver las incidencias y sus causas de fondo."
+            },
+            {
+              "code": "N7.4",
+              "name": "Enlace Operativo con el Cliente",
+              "description": "Capacidad de coordinar con el cliente la marcha operativa del servicio."
+            },
+            {
+              "code": "N7.5",
+              "name": "Mejora del Servicio",
+              "description": "Capacidad de mejorar el servicio prestado a cada cliente en operación."
+            }
+          ]
+        },
+        {
+          "code": "N8",
+          "name": "Gestión de Proyectos",
+          "description": "La capacidad de planificar, coordinar y controlar encargos con inicio y fin definidos para cumplir su alcance, plazo y presupuesto.",
+          "objeto": "Proyecto",
+          "subcapabilities": [
+            {
+              "code": "N8.1",
+              "name": "Planificación del Proyecto",
+              "description": "Capacidad de definir el alcance, el plazo y los recursos del encargo."
+            },
+            {
+              "code": "N8.2",
+              "name": "Coordinación y Ejecución",
+              "description": "Capacidad de dirigir el trabajo del equipo durante el encargo."
+            },
+            {
+              "code": "N8.3",
+              "name": "Seguimiento y Control",
+              "description": "Capacidad de vigilar el avance y corregir los desvíos del encargo."
+            }
+          ]
+        },
+        {
+          "code": "N9",
+          "name": "Gestión de Activación y Cierre de Servicios",
+          "description": "La capacidad de dar de alta y de baja los servicios contratados con cada cliente.",
+          "objeto": "Servicio contratado",
+          "subcapabilities": [
+            {
+              "code": "N9.1",
+              "name": "Activación del Servicio",
+              "description": "Capacidad de dar de alta y poner en marcha el servicio con el cliente."
+            },
+            {
+              "code": "N9.2",
+              "name": "Cierre del Servicio",
+              "description": "Capacidad de dar de baja y liquidar el servicio con el cliente."
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "name": "Gestión de Formación y Capacitación",
+          "description": "La capacidad de diseñar e impartir programas de formación profesional.",
+          "objeto": "Programa formativo",
+          "subcapabilities": [
+            {
+              "code": "N5.1",
+              "name": "Diseño Curricular y de Programas",
+              "description": "Capacidad de definir los contenidos y la estructura de los cursos."
+            },
+            {
+              "code": "N5.2",
+              "name": "Ejecución de Cohortes",
+              "description": "Capacidad de impartir y administrar cada edición de los cursos."
+            },
+            {
+              "code": "N5.3",
+              "name": "Participantes y Alianzas Académicas",
+              "description": "Capacidad de gestionar a los participantes y a las entidades educativas aliadas."
+            }
+          ]
+        },
+        {
+          "code": "N6",
+          "name": "Gestión de Producto y Plataforma (Datum)",
+          "description": "La capacidad de concebir, construir y operar la plataforma tecnológica de la firma.",
+          "objeto": "Producto / Plataforma",
+          "subcapabilities": [
+            {
+              "code": "N6.1",
+              "name": "Producto Datum",
+              "description": "Capacidad de definir la evolución y los requisitos de la plataforma."
+            },
+            {
+              "code": "N6.2",
+              "name": "Desarrollo y Entrega de Software",
+              "description": "Capacidad de construir y liberar el software del producto."
+            },
+            {
+              "code": "N6.3",
+              "name": "Operación de Plataforma",
+              "description": "Capacidad de mantener la plataforma disponible y con buen desempeño."
+            },
+            {
+              "code": "N6.4",
+              "name": "Productos de Datos",
+              "description": "Capacidad de empaquetar el conocimiento formalizado como producto vendible."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "supp",
+      "name": "Soporte y Habilitadoras",
+      "tag": "Habilitan la operación de las demás capacidades desde detrás de escena.",
+      "capabilities": [
+        {
+          "code": "S1",
+          "name": "Gestión Financiera y Contable",
+          "description": "La capacidad de administrar los recursos financieros y las obligaciones contables y tributarias de la organización.",
+          "objeto": "Recurso financiero",
+          "subcapabilities": [
+            {
+              "code": "S1.1",
+              "name": "Facturación y Cobranza",
+              "description": "Capacidad de facturar y recaudar los ingresos de la organización."
+            },
+            {
+              "code": "S1.2",
+              "name": "Pagos y Tesorería",
+              "description": "Capacidad de administrar los pagos y la liquidez."
+            },
+            {
+              "code": "S1.3",
+              "name": "Contabilidad y Tributación",
+              "description": "Capacidad de llevar la contabilidad y cumplir las obligaciones tributarias."
+            },
+            {
+              "code": "S1.4",
+              "name": "Planificación y Control Financiero",
+              "description": "Capacidad de planificar y controlar el presupuesto y el flujo de caja."
+            }
+          ]
+        },
+        {
+          "code": "S2",
+          "name": "Gestión de Talento Humano",
+          "description": "La capacidad de atraer, desarrollar y retener a las personas de la organización.",
+          "objeto": "Colaborador",
+          "subcapabilities": []
+        },
+        {
+          "code": "S3",
+          "name": "Gestión de Compras y Proveedores",
+          "description": "La capacidad de abastecer a la organización de bienes y servicios y administrar a sus proveedores.",
+          "objeto": "Proveedor",
+          "subcapabilities": []
+        },
+        {
+          "code": "S4",
+          "name": "Gestión Legal",
+          "description": "La capacidad de proteger jurídicamente a la organización en sus contratos, obligaciones y activos.",
+          "objeto": "Contrato",
+          "subcapabilities": []
+        },
+        {
+          "code": "S5",
+          "name": "Gestión de Tecnología e Infraestructura de TI",
+          "description": "La capacidad de proveer y sostener los servicios y activos tecnológicos internos.",
+          "objeto": "Activo de TI",
+          "subcapabilities": []
+        },
+        {
+          "code": "S6",
+          "name": "Gestión de Seguridad de la Información",
+          "description": "La capacidad de proteger la información de la organización y de sus clientes.",
+          "objeto": "Información",
+          "subcapabilities": []
+        },
+        {
+          "code": "S7",
+          "name": "Gestión de Calidad y Excelencia Operativa",
+          "description": "La capacidad de asegurar y mejorar la calidad con que la organización entrega sus servicios.",
+          "objeto": "Calidad del servicio",
+          "subcapabilities": [
+            {
+              "code": "S7.1",
+              "name": "Aseguramiento de la Calidad del Servicio",
+              "description": "Capacidad de revisar y controlar los entregables antes de su entrega al cliente."
+            },
+            {
+              "code": "S7.2",
+              "name": "Retroalimentación y No Conformidades",
+              "description": "Capacidad de tratar quejas y desviaciones de calidad con acciones correctivas."
+            },
+            {
+              "code": "S7.3",
+              "name": "Mejora Continua y Lecciones Aprendidas",
+              "description": "Capacidad de mejorar los métodos de trabajo a partir de la experiencia."
+            },
+            {
+              "code": "S7.4",
+              "name": "Medición del Desempeño Operativo",
+              "description": "Capacidad de medir el desempeño de la operación."
+            }
+          ]
+        },
+        {
+          "code": "S8",
+          "name": "Gestión de Cumplimiento y Riesgo Interno",
+          "description": "La capacidad de gobernar el cumplimiento y los riesgos internos de la propia organización.",
+          "objeto": "Riesgo / Cumplimiento",
+          "subcapabilities": []
+        }
+      ]
+    }
+  ],
+  "businessLines": [
+    {
+      "name": "Consultoría",
+      "codes": [
+        "N4",
+        "N7",
+        "N8",
+        "N9",
+        "N3",
+        "E5",
+        "E6"
+      ]
+    },
+    {
+      "name": "Producto tecnología",
+      "codes": [
+        "N6",
+        "E3",
+        "N2",
+        "E5.3"
+      ]
+    },
+    {
+      "name": "PDP Academy",
+      "codes": [
+        "N5",
+        "E3"
+      ]
+    },
+    {
+      "name": "Transversales",
+      "note": "Las capacidades de soporte (S1 a S8) y de dirección sirven a las tres líneas."
+    }
+  ]
+}

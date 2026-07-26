@@ -15,9 +15,12 @@ Portal interno para consultores de PDP Expert. Permite entender rápidamente qu�
 
 1. **Procedimientos** — 9 procedimientos de consultoría (PRC-CON-001 a PRC-CON-009) con sus actividades, responsabilidades, controles, riesgos e indicadores. Almacenados en Supabase, con búsqueda full-text en español.
 2. **Excellence Wiki** — Wiki de conocimiento para la excelencia operativa. Contenido estático en archivos TSX, sin Supabase. Temas actuales, por categoría: Calidad (¿Qué es calidad?), Desarrollo de Producto (Ciclo de desarrollo de producto) y Gestión del conocimiento (Qué es la gestión del conocimiento, basado en ISO 30401).
-3. **Organigrama** — Visor de solo lectura de la estructura de cargos y ocupantes de PDP Expert. Datos en `content/organigrama/organigrama-pdp-expert_v1.0.json`, consumidos por import estático (sin Supabase, sin carga manual de archivo). Ver `content/organigrama/README.md` para el origen del dato y el modelo (puesto vs. ocupante).
+3. **Sobre nosotros** — Sección institucional con una landing (mensaje principal + tarjetas de acceso) y cinco subsecciones: Por qué (Life by design y valores), ¿Organización inteligente?, Qué (mapa de capacidades), Quiénes (organigrama de rendición de cuentas) y Cómo (mapa de procesos, placeholder "Próximamente"). Reemplaza a la antigua sección "Organigrama" del menú; el organigrama pasa a vivir dentro de "Quiénes".
+   - **Mapa de capacidades** (subsección Qué): visor interactivo con Nivel 1 y Nivel 2 expandible, alimentado por `content/capability-map/capability-map_v1.0.json` (fuente única del dato, consumida por import estático). La interfaz no se edita a mano: se actualiza editando el JSON.
+   - **Organigrama** (subsección Quiénes): el mismo visor de solo lectura, datos en `content/organigrama/organigrama-pdp-expert_v1.0.json`. Ver `content/organigrama/README.md` para el origen del dato y el modelo (puesto vs. ocupante).
 
 > PGF y Biblioteca fueron secciones de la intranet y se eliminaron (2026-07-22).
+> "Organigrama" dejó de ser sección de primer nivel y ahora vive dentro de "Sobre nosotros" → "Quiénes" (2026-07-26).
 
 ## Flujos de contenido
 
@@ -38,8 +41,14 @@ Portal interno para consultores de PDP Expert. Permite entender rápidamente qu�
 ### Actualizar el organigrama
 
 1. Editar `content/organigrama/organigrama-pdp-expert_v1.0.json` (validar contra `organigrama.schema.json` si el cambio es grande)
-2. `git commit && git push origin main` — dispara el deploy. La página `/organigrama` toma el JSON en build time, sin paso de sincronización adicional
+2. `git commit && git push origin main` — dispara el deploy. La página `/sobre-nosotros/quienes` toma el JSON en build time, sin paso de sincronización adicional
 3. Detalle completo del origen del dato y del modelo (puesto vs. ocupante) en `content/organigrama/README.md`
+
+### Actualizar el mapa de capacidades
+
+1. Editar `content/capability-map/capability-map_v1.0.json` (franjas, capacidades L1/L2, objeto de negocio y cobertura de líneas de negocio)
+2. `git commit && git push origin main` — dispara el deploy. La página `/sobre-nosotros/que` monta el componente `CapabilityMap` con ese JSON en build time, sin sincronización adicional
+3. El mismo mapa existe como modelo ArchiMate fuera de este repo (`04-Arquitectura-empresarial/Capability-Map/`, gestión organizacional); el JSON de la intranet es la fuente para la interfaz. Si el modelo cambia, se actualiza este JSON
 
 ## Estructura del repositorio
 
@@ -58,7 +67,13 @@ intranet/
 │   │       ├── procesos/     # Procedimientos (consume Supabase)
 │   │       │   ├── page.tsx  # Índice
 │   │       │   └── [code]/   # Detalle por código
-│   │       ├── organigrama/  # Organigrama (estático, import directo del JSON)
+│   │       ├── sobre-nosotros/ # Sobre nosotros (landing + 5 subsecciones)
+│   │       │   ├── page.tsx  # Landing (mensaje + tarjetas)
+│   │       │   ├── por-que/
+│   │       │   ├── organizacion-inteligente/
+│   │       │   ├── que/      # Monta el mapa de capacidades
+│   │       │   ├── quienes/  # Monta el organigrama
+│   │       │   └── como/     # Mapa de procesos (placeholder)
 │   │       └── excellence/   # Excellence Wiki (estático)
 │   │           ├── page.tsx  # Índice de temas
 │   │           └── [slug]/   # Detalle por tema
@@ -67,18 +82,22 @@ intranet/
 │   │   ├── ui/               # Button, Table, Badge, SearchInput, CollapsibleSection
 │   │   ├── procedures/       # Componentes de procedimientos
 │   │   ├── organigrama/      # OrgChart (árbol + panel de detalle)
+│   │   ├── capability-map/   # CapabilityMap (visor de capacidades L1 + L2)
 │   │   ├── excellence/       # Primitivas del wiki (WikiSection, WikiTable, etc.)
 │   │   ├── AuthGuard.tsx
 │   │   └── AuthRedirectIfSession.tsx
 │   ├── content/
-│   │   └── excellence/       # Contenido del wiki
-│   │       ├── registry.ts   # Registro de temas (slug, label, category)
-│   │       └── topics/       # Un archivo .tsx por tema
+│   │   ├── excellence/       # Contenido del wiki
+│   │   │   ├── registry.ts   # Registro de temas (slug, label, category)
+│   │   │   └── topics/       # Un archivo .tsx por tema
+│   │   └── sobre-nosotros/
+│   │       └── sections.ts   # Registro de subsecciones (slug, label, short)
 │   └── lib/
 │       ├── supabase.ts       # Cliente Supabase
 │       ├── types.ts          # Tipos TS de procedures, activities, etc.
 │       ├── procedures.ts     # Helpers de fetch + búsqueda
-│       └── organigrama.ts    # Tipos y helpers del organigrama (raices, hijosDe)
+│       ├── organigrama.ts    # Tipos y helpers del organigrama (raices, hijosDe)
+│       └── capabilityMap.ts  # Tipos del mapa de capacidades
 ├── content/
 │   ├── procesos/             # Un JSON por procedimiento (respaldo portable)
 │   │   ├── PRC-CON-001.json
@@ -91,10 +110,12 @@ intranet/
 │   │   ├── PRC-CON-008.json
 │   │   ├── PRC-CON-009.json
 │   │   └── _invocations.json # Relaciones de invocación entre procedimientos
-│   └── organigrama/          # JSON del organigrama (fuente única, consumida por import estático)
-│       ├── organigrama-pdp-expert_v1.0.json
-│       ├── organigrama.schema.json
-│       └── README.md         # Origen del dato, modelo y flujo de actualización
+│   ├── organigrama/          # JSON del organigrama (fuente única, consumida por import estático)
+│   │   ├── organigrama-pdp-expert_v1.0.json
+│   │   ├── organigrama.schema.json
+│   │   └── README.md         # Origen del dato, modelo y flujo de actualización
+│   └── capability-map/       # JSON del mapa de capacidades (fuente única para la interfaz)
+│       └── capability-map_v1.0.json
 ├── scripts/
 │   └── sync-procesos.js      # Lee content/procesos/*.json → upsert en Supabase
 ├── supabase/
@@ -184,7 +205,7 @@ Login con Supabase Auth. Un solo rol: "consultor autenticado". Todo el contenido
 `src/app/` usa dos route groups de Next.js:
 
 - `(auth)/` agrupa páginas públicas (solo `login`). Su `layout.tsx` redirige a `/` si ya hay sesión. No tiene sidebar.
-- `(app)/` agrupa páginas protegidas (home, procesos, organigrama, excellence). Su `layout.tsx` envuelve con `AuthGuard` y monta el `AppLayout` (sidebar + topbar). Si no hay sesión, redirige a `/login`.
+- `(app)/` agrupa páginas protegidas (home, procesos, sobre-nosotros, excellence). Su `layout.tsx` envuelve con `AuthGuard` y monta el `AppLayout` (sidebar + topbar). Si no hay sesión, redirige a `/login`.
 
 Los paréntesis del nombre del grupo no aparecen en la URL: `/`, `/procesos`, `/login`, etc. siguen siendo los paths reales. La separación existe solo para que cada grupo de páginas tenga su propio layout y guard sin chequeos de pathname repartidos por el código.
 
@@ -223,3 +244,9 @@ Push a `main` → GitHub Actions ejecuta `next build` → archivos estáticos (`
 ## Decisiones de arquitectura
 
 16 decisiones documentadas en `PDP FILES/Intranet/1. Decisiones/decisiones-arquitectura-intranet.md` (fuera de este repo, en el directorio de gestión del proyecto).
+
+## Historial de cambios
+
+| Fecha | Qué cambió |
+|---|---|
+| 2026-07-26 | Nueva sección **Sobre nosotros** (`/sobre-nosotros`) con landing (mensaje + tarjetas) y cinco subsecciones (Por qué, ¿Organización inteligente?, Qué, Quiénes, Cómo). Se retira "Organigrama" del menú de primer nivel y del route tree (`(app)/organigrama` eliminado); el organigrama ahora se monta dentro de "Quiénes", sin la línea "Fuente: ..." en el encabezado. Nuevo visor **CapabilityMap** en "Qué", alimentado por `content/capability-map/capability-map_v1.0.json` (fuente única para la interfaz; sin edición manual). Archivos nuevos: `content/capability-map/`, `src/components/capability-map/CapabilityMap.tsx`, `src/lib/capabilityMap.ts`, `src/content/sobre-nosotros/sections.ts`, `src/app/(app)/sobre-nosotros/**`. Editados: `Sidebar.tsx`, `Breadcrumbs.tsx`. |
