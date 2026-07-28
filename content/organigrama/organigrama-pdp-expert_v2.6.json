@@ -1,7 +1,7 @@
 {
   "organizacion": "PDP Expert",
-  "version": "2.5",
-  "fecha_actualizacion": "2026-07-27",
+  "version": "2.6",
+  "fecha_actualizacion": "2026-07-28",
   "modelo": "Contenedor de dos modelos hermanos en un solo archivo. (1) Organigrama, alineado a la Ficha MOD-org-001 v0.4 y a W3C ORG: colecciones roles (org:Role), posiciones (org:Post), asignaciones (org:holds) y organos (org:OrganizationalUnit). (2) Descriptivo de cargo, alineado a la Ficha MOD-org-002 v0.3: contenido de cada rol mas su clasificacion ISCO-08, nombre estandarizado ESCO y perfiles profesionales del dominio (UNE-EN 17740:2023 con competencias e-CF, EN 16234-1). Un rol puede llevar varios perfiles a la vez, uno marcado como primario. tipo_vinculo distingue interna | staff_augmentation | managed_service. La organizacion retenida (ISO 37500) existe en toda externalizacion: explicita (rol_retenido_ref) en managed_service, e implicita (jefe interno de reporte) en staff_augmentation.",
   "fuente": "Estado actual entregado por PA (2026-07-27). Clasificacion ISCO-08/ESCO y perfiles UNE-EN 17740:2023 aprobados por PA en la Fase 1.",
   "nota_metodologica": "Se separa el puesto/asiento (estructura EOS, independiente de quien lo ocupe) del ocupante. No incluye evaluaciones de personas (Analizador de Personas / CDC-GWC). El paradigma de liderazgo de EOS (Visionario/Integrador) se maneja por fuera del modelo, no como cargo ni atributo.",
@@ -96,10 +96,8 @@
         "Decisiones estratégicas documentadas",
         "Rendición de cuentas del equipo de liderazgo"
       ],
-      "descriptivo_externo_ref": "../descriptivo-cargo-integrador_v1.0.json",
-      "contexto": "Funde los cargos previos de Visionario e Integrador. El paradigma de liderazgo de EOS (Visionario/Integrador) se maneja por fuera del modelo. El descriptivo externo referenciado corresponde a la faceta de integración.",
-      "origen_codigo_cargo": "CRG-0001",
-      "notas": "Rol nuevo que funde Visionario (ROL-0002) e Integrador (ROL-0001)."
+      "descriptivo_externo_ref": "../descriptivos de cargo/descriptivo-cargo-integrador_v1.0.json",
+      "origen_codigo_cargo": "CRG-0001"
     },
     {
       "codigo_rol": "ROL-0023",
@@ -122,7 +120,7 @@
           "primario": true
         }
       ],
-      "mision": "Actuar como Delegado de Protección de Datos interno de la organización, velando por el cumplimiento del programa interno de protección de datos personales y asesorando a la dirección.",
+      "mision": "Actuar como Delegado de Protección de Datos interno de la organización, velando por el cumplimiento del programa interno de protección de datos personales y asesorando a la dirección. Es un rol interno, distinto del Consultor DPO, que presta el servicio de DPO externo a clientes.",
       "funciones_esenciales": [
         {
           "descripcion": "Supervisar el cumplimiento del programa interno de protección de datos personales de la organización.",
@@ -176,9 +174,7 @@
         "Indicadores de protección de datos"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": "Rol interno, distinto del Consultor DPO (servicio de DPO externo a clientes).",
-      "origen_codigo_cargo": null,
-      "notas": "Misión y funciones en borrador, a validar en Fase 2."
+      "origen_codigo_cargo": null
     },
     {
       "codigo_rol": "ROL-0005",
@@ -250,9 +246,7 @@
         "Plan de desarrollo del equipo de consultoría"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": null,
-      "origen_codigo_cargo": "CRG-0005",
-      "notas": "Trazabilidad e-CF (revisión de alineamiento 2026-07-27, PA): mapeo parcial del perfil Gerente de Protección de Datos 5.3, con E.3 Gestión de riesgos, E.8 Gestión de la seguridad de la información y D.8 Gestión de contratos; se omiten A.4 Planificación de productos o servicios y A.5 Diseño de arquitectura por no ejercer arquitectura, y D.9 Desarrollo de personal (opcional) no pertenece a 5.3 (es del perfil Delegado 5.2), se conserva por la realidad del cargo. ISCO 1219 confirmado vía ESCO (business service manager 1219.1)."
+      "origen_codigo_cargo": "CRG-0005"
     },
     {
       "codigo_rol": "ROL-0013",
@@ -314,9 +308,7 @@
         "Acta de cierre"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": null,
-      "origen_codigo_cargo": "CRG-0013",
-      "notas": null
+      "origen_codigo_cargo": "CRG-0013"
     },
     {
       "codigo_rol": "ROL-0007",
@@ -396,9 +388,7 @@
         "Asesoramiento sobre consultas"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": "Rol de servicio de DPO externo a clientes. Ocupado por Pablo Arteaga.",
-      "origen_codigo_cargo": "CRG-0007",
-      "notas": "Trazabilidad e-CF (revisión de alineamiento 2026-07-27, PA): D.9 (Desarrollo de personal) es competencia e-CF del perfil Delegado 5.2; se conserva como opcional por tratarse de un DPO de servicio externo a clientes."
+      "origen_codigo_cargo": "CRG-0007"
     },
     {
       "codigo_rol": "ROL-0015",
@@ -472,9 +462,7 @@
         "Contribución a evaluaciones de impacto"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": null,
-      "origen_codigo_cargo": "CRG-0015",
-      "notas": "Niveles e-CF asignados por criterio de PA (UNE-EN 17740 deja los niveles en blanco): A.4 Planificación de productos o servicios nivel 3, A.5 Diseño de arquitectura nivel 4, A.6 Diseño de aplicaciones nivel 3, E.3 Gestión de riesgos nivel 4. Revisión de alineamiento 2026-07-27. ISCO 2529 confirmado vía ESCO (ICT security consultant 2529.6)."
+      "origen_codigo_cargo": "CRG-0015"
     },
     {
       "codigo_rol": "ROL-0016",
@@ -545,9 +533,7 @@
         "Procedimientos operativos (apoyo)"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": null,
-      "origen_codigo_cargo": "CRG-0016",
-      "notas": "Renombrado desde 'Analista'."
+      "origen_codigo_cargo": "CRG-0016"
     },
     {
       "codigo_rol": "ROL-0014",
@@ -628,9 +614,7 @@
         "Gestión de procedimientos regulatorios"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": "Renombrado desde Consultor Legal (2026-07-27). Toma la porción de riesgo y gobernanza del perfil híbrido Especialista en Protección de Datos (UNE 5.4). Su núcleo es GRC, no solo opiniones legales.",
-      "origen_codigo_cargo": "CRG-0014",
-      "notas": "Un asiento, ocupado por Gabriela Villafuerte. Línea de reporte inferida (a validar)."
+      "origen_codigo_cargo": "CRG-0014"
     },
     {
       "codigo_rol": "ROL-0003",
@@ -743,9 +727,7 @@
         "Contribución a la documentación de protección de datos de los sistemas"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": "Cargo doble: CTO de Datum y CISO/TI de la organización.",
-      "origen_codigo_cargo": "CRG-0003",
-      "notas": null
+      "origen_codigo_cargo": "CRG-0003"
     },
     {
       "codigo_rol": "ROL-0012",
@@ -818,9 +800,7 @@
         "Resultados de pruebas piloto y lanzamientos"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": null,
-      "origen_codigo_cargo": "CRG-0012",
-      "notas": "Renombrado desde 'Desarrollador de Software'."
+      "origen_codigo_cargo": "CRG-0012"
     },
     {
       "codigo_rol": "ROL-0006",
@@ -895,9 +875,7 @@
         "Supervisión del control interno"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": "Renombrada desde 'Jefa Administrativa Contable'. Ejerce la organización retenida (interfaz) sobre el managed service Contador Chile, y coordina las plazas administrativas provistas por BMV (staff augmentation).",
-      "origen_codigo_cargo": "CRG-0006",
-      "notas": null
+      "origen_codigo_cargo": "CRG-0006"
     },
     {
       "codigo_rol": "ROL-0019",
@@ -971,9 +949,7 @@
         "Insumos para declaraciones y cierres"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": "Renombrado desde 'Asistente administrativo'. Plaza provista por BMV (staff augmentation), hoy vacante. Solapamiento con la Jefa Administrativa Financiera resuelto en el Lote B (2026-07-27, PA): este cargo ejecuta el registro contable, las conciliaciones y el apoyo operativo; la dirección, el control interno, la planificación fiscal, la coordinación de RRHH y la interfaz de externalización quedan solo en la Jefa Administrativa Financiera.",
-      "origen_codigo_cargo": "CRG-0019",
-      "notas": null
+      "origen_codigo_cargo": "CRG-0019"
     },
     {
       "codigo_rol": "ROL-0018",
@@ -1048,9 +1024,7 @@
         "Soporte a constitución y cumplimiento societario"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": null,
-      "origen_codigo_cargo": "CRG-0018",
-      "notas": "Vacante."
+      "origen_codigo_cargo": "CRG-0018"
     },
     {
       "codigo_rol": "ROL-0021",
@@ -1122,9 +1096,7 @@
         "Información financiera para la dirección"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": "Managed service externalizado. La organización retenida (interfaz de control) es la Jefa Administrativa Financiera.",
-      "origen_codigo_cargo": "CRG-0021",
-      "notas": null
+      "origen_codigo_cargo": "CRG-0021"
     },
     {
       "codigo_rol": "ROL-0022",
@@ -1196,9 +1168,7 @@
         "Reportes de pipeline"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": "Evoluciona del anterior Jefe de Growth y absorbe la función comercial y de ventas (Ecuador y Chile).",
-      "origen_codigo_cargo": null,
-      "notas": "Coordinador sin personas a cargo."
+      "origen_codigo_cargo": null
     },
     {
       "codigo_rol": "ROL-0011",
@@ -1261,9 +1231,7 @@
         "Reportes de generación de demanda"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": "Renombrada desde 'Marketing'. Función provista por Pellegrinello (staff augmentation).",
-      "origen_codigo_cargo": "CRG-0011",
-      "notas": null
+      "origen_codigo_cargo": "CRG-0011"
     },
     {
       "codigo_rol": "ROL-0017",
@@ -1320,9 +1288,7 @@
         "Reportes de ejecución"
       ],
       "descriptivo_externo_ref": null,
-      "contexto": null,
-      "origen_codigo_cargo": "CRG-0017",
-      "notas": null
+      "origen_codigo_cargo": "CRG-0017"
     }
   ],
   "posiciones": [
@@ -1340,7 +1306,7 @@
       "confianza_vinculo": "alta",
       "proveedor": null,
       "origen_codigo_cargo": "CRG-0001",
-      "notas": "Cúspide de la estructura. Funde los cargos previos Visionario e Integrador. Interfaz de organización retenida hacia las funciones externalizadas."
+      "notas": "Cúspide de la estructura; interfaz de organización retenida hacia las funciones externalizadas."
     },
     {
       "codigo_posicion": "POS-0003",
@@ -1473,7 +1439,7 @@
       "confianza_vinculo": "alta",
       "proveedor": "BMV",
       "origen_codigo_cargo": "CRG-0017",
-      "notas": "Ocupado por Daniela Pérez (externa, provista vía BMV) por el momento."
+      "notas": null
     },
     {
       "codigo_posicion": "POS-0010",
@@ -1587,7 +1553,7 @@
       "confianza_vinculo": "inferida",
       "proveedor": null,
       "origen_codigo_cargo": "CRG-0014",
-      "notas": "Un asiento, ocupado por Gabriela Villafuerte. Renombrado desde Consultor Legal. Línea de reporte inferida (a validar). Trazabilidad e-CF (revisión de alineamiento 2026-07-27, PA): de las competencias esenciales, solo E.3 Gestión de riesgos es e-CF del perfil Especialista 5.4 (E.8 Gestión de la seguridad de la información queda como opcional); gobernanza, diseño de controles, análisis jurídico y elaboración de instrumentos son competencias de dominio/ESCO, no e-CF. ISCO reasignado de 2422 a 2619 (alineación con ESCO compliance/regulatory)."
+      "notas": "Un asiento. Línea de reporte inferida, a validar."
     },
     {
       "codigo_posicion": "POS-0017",
@@ -1829,5 +1795,6 @@
   ],
   "cambios_v2_4": "Registro de la Fase 2 Lote A (Consultoria). Se poblaron competencias (esenciales/opcionales), requisitos, indicadores y entregables de los 6 cargos de consultoria, anclados a las competencias e-CF de los perfiles UNE-EN 17740 donde aplica y a ESCO en el resto. Ajustes aprobados por PA: la Jefa de Operaciones de Consultoria lleva proteccion de datos como competencia esencial y se le mapea el perfil Gerente de Proteccion de Datos (UNE 5.3, secundario); el Gerente de Proyectos lleva conocimiento moderado de proteccion de datos; el Consultor DPO exige certificacion de DPO obligatoria; la Analista de Proteccion de Datos se reencuadra como junior juridico (sin seguridad ni tecnico como esenciales; gestion de riesgo opcional). Cambio de rol: Consultor Legal pasa a Consultor GRC (ESCO a compliance/GRC, ISCO a 2422 por confirmar, nucleo de riesgo y gobernanza, ocupa Gabriela Villafuerte). Criterio del reparto del perfil hibrido Especialista (5.4) entre cargos registrado en nota; detalle en la ficha MOD-org-002 v0.3.",
   "cambios_v2_5": "Fase 2 Lote B (2026-07-27, aprobado por PA). Se poblaron competencias (esenciales/opcionales), requisitos, indicadores y entregables de los 11 cargos restantes: Gerente General, DPO PDP Expert, Jefe de Tecnologia y SI, Desarrollador Senior, Jefa Administrativa Financiera, Analista Administrativo Contable, Asesor Legal Interno, Contador Chile, Coordinador Comercial, Coordinadora de Marketing y Coordinador de PDP Academy. Fuentes: UNE-EN 17740 (archivo local) para los cargos del dominio PDP y ESCO (API) para el resto; codigos ISCO confirmados via API ESCO. Se resolvio el solapamiento Jefa Administrativa Financiera / Analista Administrativo Contable bajando el Analista a nivel de ejecucion (registro, conciliaciones, cuentas y apoyo a fiscal/nomina), dejando la direccion, el control interno, la planificacion fiscal, la coordinacion de RRHH y la interfaz de externalizacion solo en la Jefa. Decisiones de PA: DPO interno con certificacion deseable; Jefe de Tecnologia y SI sin niveles e-CF en su faceta PDP secundaria; Coordinador Comercial en ISCO 2431 (marketeer). Los codigos e-CF se expresan con su nombre completo. Trazabilidad de fuentes en el anexo Fuentes-y-trazabilidad-de-estandares. Precede la revision de alineamiento del Lote A registrada en los campos notas.",
-  "nota_reparto_perfil_hibrido": "El perfil Especialista en Proteccion de Datos (UNE-EN 17740 5.4) es hibrido (juridico, tecnico y de riesgo/gobernanza). La organizacion reparte esas competencias entre cargos: la Analista de Proteccion de Datos toma la porcion juridica, el Consultor Tecnico la porcion de ingenieria (mapeado como Ingeniero, 5.5), y el Consultor GRC la porcion de riesgo y gobernanza. Detalle en la ficha MOD-org-002 v0.3. Revisión de alineamiento 2026-07-27 (PA): las competencias C.1 (soporte al usuario) y C.2 (soporte al cambio) del perfil 5.4 quedan fuera del reparto por decisión consciente, dado que la organización no presta ese soporte operativo."
+  "nota_reparto_perfil_hibrido": "El perfil Especialista en Proteccion de Datos (UNE-EN 17740 5.4) es hibrido (juridico, tecnico y de riesgo/gobernanza). La organizacion reparte esas competencias entre cargos: la Analista de Proteccion de Datos toma la porcion juridica, el Consultor Tecnico la porcion de ingenieria (mapeado como Ingeniero, 5.5), y el Consultor GRC la porcion de riesgo y gobernanza. Detalle en la ficha MOD-org-002 v0.3. Revisión de alineamiento 2026-07-27 (PA): las competencias C.1 (soporte al usuario) y C.2 (soporte al cambio) del perfil 5.4 quedan fuera del reparto por decisión consciente, dado que la organización no presta ese soporte operativo.",
+  "cambios_v2_6": "Barrido de calidad y separacion de capas segun MOD-org-002 v0.4 (2026-07-28, aprobado por PA). (1) Se eliminan los campos contexto y notas de todos los roles: no son atributos del descriptivo; el contenido con valor se absorbio en mision/funciones y la historia y la trazabilidad viven en el anexo de fuentes y en los campos cambios_*. (2) Se limpian las notas de posicion dejando solo hechos estructurales (POS-0002 sin la historia de fusion; POS-0015 sin la traza e-CF/ISCO ni el nombre del ocupante; POS-0009 sin la nota de ocupante). (3) Se corrige la ruta rota de descriptivo_externo_ref del Gerente General (ROL-0024) a ../descriptivos de cargo/descriptivo-cargo-integrador_v1.0.json. (4) El encabezado de identificacion del descriptivo (area y reporta a) se deriva de la posicion en el visor, no se almacena en el rol. Las confianzas de clasificacion y de vinculo se conservan como metadato de gobernanza pero dejan de mostrarse en el panel del descriptivo."
 }

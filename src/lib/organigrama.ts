@@ -56,8 +56,7 @@ export interface Rol {
   indicadores_desempeno?: string[];
   entregables?: string[];
   descriptivo_externo_ref?: string | null;
-  contexto?: string | null;
-  notas?: string | null;
+  origen_codigo_cargo?: string | null;
 }
 
 export interface VinculoSuperior {

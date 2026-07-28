@@ -4,7 +4,7 @@ import { ABOUT_SECTIONS } from '@/content/sobre-nosotros/sections';
 import type { CapabilityMapData } from './capabilityMap';
 import type { Organigrama } from './organigrama';
 import capabilityMapData from '../../content/capability-map/capability-map_v1.0.json';
-import organigramaData from '../../content/organigrama/organigrama-pdp-expert_v2.5.json';
+import organigramaData from '../../content/organigrama/organigrama-pdp-expert_v2.6.json';
 
 const capMap = capabilityMapData as CapabilityMapData;
 const organigrama = organigramaData as Organigrama;

@@ -78,9 +78,7 @@
           "indicadores_desempeno": { "type": "array", "items": { "type": "string" } },
           "entregables": { "type": "array", "items": { "type": "string" } },
           "descriptivo_externo_ref": { "type": ["string", "null"] },
-          "contexto": { "type": ["string", "null"] },
-          "origen_codigo_cargo": { "type": ["string", "null"] },
-          "notas": { "type": ["string", "null"] }
+          "origen_codigo_cargo": { "type": ["string", "null"] }
         }
       }
     },

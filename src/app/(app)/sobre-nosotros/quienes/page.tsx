@@ -1,6 +1,6 @@
 import { OrgChart } from '@/components/organigrama/OrgChart';
 import type { Organigrama } from '@/lib/organigrama';
-import organigramaData from '../../../../../content/organigrama/organigrama-pdp-expert_v2.5.json';
+import organigramaData from '../../../../../content/organigrama/organigrama-pdp-expert_v2.6.json';
 
 const data = organigramaData as Organigrama;
 

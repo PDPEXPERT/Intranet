@@ -3,7 +3,6 @@
 import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArbolOrganigrama,
-  ETIQUETA_VINCULO,
   NodoArbol,
   Organigrama,
   Posicion,
@@ -389,77 +388,29 @@ function renderDetallePosicion(nodo: NodoArbol, arbol: ArbolOrganigrama): ReactN
 
   return (
     <>
+      <h4>Identificación</h4>
+      <div className={styles.fila}>
+        <span>Área</span>
+        <b>{pos.area_departamento || '—'}</b>
+      </div>
+      {pos.vinculo_superior && (
+        <div className={styles.fila}>
+          <span>{pos.vinculo_superior.tipo === 'servicio' ? 'Relación de servicio con' : 'Reporta a'}</span>
+          <b>{tituloPosicion(posiciones, roles, pos.vinculo_superior.ref)}</b>
+        </div>
+      )}
+
       {rol?.mision && (
         <>
           <h4>Misión</h4>
           <p>{rol.mision}</p>
         </>
       )}
-      {rol?.contexto && (
-        <>
-          <h4>Contexto</h4>
-          <p>{rol.contexto}</p>
-        </>
-      )}
-
-      <h4>Ocupante</h4>
-      <p>
-        {nodo.ocupanteTexto || '—'}
-        {pos.ubicacion ? ` · ${pos.ubicacion}` : ''}
-      </p>
-
-      <div className={styles.fila}>
-        <span>Nivel jerárquico</span>
-        <b>{pos.nivel_jerarquico}</b>
-      </div>
-      <div className={styles.fila}>
-        <span>Tipo de vínculo</span>
-        <b>{ETIQUETA_VINCULO[pos.tipo_vinculo]}</b>
-      </div>
-      {pos.proveedor && (
-        <div className={styles.fila}>
-          <span>Proveedor</span>
-          <b>{pos.proveedor}</b>
-        </div>
-      )}
-      {pos.vinculo_superior && (
-        <div className={styles.fila}>
-          <span>{pos.vinculo_superior.tipo === 'servicio' ? 'Relación de servicio con' : 'Reporta a'}</span>
-          <b>
-            {tituloPosicion(posiciones, roles, pos.vinculo_superior.ref)}
-            {pos.confianza_vinculo === 'inferida' && (
-              <span className={`${styles.badge} ${styles.badgeInferida} ml-1`}>inferido</span>
-            )}
-          </b>
-        </div>
-      )}
-      {pos.rol_retenido_ref && (
-        <div className={styles.fila}>
-          <span>Organización retenida</span>
-          <b>{tituloPosicion(posiciones, roles, pos.rol_retenido_ref)}</b>
-        </div>
-      )}
-      {nodo.hijos.filter((h) => h.tipo === 'posicion').length > 0 && (
-        <div className={styles.fila}>
-          <span>Supervisa</span>
-          <b>
-            {nodo.hijos
-              .filter((h) => h.tipo === 'posicion')
-              .map((h) => h.titulo)
-              .join(', ')}
-          </b>
-        </div>
-      )}
 
       {isco?.codigo && (
         <>
           <h4>Clasificación ISCO-08</h4>
-          <p>
-            {isco.grupo_unitario || isco.codigo}
-            {isco.confianza && (
-              <span className={`${styles.badge} ${styles.badgeInferida} ml-1`}>{isco.confianza}</span>
-            )}
-          </p>
+          <p>{isco.grupo_unitario || isco.codigo}</p>
         </>
       )}
 
@@ -537,17 +488,6 @@ function renderDetallePosicion(nodo: NodoArbol, arbol: ArbolOrganigrama): ReactN
 
       <ListaDetalle titulo="Indicadores de desempeño" items={rol?.indicadores_desempeno} />
       <ListaDetalle titulo="Entregables" items={rol?.entregables} />
-
-      {pos.notas && (
-        <div className={styles.nota}>
-          <b>Posición:</b> {pos.notas}
-        </div>
-      )}
-      {rol?.notas && (
-        <div className={styles.nota}>
-          <b>Rol:</b> {rol.notas}
-        </div>
-      )}
     </>
   );
 }

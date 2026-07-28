@@ -9,14 +9,13 @@ vive versionado en este repositorio y se importa en build time.
 
 | Archivo | Qué es |
 |---|---|
-| `organigrama-pdp-expert_v2.5.json` | Instancia vigente (modelo v2.x). Consumida por `src/app/(app)/sobre-nosotros/quienes/page.tsx` vía import estático. |
-| `organigrama-pdp-expert_v1.0.json` | Instancia legacy (modelo plano `cargos`). Ya no se consume; se conserva hasta confirmar el switch a v2.x y luego se archiva. |
+| `organigrama-pdp-expert_v2.6.json` | Instancia vigente (modelo v2.x, descriptivo MOD-org-002 v0.4). Consumida por `src/app/(app)/sobre-nosotros/quienes/page.tsx` y `src/lib/search.ts` vía import estático. |
 | `organigrama.schema.json` | JSON Schema del modelo v2.x. Referencia para validar ediciones manuales. |
 
 ## Origen del dato
 
 Fuente de gobernanza: Gestión Organizacional,
-`03-Personas/Organigrama/organigrama-pdp-expert_v2.5.json`, con sus fichas
+`03-Personas/Organigrama/organigrama-pdp-expert_v2.6.json`, con sus fichas
 MOD-org-001 (organigrama) y MOD-org-002 (descriptivo de cargo) y el anexo de
 fuentes y trazabilidad. Ese espacio es la fuente de verdad del modelo; este
 repo consume una copia versionada para la intranet.
@@ -33,7 +32,11 @@ El JSON contiene dos modelos hermanos, alineados a W3C Organization Ontology:
 - **`roles`** (org:Role): el descriptivo de cada cargo. Misión, funciones
   esenciales, competencias (esenciales y opcionales), requisitos, indicadores,
   entregables, clasificación ISCO-08, nombre estandarizado ESCO y perfiles
-  profesionales UNE-EN 17740.
+  profesionales UNE-EN 17740. Según MOD-org-002 v0.4, el descriptivo no guarda
+  campos libres de contexto ni notas de proceso; el panel de detalle arma un
+  encabezado de identificación derivado de la posición (área y "reporta a") y no
+  muestra ocupante, tipo de vínculo, organización retenida ni confianzas del
+  dato, que son propios del organigrama o metadato de gobernanza.
 - **`posiciones`** (org:Post): las plazas de la estructura. Cada una referencia
   un rol (`rol_ref`), su línea de reporte (`vinculo_superior.ref` con `tipo`
   `mando` o `servicio`), el tipo de vínculo (`interna` / `staff_augmentation` /
