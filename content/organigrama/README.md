@@ -1,73 +1,75 @@
 # Organigrama
 
-Datos del organigrama de PDP Expert que alimentan la página `/organigrama` de
-la intranet. El JSON es la fuente única de la vista; la página no tiene botón
-de carga de archivo — el dato vive versionado en este repositorio.
+Datos del organigrama de PDP Expert que alimentan la página
+`/sobre-nosotros/quienes` de la intranet (componente `OrgChart`). El JSON es la
+fuente única de la vista; la página no tiene botón de carga de archivo: el dato
+vive versionado en este repositorio y se importa en build time.
 
 ## Archivos
 
 | Archivo | Qué es |
 |---|---|
-| `organigrama-pdp-expert_v1.0.json` | Instancia con los 20 cargos de PDP Expert. Consumida por `src/app/(app)/organigrama/page.tsx` vía import estático. |
-| `organigrama.schema.json` | JSON Schema del organigrama completo (envuelve un arreglo `cargos`). Referencia para validar cualquier edición manual del JSON. |
+| `organigrama-pdp-expert_v2.5.json` | Instancia vigente (modelo v2.x). Consumida por `src/app/(app)/sobre-nosotros/quienes/page.tsx` vía import estático. |
+| `organigrama-pdp-expert_v1.0.json` | Instancia legacy (modelo plano `cargos`). Ya no se consume; se conserva hasta confirmar el switch a v2.x y luego se archiva. |
+| `organigrama.schema.json` | JSON Schema del modelo v2.x. Referencia para validar ediciones manuales. |
 
 ## Origen del dato
 
-Fuente primaria: `Organigrama de rendición de cuentas PDP EXPERT 2026 3t.xlsx`
-(hoja "Organigrama 26-1"), cruzado con notas del Integrador y con
-`descriptivo-cargo-integrador_v1.0.json`. Migrado el 2026-07-22 desde
-Gestión Organizacional (`01-Arquitectura-empresarial/02-Organizacion-y-
-Personas/Organigrama/Modelo-de-datos_v1.0/organigrama/`), donde queda el
-paquete completo (README de migración, criterio de migración, plantillas de
-descriptivo de cargo). Ese espacio sigue siendo la fuente de gobernanza del
-dato; este repo consume una copia versionada para la intranet.
+Fuente de gobernanza: Gestión Organizacional,
+`03-Personas/Organigrama/organigrama-pdp-expert_v2.5.json`, con sus fichas
+MOD-org-001 (organigrama) y MOD-org-002 (descriptivo de cargo) y el anexo de
+fuentes y trazabilidad. Ese espacio es la fuente de verdad del modelo; este
+repo consume una copia versionada para la intranet.
 
-**No incluye datos del "Evaluador de personas"** (valores medulares,
-CDC/GWC). Ese dato es sensible y se mantiene fuera de este modelo por
-decisión ya documentada en Gestión Organizacional: el organigrama solo dice
-quién ocupa cada puesto, no cómo se evalúa a esa persona.
+**No incluye datos del "Evaluador de personas"** (valores medulares, CDC/GWC).
+Ese dato es sensible y se mantiene fuera del modelo por decisión ya documentada
+en Gestión Organizacional: el organigrama solo dice qué posición existe y quién
+la ocupa, no cómo se evalúa a esa persona.
 
-## Modelo de datos
+## Modelo de datos (v2.x)
 
-Cada cargo separa el puesto de quién lo ocupa (inspirado en W3C Organization
-Ontology: Post / Membership / reportsTo):
+El JSON contiene dos modelos hermanos, alineados a W3C Organization Ontology:
 
-- **Puesto** — `codigo_cargo`, `titulo_cargo`, `mision_cargo`,
-  `funciones_esenciales`, `reporta_a`, etc. Estructura EOS, independiente de
-  la persona.
-- **Ocupante** (`ocupante.tipo`: `interno` / `externalizado` / `vacante`) —
-  quién ocupa el puesto hoy. Sin evaluación de desempeño, solo identidad.
-- **`confianza_reporta_a`** (`alta` / `inferida` / `null`) — si la línea de
-  reporte es explícita en la fuente o se dedujo por posición. Se muestra en
-  la vista como badge "Inferido" para no imponer certeza donde no la hay.
+- **`roles`** (org:Role): el descriptivo de cada cargo. Misión, funciones
+  esenciales, competencias (esenciales y opcionales), requisitos, indicadores,
+  entregables, clasificación ISCO-08, nombre estandarizado ESCO y perfiles
+  profesionales UNE-EN 17740.
+- **`posiciones`** (org:Post): las plazas de la estructura. Cada una referencia
+  un rol (`rol_ref`), su línea de reporte (`vinculo_superior.ref` con `tipo`
+  `mando` o `servicio`), el tipo de vínculo (`interna` / `staff_augmentation` /
+  `managed_service`), el proveedor y el rol retenido (ISO 37500).
+- **`asignaciones`** (org:holds): quién ocupa cada posición. Solo identidad.
+- **`organos`** (org:OrganizationalUnit): órganos como el Comité de liderazgo,
+  con sus miembros y a qué posición asesoran.
 
-## Hallazgos abiertos (vienen del JSON, campo `hallazgos_detectados`)
+El componente `OrgChart` arma el árbol desde `posiciones` (raíz = posición sin
+`vinculo_superior`), enriquece cada nodo con su rol y su ocupante, dibuja línea
+punteada para relaciones de servicio o asesoría, y cuelga los órganos de la
+posición que asesoran. El adaptador vive en `src/lib/organigrama.ts`
+(`construirArbol`).
 
-- FB figura como ocupante de al menos tres asientos simultáneos (Gerente de
-  Tecnología y SI, Jefe de Growth, Ventas Ecuador) — concentración a
-  verificar con PA.
-- Ventas Chile y Gerente de Proyecto figuran con headcount 0 (vacantes).
-- Las líneas de reporte de Consultor Legal, Consultor Técnico y Analista
-  siguen inferidas por posición, no explícitas en la fuente.
+## Exportación a PDF
 
-## Pendiente
+La vista de la intranet **no** exporta a PDF (es de consulta). El visor
+standalone `visor-organigrama.html` que vive en Gestión Organizacional **sí**
+permite exportar a PDF (imprimir). Ambos consumen el mismo modelo v2.x.
 
-Sesión con MG prevista en el criterio original de migración
-(`Criterio - Migración organigrama a modelo de datos.md`, en Gestión
-Organizacional) antes de considerar este dato como entregable institucional
-cerrado. Esta copia en la intranet es la base migrada, no el cierre.
+## Hallazgos abiertos
+
+Vienen del propio JSON (campo `hallazgos_detectados`) y se muestran en la vista
+bajo "Notas". Incluyen concentración de personas en varios asientos y algunas
+líneas de reporte o códigos ISCO por confirmar. Detalle y resolución en Gestión
+Organizacional.
 
 ## Cómo actualizar el organigrama
 
-1. Edita `organigrama-pdp-expert_v1.0.json` (a mano, o regenerando desde el
-   Excel institucional). Valídalo contra `organigrama.schema.json` si el
-   cambio es grande.
-2. Si el cambio de fondo (estructura de cargos, criterio de migración) debe
-   quedar también en Gestión Organizacional, replícalo ahí — ese espacio es
-   la fuente de gobernanza, este repo es el consumidor para la intranet.
-3. `git commit && git push origin main` — dispara el deploy. La página
-   `/organigrama` toma el JSON en build time, no hay paso de sincronización
-   adicional.
+1. El cambio de fondo se hace primero en Gestión Organizacional (fuente de
+   gobernanza), generando la nueva versión del JSON.
+2. Copia el JSON nuevo a `content/organigrama/` con su nombre versionado y
+   repunta el import en `src/app/(app)/sobre-nosotros/quienes/page.tsx`.
+   Valídalo contra `organigrama.schema.json` si el cambio es grande.
+3. `git commit && git push origin main` dispara el deploy. La página toma el
+   JSON en build time, no hay paso de sincronización adicional.
 
 No hay carga manual de archivo en la intranet: el JSON de este directorio es
 siempre lo que se muestra.

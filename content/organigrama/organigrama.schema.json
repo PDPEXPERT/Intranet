@@ -1,52 +1,54 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://pdpexpert.local/schemas/organigrama.schema.json",
-  "title": "Organigrama",
-  "description": "Modelo para un organigrama completo de la organización: un solo JSON con todos los cargos (puestos/asientos), independiente de quién los ocupa. Extiende cargo.schema.json (plantilla de descriptivo de cargo) agregando el arreglo 'cargos' y, por cargo, el campo 'ocupante' (separado deliberadamente de cualquier dato de evaluación de personas). Inspirado en W3C Organization Ontology (org:Post, org:Membership, org:reportsTo) — ver 'Criterio - Migración organigrama a modelo de datos.md' en Gestión Organizacional.",
+  "title": "Organigrama (modelo v2.x)",
+  "description": "Contenedor de dos modelos hermanos en un solo JSON, alineado a las fichas MOD-org-001 (organigrama) y MOD-org-002 (descriptivo de cargo) y al vocabulario W3C Organization Ontology. (1) Organigrama: colecciones 'roles' (org:Role), 'posiciones' (org:Post), 'asignaciones' (org:holds) y 'organos' (org:OrganizationalUnit). (2) Descriptivo de cargo: contenido de cada rol mas su clasificacion ISCO-08, nombre estandarizado ESCO y perfiles profesionales UNE-EN 17740. La gobernanza del dato vive en Gestion Organizacional; este repo consume una copia versionada.",
   "type": "object",
-  "required": ["organizacion", "version", "fecha_actualizacion", "fuente", "cargos"],
+  "required": ["organizacion", "version", "fecha_actualizacion", "roles", "posiciones", "asignaciones"],
   "properties": {
     "organizacion": { "type": "string" },
     "version": { "type": "string" },
     "fecha_actualizacion": { "type": "string", "format": "date" },
-    "fuente": { "type": "string", "description": "De dónde se extrajo/migró la información." },
+    "fuente": { "type": "string" },
+    "modelo": { "type": "string" },
     "nota_metodologica": { "type": "string" },
-    "hallazgos_detectados": {
-      "type": "array",
-      "description": "Inconsistencias, ambigüedades o hallazgos detectados al construir el modelo, para revisión humana. No se resuelven aquí, se señalan.",
-      "items": { "type": "string" }
-    },
-    "cargos": {
+    "hallazgos_detectados": { "type": "array", "items": { "type": "string" } },
+    "roles": {
       "type": "array",
       "minItems": 1,
       "items": {
         "type": "object",
-        "description": "Un cargo/puesto. Mismos campos que cargo.schema.json (../plantillas/cargo.schema.json), más 'ocupante' y 'confianza_reporta_a'.",
-        "required": ["codigo_cargo", "titulo_cargo", "nivel_jerarquico", "mision_cargo", "estado", "version", "fecha_actualizacion", "ocupante"],
+        "required": ["codigo_rol", "titulo"],
         "properties": {
-          "codigo_cargo": { "type": "string", "pattern": "^CRG-[0-9]{4,}$" },
-          "titulo_cargo": { "type": "string" },
-          "area_departamento": { "type": "string" },
-          "nivel_jerarquico": {
-            "type": "string",
-            "enum": ["operativo", "coordinacion", "jefatura", "gerencia", "direccion"]
+          "codigo_rol": { "type": "string", "pattern": "^ROL-[0-9]{4,}$" },
+          "titulo": { "type": "string" },
+          "nombre_estandarizado": { "type": "string", "description": "Termino preferido ESCO." },
+          "terminos_alternativos": { "type": "array", "items": { "type": "string" } },
+          "clasificacion_isco": {
+            "type": "object",
+            "properties": {
+              "codigo": { "type": "string" },
+              "grupo_principal": { "type": "string" },
+              "subgrupo_principal": { "type": "string" },
+              "grupo_menor": { "type": "string" },
+              "grupo_unitario": { "type": "string" },
+              "confianza": { "type": "string" }
+            }
           },
-          "reporta_a": {
-            "type": ["string", "null"],
-            "description": "codigo_cargo del cargo superior. Null si es el de mayor jerarquía."
-          },
-          "confianza_reporta_a": {
-            "type": ["string", "null"],
-            "enum": ["alta", "inferida", null],
-            "description": "Si la línea de reporte es explícita en la fuente ('alta') o inferida por posición/contenido ('inferida'). No forzar certeza donde la fuente es ambigua."
-          },
-          "cargos_que_supervisa": {
+          "perfiles_profesionales": {
             "type": "array",
-            "items": { "type": "string" },
-            "default": []
+            "items": {
+              "type": "object",
+              "required": ["esquema", "perfil", "primario"],
+              "properties": {
+                "esquema": { "type": "string" },
+                "perfil": { "type": "string" },
+                "referencia": { "type": ["string", "null"] },
+                "primario": { "type": "boolean" }
+              }
+            }
           },
-          "mision_cargo": { "type": "string" },
-          "contexto_area": { "type": "string" },
+          "mision": { "type": "string" },
           "funciones_esenciales": {
             "type": "array",
             "items": {
@@ -58,56 +60,98 @@
               }
             }
           },
-          "entregables": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": ["nombre"],
-              "properties": {
-                "nombre": { "type": "string" },
-                "frecuencia": { "type": "string" },
-                "descripcion": { "type": "string" }
-              }
-            }
-          },
-          "indicadores_desempeno": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "nombre": { "type": "string" },
-                "descripcion": { "type": "string" }
-              }
+          "competencias": {
+            "type": "object",
+            "properties": {
+              "esenciales": { "type": "array", "items": { "type": "string" } },
+              "opcionales": { "type": "array", "items": { "type": "string" } }
             }
           },
           "requisitos": {
             "type": "object",
             "properties": {
-              "formacion_requerida": { "type": "string" },
-              "experiencia_requerida": { "type": "string" },
-              "competencias_conocimientos": { "type": "array", "items": { "type": "string" } },
-              "herramientas_sistemas": { "type": "array", "items": { "type": "string" } }
+              "formacion": { "type": "string" },
+              "experiencia": { "type": "string" },
+              "certificaciones": { "type": "string" }
             }
           },
-          "interacciones_internas": { "type": "array", "items": { "type": "string" } },
-          "interacciones_externas": { "type": "array", "items": { "type": "string" } },
-          "version": { "type": "string" },
-          "estado": { "type": "string", "enum": ["vigente", "en_revision", "obsoleto"] },
-          "fecha_creacion": { "type": "string", "format": "date" },
-          "fecha_actualizacion": { "type": "string", "format": "date" },
+          "indicadores_desempeno": { "type": "array", "items": { "type": "string" } },
+          "entregables": { "type": "array", "items": { "type": "string" } },
+          "descriptivo_externo_ref": { "type": ["string", "null"] },
+          "contexto": { "type": ["string", "null"] },
+          "origen_codigo_cargo": { "type": ["string", "null"] },
+          "notas": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "posiciones": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["codigo_posicion", "rol_ref", "titulo_posicion", "nivel_jerarquico", "estado", "tipo_vinculo"],
+        "properties": {
+          "codigo_posicion": { "type": "string", "pattern": "^POS-[0-9]{4,}$" },
+          "rol_ref": { "type": "string", "pattern": "^ROL-[0-9]{4,}$" },
+          "titulo_posicion": { "type": "string" },
+          "area_departamento": { "type": "string" },
+          "nivel_jerarquico": {
+            "type": "string",
+            "enum": ["operativo", "coordinacion", "jefatura", "gerencia", "direccion"]
+          },
+          "estado": { "type": "string", "enum": ["ocupada", "vacante", "provista_externamente"] },
+          "tipo_vinculo": { "type": "string", "enum": ["interna", "staff_augmentation", "managed_service"] },
+          "ubicacion": { "type": ["string", "null"] },
+          "vinculo_superior": {
+            "type": ["object", "null"],
+            "required": ["ref", "tipo"],
+            "properties": {
+              "ref": { "type": "string" },
+              "tipo": { "type": "string", "enum": ["mando", "servicio"] }
+            }
+          },
+          "rol_retenido_ref": { "type": ["string", "null"] },
+          "confianza_vinculo": { "type": "string", "enum": ["alta", "inferida"] },
+          "proveedor": { "type": ["string", "null"] },
+          "origen_codigo_cargo": { "type": ["string", "null"] },
+          "notas": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "asignaciones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["codigo_asignacion", "posicion_ref", "ocupante"],
+        "properties": {
+          "codigo_asignacion": { "type": "string" },
+          "posicion_ref": { "type": "string", "pattern": "^POS-[0-9]{4,}$" },
           "ocupante": {
             "type": "object",
-            "description": "Modelo A (estructura) enlaza aquí solo la identidad del ocupante — nunca datos de evaluación (Modelo B: Analizador de Personas, CDC/GWC), que permanecen fuera de este archivo.",
+            "description": "Solo la identidad del ocupante, nunca datos de evaluacion de personas (que permanecen fuera de este archivo).",
             "required": ["tipo"],
             "properties": {
-              "tipo": { "type": "string", "enum": ["interno", "externalizado", "vacante"] },
+              "tipo": { "type": "string", "enum": ["persona_interna", "persona_externa", "proveedor"] },
               "nombre_o_iniciales": { "type": ["string", "null"] },
-              "headcount": { "type": "integer", "minimum": 0 },
-              "proveedor": { "type": "string" },
-              "ubicacion": { "type": "string" }
+              "proveedor": { "type": ["string", "null"] }
             }
-          },
-          "notas": { "type": "string" }
+          }
+        }
+      }
+    },
+    "organos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["codigo_organo", "titulo"],
+        "properties": {
+          "codigo_organo": { "type": "string" },
+          "titulo": { "type": "string" },
+          "tipo": { "type": "string" },
+          "descripcion": { "type": "string" },
+          "miembros_ref": { "type": "array", "items": { "type": "string" } },
+          "asesora_a_ref": { "type": ["string", "null"] },
+          "notas": { "type": ["string", "null"] }
         }
       }
     }

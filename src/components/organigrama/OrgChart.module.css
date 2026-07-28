@@ -18,6 +18,11 @@
   stroke-width: 2;
 }
 
+.lineaConectorPunteada {
+  stroke-dasharray: 5 4;
+  stroke: rgb(var(--color-neutral));
+}
+
 .arbol {
   display: flex;
   justify-content: center;
@@ -78,6 +83,13 @@
 
 .nivelDireccion:hover {
   border-color: rgb(var(--color-accent));
+}
+
+.nodoOrgano {
+  border-style: dashed;
+  border-top: 1px dashed rgb(var(--color-accent));
+  border-color: rgb(var(--color-accent));
+  background: #fbfdff;
 }
 
 .titulo {
@@ -146,6 +158,12 @@
   color: #666;
   border-color: #ddd;
   border-style: dashed;
+}
+
+.badgeOrgano {
+  background: #eef6fc;
+  color: rgb(var(--color-primary));
+  border-color: #cfe4f5;
 }
 
 .toggle {

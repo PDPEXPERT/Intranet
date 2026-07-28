@@ -4,7 +4,7 @@ import { ABOUT_SECTIONS } from '@/content/sobre-nosotros/sections';
 import type { CapabilityMapData } from './capabilityMap';
 import type { Organigrama } from './organigrama';
 import capabilityMapData from '../../content/capability-map/capability-map_v1.0.json';
-import organigramaData from '../../content/organigrama/organigrama-pdp-expert_v1.0.json';
+import organigramaData from '../../content/organigrama/organigrama-pdp-expert_v2.5.json';
 
 const capMap = capabilityMapData as CapabilityMapData;
 const organigrama = organigramaData as Organigrama;
@@ -90,16 +90,24 @@ function matchStatic(q: string): SearchHitAll[] {
     }
   }
 
-  // Organigrama (cargos y ocupantes)
+  // Organigrama (posiciones y ocupantes)
+  const ocupantePorPos: Record<string, string> = {};
+  for (const a of organigrama.asignaciones) {
+    ocupantePorPos[a.posicion_ref] =
+      a.ocupante?.nombre_o_iniciales ?? a.ocupante?.proveedor ?? '';
+  }
   let orgCount = 0;
-  for (const cargo of organigrama.cargos) {
+  for (const pos of organigrama.posiciones) {
     if (orgCount >= PER_AREA) break;
-    const ocupante = cargo.ocupante?.nombre_o_iniciales ?? '';
-    if (normalize(`${cargo.titulo_cargo} ${ocupante} ${cargo.codigo_cargo}`).includes(q)) {
+    const ocupante =
+      pos.estado === 'vacante'
+        ? 'Vacante'
+        : ocupantePorPos[pos.codigo_posicion] ?? pos.proveedor ?? '';
+    if (normalize(`${pos.titulo_posicion} ${ocupante} ${pos.rol_ref}`).includes(q)) {
       hits.push({
         area: 'Organigrama',
-        title: cargo.titulo_cargo,
-        subtitle: ocupante || cargo.codigo_cargo,
+        title: pos.titulo_posicion,
+        subtitle: ocupante || pos.rol_ref,
         href: '/sobre-nosotros/quienes/',
       });
       orgCount++;

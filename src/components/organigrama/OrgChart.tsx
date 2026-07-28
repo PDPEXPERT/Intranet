@@ -2,12 +2,14 @@
 
 import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Cargo,
+  ArbolOrganigrama,
+  ETIQUETA_VINCULO,
+  NodoArbol,
   Organigrama,
-  cargosPorCodigo,
-  hijosDe,
-  raices,
-  textoOcupante,
+  Posicion,
+  Rol,
+  construirArbol,
+  tituloPosicion,
 } from '@/lib/organigrama';
 import { Button } from '@/components/ui/Button';
 import styles from './OrgChart.module.css';
@@ -16,13 +18,28 @@ interface OrgChartProps {
   data: Organigrama;
 }
 
+function aplanar(nodos: NodoArbol[], parent: string | undefined, acc: {
+  todos: NodoArbol[];
+  parentDe: Record<string, string | undefined>;
+}) {
+  nodos.forEach((n) => {
+    acc.todos.push(n);
+    acc.parentDe[n.id] = parent;
+    aplanar(n.hijos, n.id, acc);
+  });
+}
+
 export function OrgChart({ data }: OrgChartProps) {
-  const porCodigo = useMemo(() => cargosPorCodigo(data), [data]);
-  const raicesData = useMemo(() => raices(data, porCodigo), [data, porCodigo]);
+  const arbol: ArbolOrganigrama = useMemo(() => construirArbol(data), [data]);
+  const { todos, parentDe } = useMemo(() => {
+    const acc = { todos: [] as NodoArbol[], parentDe: {} as Record<string, string | undefined> };
+    aplanar(arbol.raices, undefined, acc);
+    return acc;
+  }, [arbol]);
 
   const [colapsados, setColapsados] = useState<Set<string>>(() => new Set());
   const [query, setQuery] = useState('');
-  const [seleccionado, setSeleccionado] = useState<Cargo | null>(null);
+  const [seleccionado, setSeleccionado] = useState<NodoArbol | null>(null);
   const [notasAbiertas, setNotasAbiertas] = useState(false);
   const [leyendaAbierta, setLeyendaAbierta] = useState(false);
 
@@ -64,7 +81,8 @@ export function OrgChart({ data }: OrgChartProps) {
           'd',
           `M ${px} ${py} L ${px} ${midY} L ${cx} ${midY} L ${cx} ${cy}`,
         );
-        path.setAttribute('class', styles.lineaConector);
+        const dashed = nodoHijo.dataset.linea === 'servicio';
+        path.setAttribute('class', `${styles.lineaConector} ${dashed ? styles.lineaConectorPunteada : ''}`);
         svg.appendChild(path);
       });
     });
@@ -95,11 +113,11 @@ export function OrgChart({ data }: OrgChartProps) {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
-  function toggleColapso(codigo: string) {
+  function toggleColapso(id: string) {
     setColapsados((prev) => {
       const next = new Set(prev);
-      if (next.has(codigo)) next.delete(codigo);
-      else next.add(codigo);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   }
@@ -109,114 +127,113 @@ export function OrgChart({ data }: OrgChartProps) {
   }
 
   function colapsarTodo() {
-    const raicesConHijos = raicesData.filter((r) => hijosDe(data, r.codigo_cargo).length > 0);
-    setColapsados(new Set(raicesConHijos.map((r) => r.codigo_cargo)));
+    setColapsados(new Set(arbol.raices.filter((r) => r.hijos.length > 0).map((r) => r.id)));
   }
 
   const q = query.trim().toLowerCase();
 
-  // Al buscar, expande automaticamente los ancestros de cualquier coincidencia
-  // para que el resultado quede visible.
+  const coincide = useCallback(
+    (nodo: NodoArbol): boolean => {
+      if (!q) return false;
+      return `${nodo.titulo} ${nodo.ocupanteTexto}`.toLowerCase().includes(q);
+    },
+    [q],
+  );
+
+  // Al buscar, expande los ancestros de cualquier coincidencia para que quede visible.
   useEffect(() => {
     if (!q) return;
-    const ancestrosAExpandir = new Set<string>();
-    data.cargos.forEach((c) => {
-      const buscable = `${c.titulo_cargo} ${c.ocupante?.nombre_o_iniciales || ''}`.toLowerCase();
-      if (!buscable.includes(q)) return;
-      let actual = c.reporta_a;
+    const aExpandir = new Set<string>();
+    todos.forEach((n) => {
+      if (!`${n.titulo} ${n.ocupanteTexto}`.toLowerCase().includes(q)) return;
+      let actual = parentDe[n.id];
       while (actual) {
-        ancestrosAExpandir.add(actual);
-        actual = porCodigo[actual]?.reporta_a ?? null;
+        aExpandir.add(actual);
+        actual = parentDe[actual];
       }
     });
-    if (ancestrosAExpandir.size === 0) return;
+    if (aExpandir.size === 0) return;
     setColapsados((prev) => {
       let cambio = false;
       const next = new Set(prev);
-      ancestrosAExpandir.forEach((codigo) => {
-        if (next.delete(codigo)) cambio = true;
+      aExpandir.forEach((id) => {
+        if (next.delete(id)) cambio = true;
       });
       return cambio ? next : prev;
     });
-  }, [q, data.cargos, porCodigo]);
+  }, [q, todos, parentDe]);
 
-  function coincide(cargo: Cargo): boolean {
-    if (!q) return false;
-    const buscable = `${cargo.titulo_cargo} ${cargo.ocupante?.nombre_o_iniciales || ''}`.toLowerCase();
-    return buscable.includes(q);
-  }
-
-  function renderRama(cargo: Cargo): ReactNode {
-    const hijos = hijosDe(data, cargo.codigo_cargo);
-    const ocupanteTxt = cargo.ocupante ? textoOcupante(cargo) : '';
-    const ocupanteVacante = cargo.ocupante?.tipo === 'vacante';
-    const colapsado = colapsados.has(cargo.codigo_cargo);
+  function renderRama(nodo: NodoArbol): ReactNode {
+    const colapsado = colapsados.has(nodo.id);
+    const esOrgano = nodo.tipo === 'organo';
 
     const nodoClases = [
       styles.nodo,
-      cargo.nivel_jerarquico === 'direccion' ? styles.nivelDireccion : '',
-      ocupanteVacante ? styles.vacante : '',
-      coincide(cargo) ? styles.resaltado : '',
-      seleccionado?.codigo_cargo === cargo.codigo_cargo ? styles.seleccionado : '',
+      nodo.nivel === 'direccion' && !esOrgano ? styles.nivelDireccion : '',
+      esOrgano ? styles.nodoOrgano : '',
+      nodo.esVacante ? styles.vacante : '',
+      coincide(nodo) ? styles.resaltado : '',
+      seleccionado?.id === nodo.id ? styles.seleccionado : '',
     ]
       .filter(Boolean)
       .join(' ');
 
+    const mostrarBadges = nodo.esExternalizada || nodo.esVacante || nodo.esInferida || esOrgano;
+
     return (
-      <div key={cargo.codigo_cargo} className={styles.rama}>
+      <div key={nodo.id} className={styles.rama}>
         <div
           className={nodoClases}
+          data-linea={nodo.lineaServicio ? 'servicio' : 'mando'}
           onClick={(e) => {
             e.stopPropagation();
-            setSeleccionado(cargo);
+            setSeleccionado(nodo);
           }}
         >
-          <div className={styles.titulo}>{cargo.titulo_cargo}</div>
+          <div className={styles.titulo}>{nodo.titulo}</div>
           <div className={styles.codigo}>
-            {cargo.codigo_cargo}
-            {cargo.area_departamento ? ` · ${cargo.area_departamento}` : ''}
+            {nodo.codigo}
+            {nodo.area ? ` · ${nodo.area}` : ''}
           </div>
-          {ocupanteTxt && <div className={styles.ocupante}>{ocupanteTxt}</div>}
-          {(cargo.ocupante?.tipo === 'externalizado' ||
-            cargo.ocupante?.tipo === 'vacante' ||
-            cargo.confianza_reporta_a === 'inferida') && (
+          {nodo.ocupanteTexto && <div className={styles.ocupante}>{nodo.ocupanteTexto}</div>}
+          {mostrarBadges && (
             <div className={styles.badges}>
-              {cargo.ocupante?.tipo === 'externalizado' && (
+              {esOrgano && (
+                <span className={`${styles.badge} ${styles.badgeOrgano}`}>Órgano asesor</span>
+              )}
+              {nodo.esExternalizada && (
                 <span className={`${styles.badge} ${styles.badgeExternalizado}`}>
                   Externalizado
                 </span>
               )}
-              {cargo.ocupante?.tipo === 'vacante' && (
+              {nodo.esVacante && (
                 <span className={`${styles.badge} ${styles.badgeVacante}`}>Vacante</span>
               )}
-              {cargo.confianza_reporta_a === 'inferida' && (
+              {nodo.esInferida && (
                 <span className={`${styles.badge} ${styles.badgeInferida}`}>Inferido</span>
               )}
             </div>
           )}
-          {hijos.length > 0 && (
+          {nodo.hijos.length > 0 && (
             <div
               className={styles.toggle}
               onClick={(e) => {
                 e.stopPropagation();
-                toggleColapso(cargo.codigo_cargo);
+                toggleColapso(nodo.id);
               }}
             >
               {colapsado ? '+' : '−'}
             </div>
           )}
         </div>
-        {hijos.length > 0 && (
+        {nodo.hijos.length > 0 && (
           <div className={`${styles.hijos} ${colapsado ? styles.hijosOculto : ''}`}>
-            {hijos.map((h) => renderRama(h))}
+            {nodo.hijos.map((h) => renderRama(h))}
           </div>
         )}
       </div>
     );
   }
-
-  const jefeDeSeleccionado = seleccionado?.reporta_a ? porCodigo[seleccionado.reporta_a] : null;
-  const hijosDeSeleccionado = seleccionado ? hijosDe(data, seleccionado.codigo_cargo) : [];
 
   return (
     <div className="space-y-4">
@@ -237,14 +254,12 @@ export function OrgChart({ data }: OrgChartProps) {
         <Button variant="ghost" onClick={() => setLeyendaAbierta((v) => !v)}>
           Leyenda
         </Button>
-        {(data.nota_metodologica || (data.hallazgos_detectados && data.hallazgos_detectados.length > 0)) && (
+        {(data.nota_metodologica ||
+          (data.hallazgos_detectados && data.hallazgos_detectados.length > 0)) && (
           <Button variant="ghost" onClick={() => setNotasAbiertas((v) => !v)}>
             Notas
           </Button>
         )}
-        <Button variant="ghost" onClick={() => window.print()}>
-          Exportar a PDF
-        </Button>
       </div>
 
       {leyendaAbierta && (
@@ -261,9 +276,14 @@ export function OrgChart({ data }: OrgChartProps) {
           </span>
           <span className={`${styles.badge} ${styles.badgeExternalizado}`}>Externalizado</span>
           <span className={`${styles.badge} ${styles.badgeVacante}`}>Vacante</span>
+          <span className={`${styles.badge} ${styles.badgeOrgano}`}>Órgano asesor</span>
           <span className="flex items-center gap-1.5">
             <span className={`${styles.badge} ${styles.badgeInferida}`}>Inferido</span>
             línea de reporte no explícita en la fuente
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block w-6 border-t-2 border-dashed border-neutral" /> relación
+            de servicio o asesoría
           </span>
         </div>
       )}
@@ -296,7 +316,7 @@ export function OrgChart({ data }: OrgChartProps) {
       <div className="overflow-x-auto pb-4">
         <div ref={wrapperRef} className={styles.wrapper}>
           <svg ref={svgRef} className={styles.svgConectores} />
-          <div className={styles.arbol}>{raicesData.map((r) => renderRama(r))}</div>
+          <div className={styles.arbol}>{arbol.raices.map((r) => renderRama(r))}</div>
         </div>
       </div>
 
@@ -325,72 +345,242 @@ export function OrgChart({ data }: OrgChartProps) {
               >
                 &times;
               </button>
-              <h2 className="m-0 mr-6 text-[15px] font-bold font-heading">
-                {seleccionado.titulo_cargo}
-              </h2>
+              <h2 className="m-0 mr-6 text-[15px] font-bold font-heading">{seleccionado.titulo}</h2>
               <div className="text-[10.5px] opacity-65 tracking-wide mt-1">
-                {seleccionado.codigo_cargo}
-                {seleccionado.area_departamento ? ` · ${seleccionado.area_departamento}` : ''}
+                {seleccionado.codigo}
+                {seleccionado.area ? ` · ${seleccionado.area}` : ''}
               </div>
             </div>
             <div className={styles.panelDetalleCuerpo}>
-              <h4>Misión</h4>
-              <p>{seleccionado.mision_cargo || '—'}</p>
-
-              {seleccionado.contexto_area && (
-                <>
-                  <h4>Contexto</h4>
-                  <p>{seleccionado.contexto_area}</p>
-                </>
-              )}
-
-              <h4>Ocupante</h4>
-              <p>{seleccionado.ocupante ? textoOcupante(seleccionado) : '—'}</p>
-
-              <div className={styles.fila}>
-                <span>Nivel jerárquico</span>
-                <b>{seleccionado.nivel_jerarquico || '—'}</b>
-              </div>
-
-              {seleccionado.reporta_a && (
-                <div className={styles.fila}>
-                  <span>Reporta a</span>
-                  <b>
-                    {jefeDeSeleccionado ? jefeDeSeleccionado.titulo_cargo : seleccionado.reporta_a}
-                    {seleccionado.confianza_reporta_a === 'inferida' && (
-                      <span className={`${styles.badge} ${styles.badgeInferida} ml-1`}>
-                        inferido
-                      </span>
-                    )}
-                  </b>
-                </div>
-              )}
-
-              {hijosDeSeleccionado.length > 0 && (
-                <div className={styles.fila}>
-                  <span>Supervisa</span>
-                  <b>{hijosDeSeleccionado.map((h) => h.titulo_cargo).join(', ')}</b>
-                </div>
-              )}
-
-              {seleccionado.funciones_esenciales.length > 0 && (
-                <>
-                  <h4>Funciones esenciales</h4>
-                  <ul className={styles.funciones}>
-                    {seleccionado.funciones_esenciales.map((f, i) => (
-                      <li key={i} className={f.critica ? '' : styles.secundaria}>
-                        {f.descripcion}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-
-              {seleccionado.notas && <div className={styles.nota}>{seleccionado.notas}</div>}
+              {seleccionado.tipo === 'organo'
+                ? renderDetalleOrgano(seleccionado, arbol)
+                : renderDetallePosicion(seleccionado, arbol)}
             </div>
           </>
         )}
       </div>
     </div>
+  );
+}
+
+function ListaDetalle({ titulo, items }: { titulo: string; items?: string[] }) {
+  if (!items || items.length === 0) return null;
+  return (
+    <>
+      <h4>{titulo}</h4>
+      <ul className={styles.funciones}>
+        {items.map((x, i) => (
+          <li key={i}>{x}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+function renderDetallePosicion(nodo: NodoArbol, arbol: ArbolOrganigrama): ReactNode {
+  const pos = nodo.posicion as Posicion;
+  const rol: Rol | undefined = nodo.rol;
+  const { posiciones, roles } = arbol;
+
+  const isco = rol?.clasificacion_isco;
+  const perfiles = rol?.perfiles_profesionales ?? [];
+  const funciones = rol?.funciones_esenciales ?? [];
+  const requisitos = rol?.requisitos;
+
+  return (
+    <>
+      {rol?.mision && (
+        <>
+          <h4>Misión</h4>
+          <p>{rol.mision}</p>
+        </>
+      )}
+      {rol?.contexto && (
+        <>
+          <h4>Contexto</h4>
+          <p>{rol.contexto}</p>
+        </>
+      )}
+
+      <h4>Ocupante</h4>
+      <p>
+        {nodo.ocupanteTexto || '—'}
+        {pos.ubicacion ? ` · ${pos.ubicacion}` : ''}
+      </p>
+
+      <div className={styles.fila}>
+        <span>Nivel jerárquico</span>
+        <b>{pos.nivel_jerarquico}</b>
+      </div>
+      <div className={styles.fila}>
+        <span>Tipo de vínculo</span>
+        <b>{ETIQUETA_VINCULO[pos.tipo_vinculo]}</b>
+      </div>
+      {pos.proveedor && (
+        <div className={styles.fila}>
+          <span>Proveedor</span>
+          <b>{pos.proveedor}</b>
+        </div>
+      )}
+      {pos.vinculo_superior && (
+        <div className={styles.fila}>
+          <span>{pos.vinculo_superior.tipo === 'servicio' ? 'Relación de servicio con' : 'Reporta a'}</span>
+          <b>
+            {tituloPosicion(posiciones, roles, pos.vinculo_superior.ref)}
+            {pos.confianza_vinculo === 'inferida' && (
+              <span className={`${styles.badge} ${styles.badgeInferida} ml-1`}>inferido</span>
+            )}
+          </b>
+        </div>
+      )}
+      {pos.rol_retenido_ref && (
+        <div className={styles.fila}>
+          <span>Organización retenida</span>
+          <b>{tituloPosicion(posiciones, roles, pos.rol_retenido_ref)}</b>
+        </div>
+      )}
+      {nodo.hijos.filter((h) => h.tipo === 'posicion').length > 0 && (
+        <div className={styles.fila}>
+          <span>Supervisa</span>
+          <b>
+            {nodo.hijos
+              .filter((h) => h.tipo === 'posicion')
+              .map((h) => h.titulo)
+              .join(', ')}
+          </b>
+        </div>
+      )}
+
+      {isco?.codigo && (
+        <>
+          <h4>Clasificación ISCO-08</h4>
+          <p>
+            {isco.grupo_unitario || isco.codigo}
+            {isco.confianza && (
+              <span className={`${styles.badge} ${styles.badgeInferida} ml-1`}>{isco.confianza}</span>
+            )}
+          </p>
+        </>
+      )}
+
+      {perfiles.length > 0 && (
+        <>
+          <h4>Perfiles profesionales</h4>
+          <ul className={styles.funciones}>
+            {perfiles.map((pf, i) => (
+              <li key={i}>
+                {pf.perfil} ({pf.esquema}
+                {pf.referencia ? ` ${pf.referencia}` : ''}
+                {pf.primario ? ', primario' : ''})
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      {rol?.nombre_estandarizado && (
+        <>
+          <h4>Nombre estandarizado (ESCO)</h4>
+          <p>
+            {rol.nombre_estandarizado}
+            {rol.terminos_alternativos && rol.terminos_alternativos.length > 0 && (
+              <>
+                <br />
+                <span className="text-neutral-dark/60 text-[11.5px]">
+                  {rol.terminos_alternativos.join(', ')}
+                </span>
+              </>
+            )}
+          </p>
+        </>
+      )}
+
+      {funciones.length > 0 && (
+        <>
+          <h4>Funciones esenciales</h4>
+          <ul className={styles.funciones}>
+            {funciones.map((f, i) => (
+              <li key={i} className={f.critica ? '' : styles.secundaria}>
+                {f.descripcion}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      <ListaDetalle titulo="Competencias esenciales" items={rol?.competencias?.esenciales} />
+      <ListaDetalle titulo="Competencias opcionales" items={rol?.competencias?.opcionales} />
+
+      {requisitos && (requisitos.formacion || requisitos.experiencia || requisitos.certificaciones) && (
+        <>
+          <h4>Requisitos</h4>
+          {requisitos.formacion && (
+            <div className={styles.fila}>
+              <span>Formación</span>
+              <b>{requisitos.formacion}</b>
+            </div>
+          )}
+          {requisitos.experiencia && (
+            <div className={styles.fila}>
+              <span>Experiencia</span>
+              <b>{requisitos.experiencia}</b>
+            </div>
+          )}
+          {requisitos.certificaciones && (
+            <div className={styles.fila}>
+              <span>Certificaciones</span>
+              <b>{requisitos.certificaciones}</b>
+            </div>
+          )}
+        </>
+      )}
+
+      <ListaDetalle titulo="Indicadores de desempeño" items={rol?.indicadores_desempeno} />
+      <ListaDetalle titulo="Entregables" items={rol?.entregables} />
+
+      {pos.notas && (
+        <div className={styles.nota}>
+          <b>Posición:</b> {pos.notas}
+        </div>
+      )}
+      {rol?.notas && (
+        <div className={styles.nota}>
+          <b>Rol:</b> {rol.notas}
+        </div>
+      )}
+    </>
+  );
+}
+
+function renderDetalleOrgano(nodo: NodoArbol, arbol: ArbolOrganigrama): ReactNode {
+  const org = nodo.organo;
+  if (!org) return null;
+  const { posiciones, roles } = arbol;
+  return (
+    <>
+      {org.descripcion && (
+        <>
+          <h4>Descripción</h4>
+          <p>{org.descripcion}</p>
+        </>
+      )}
+      {org.asesora_a_ref && (
+        <div className={styles.fila}>
+          <span>Asesora a</span>
+          <b>{tituloPosicion(posiciones, roles, org.asesora_a_ref)}</b>
+        </div>
+      )}
+      {org.miembros_ref && org.miembros_ref.length > 0 && (
+        <>
+          <h4>Miembros</h4>
+          <ul className={styles.funciones}>
+            {org.miembros_ref.map((m) => (
+              <li key={m}>{tituloPosicion(posiciones, roles, m)}</li>
+            ))}
+          </ul>
+        </>
+      )}
+      {org.notas && <div className={styles.nota}>{org.notas}</div>}
+    </>
   );
 }

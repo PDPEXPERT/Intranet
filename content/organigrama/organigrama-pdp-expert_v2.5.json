@@ -1,0 +1,1833 @@
+{
+  "organizacion": "PDP Expert",
+  "version": "2.5",
+  "fecha_actualizacion": "2026-07-27",
+  "modelo": "Contenedor de dos modelos hermanos en un solo archivo. (1) Organigrama, alineado a la Ficha MOD-org-001 v0.4 y a W3C ORG: colecciones roles (org:Role), posiciones (org:Post), asignaciones (org:holds) y organos (org:OrganizationalUnit). (2) Descriptivo de cargo, alineado a la Ficha MOD-org-002 v0.3: contenido de cada rol mas su clasificacion ISCO-08, nombre estandarizado ESCO y perfiles profesionales del dominio (UNE-EN 17740:2023 con competencias e-CF, EN 16234-1). Un rol puede llevar varios perfiles a la vez, uno marcado como primario. tipo_vinculo distingue interna | staff_augmentation | managed_service. La organizacion retenida (ISO 37500) existe en toda externalizacion: explicita (rol_retenido_ref) en managed_service, e implicita (jefe interno de reporte) en staff_augmentation.",
+  "fuente": "Estado actual entregado por PA (2026-07-27). Clasificacion ISCO-08/ESCO y perfiles UNE-EN 17740:2023 aprobados por PA en la Fase 1.",
+  "nota_metodologica": "Se separa el puesto/asiento (estructura EOS, independiente de quien lo ocupe) del ocupante. No incluye evaluaciones de personas (Analizador de Personas / CDC-GWC). El paradigma de liderazgo de EOS (Visionario/Integrador) se maneja por fuera del modelo, no como cargo ni atributo.",
+  "cambios_v2_3": "Registro de la Fase 1 (clasificacion + perfiles). (1) Fusion estructural: los cargos previos Visionario e Integrador se funden en un unico cargo Gerente General (ROL-0024, ocupa Pablo Arteaga); se elimina la posicion Visionario; el Gerente General es la cuspide (sin superior) y a el reportan todos los jefes y coordinadores y el DPO PDP Expert. (2) Se completan clasificacion_isco y nombre_estandarizado en cada rol. (3) Se agrega el campo perfiles_profesionales (esquema, perfil, primario): DPO PDP Expert y Consultor DPO como Delegado de Proteccion de Datos (UNE-EN 17740 5.2); Consultor Tecnico como Ingeniero de Proteccion de Datos (5.5, primario) mas consultor de seguridad TIC (ESCO); Analista de Proteccion de Datos y Consultor Legal como Especialista en Proteccion de Datos (5.4); Jefe de Tecnologia y SI como gerente de servicios TIC mas CISO mas Ingeniero de Proteccion de Datos (5.5). Los codigos ISCO de 4 digitos marcados con confianza 'por confirmar' se validaran contra el portal ESCO/ISCO; competencias e-CF por poblar en Fase 2.",
+  "hallazgos_detectados": [
+    "Concentracion de personas en varios asientos: Pablo Arteaga (Gerente General, Consultor DPO), Fernando Balarezo (Jefe de Tecnologia y SI, Consultor Tecnico, Coordinador Comercial), Milena Gross (Jefa de Operaciones, Gerente de Proyectos), Daniela Perez (Jefa Administrativa Financiera, Coordinador de PDP Academy), Gabriela Villafuerte (DPO PDP Expert, Consultor Legal). A revisar con PA.",
+    "Solapamiento de funciones entre Jefa Administrativa Financiera (ROL-0006) y Analista Administrativo Contable (ROL-0019): legacy de la migracion, a corregir al redactar sus descriptivos (Fase 2, Lote B).",
+    "Consultor Legal (ROL-0014): linea de reporte a la Jefa de Operaciones de Consultoria marcada como inferida, a validar.",
+    "Codigos ISCO 'por confirmar': revision de alineamiento 2026-07-27 (PA) via API ESCO. Resueltos: Consultor GRC 2422 -> 2619, Coordinador de PDP Academy 2359 -> 1345, Analista de Proteccion de Datos limpiado a 2619 (confianza media). Consultor Tecnico 2529 confirmado (media -> alta). Pendientes para el Lote B: DPO PDP Expert y Consultor DPO (2619, sin ocupacion ESCO dedicada) y Coordinador Comercial (2431, a confirmar). Detalle en el anexo de fuentes.",
+    "Competencias e-CF (EN 16234-1) por perfil UNE-EN 17740 y demas contenido del descriptivo pendientes de poblar en Fase 2, mas jerarquia SKOS broader/narrower."
+  ],
+  "roles": [
+    {
+      "codigo_rol": "ROL-0024",
+      "titulo": "Gerente General",
+      "nombre_estandarizado": "chief executive officer",
+      "terminos_alternativos": [
+        "director general",
+        "gerente general"
+      ],
+      "clasificacion_isco": {
+        "codigo": "1120",
+        "grupo_principal": "1 Directores y gerentes",
+        "subgrupo_principal": "11 Directores ejecutivos y personal directivo de la administracion publica",
+        "grupo_menor": "112 Directores generales y gerentes generales",
+        "grupo_unitario": "1120 Directores generales y gerentes generales",
+        "confianza": "alta"
+      },
+      "perfiles_profesionales": [],
+      "mision": "Como fundador y máxima autoridad ejecutiva, definir y custodiar la visión de largo plazo de la organización e integrar sus funciones principales (comercial, operaciones y administración/finanzas) para traducir la estrategia en ejecución medible, exigiendo rendición de cuentas al equipo de liderazgo.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Definir y custodiar la visión y la estrategia de largo plazo de la organización.",
+          "critica": true
+        },
+        {
+          "descripcion": "Integrar y alinear las áreas con la visión, y exigir rendición de cuentas al equipo de liderazgo.",
+          "critica": true
+        },
+        {
+          "descripcion": "Priorizar iniciativas clave y resolver problemas complejos y decisiones disruptivas.",
+          "critica": true
+        },
+        {
+          "descripcion": "Desarrollar relaciones estratégicas (clientes, socios, reguladores).",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisar el cumplimiento de rocas, indicadores y procesos, y los estándares operativos y normativos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Detectar y crear nuevas oportunidades de negocio, incluida la determinación de requisitos de productos y servicios.",
+          "critica": true
+        },
+        {
+          "descripcion": "Ejercer la interfaz de organización retenida hacia las funciones externalizadas.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Elaborar la estrategia empresarial y tomar decisiones estratégicas",
+          "Desarrollar las políticas y la cultura de la organización",
+          "Gestión financiera y análisis del rendimiento financiero de la empresa",
+          "Liderazgo y dirección de los responsables de área",
+          "Negociación con partes interesadas (clientes, socios, reguladores)",
+          "Búsqueda de crecimiento del negocio y determinación de requisitos de productos y servicios",
+          "Ejercer la interfaz de organización retenida (ISO 37500) sobre las funciones externalizadas"
+        ],
+        "opcionales": [
+          "Evaluación del desempeño del equipo directivo",
+          "Interacción con el órgano de gobierno",
+          "Ética empresarial y aseguramiento de operaciones lícitas",
+          "Nociones de fusiones y adquisiciones y de derecho de sociedades"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Administración o afín, o experiencia equivalente como fundador o ejecutivo",
+        "experiencia": "Dirección general y liderazgo de equipos",
+        "certificaciones": "No requeridas; deseable formación ejecutiva"
+      },
+      "indicadores_desempeno": [
+        "Cumplimiento de la visión y de las rocas trimestrales",
+        "Crecimiento del negocio (ingresos y clientes)",
+        "Salud financiera de la organización",
+        "Cumplimiento de los indicadores de las áreas"
+      ],
+      "entregables": [
+        "Visión y estrategia de largo plazo",
+        "Plan de empresa",
+        "Decisiones estratégicas documentadas",
+        "Rendición de cuentas del equipo de liderazgo"
+      ],
+      "descriptivo_externo_ref": "../descriptivo-cargo-integrador_v1.0.json",
+      "contexto": "Funde los cargos previos de Visionario e Integrador. El paradigma de liderazgo de EOS (Visionario/Integrador) se maneja por fuera del modelo. El descriptivo externo referenciado corresponde a la faceta de integración.",
+      "origen_codigo_cargo": "CRG-0001",
+      "notas": "Rol nuevo que funde Visionario (ROL-0002) e Integrador (ROL-0001)."
+    },
+    {
+      "codigo_rol": "ROL-0023",
+      "titulo": "DPO PDP Expert",
+      "nombre_estandarizado": "data protection officer",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "2619",
+        "grupo_principal": "2 Profesionales cientificos e intelectuales",
+        "subgrupo_principal": "26 Profesionales en derecho, en ciencias sociales y culturales",
+        "grupo_menor": "261 Profesionales en derecho",
+        "grupo_unitario": "2619 Profesionales en derecho no clasificados bajo otros epigrafes",
+        "confianza": "por confirmar"
+      },
+      "perfiles_profesionales": [
+        {
+          "esquema": "UNE-EN 17740:2023",
+          "perfil": "Delegado de Protección de Datos",
+          "referencia": "5.2",
+          "primario": true
+        }
+      ],
+      "mision": "Actuar como Delegado de Protección de Datos interno de la organización, velando por el cumplimiento del programa interno de protección de datos personales y asesorando a la dirección.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Supervisar el cumplimiento del programa interno de protección de datos personales de la organización.",
+          "critica": true
+        },
+        {
+          "descripcion": "Asesorar al Gerente General y a las áreas en materia de protección de datos personales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Actuar como punto de contacto interno y ante la autoridad de control respecto de la organización.",
+          "critica": true
+        },
+        {
+          "descripcion": "Monitorear riesgos y proponer mejoras al programa interno.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Gestión de contratos (e-CF D.8)",
+          "Desarrollo de personal y sensibilización interna (e-CF D.9)",
+          "Gestión de riesgos (e-CF E.3)",
+          "Gestión de relaciones e interlocución con la autoridad y los interesados (e-CF E.4)",
+          "Gestión de la seguridad de la información (e-CF E.8)",
+          "Analizar el tratamiento y evaluar su cumplimiento legal",
+          "Verificar la privacidad desde el diseño y por defecto",
+          "Identificar roles, responsabilidades y bases jurídicas"
+        ],
+        "opcionales": [
+          "Técnicas de anonimización y seudonimización",
+          "Técnicas criptográficas",
+          "Informática forense",
+          "Comunicación institucional con autoridades"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Jurídica o afín en protección de datos",
+        "experiencia": "Cumplimiento o funciones de DPO",
+        "certificaciones": "Certificación de DPO deseable"
+      },
+      "indicadores_desempeno": [
+        "Informes periódicos basados en riesgo del programa interno",
+        "Consultas e incidencias internas atendidas en plazo",
+        "Nivel de cumplimiento del programa interno"
+      ],
+      "entregables": [
+        "Informes periódicos basados en riesgo del programa interno",
+        "Documentación de interlocución con la autoridad de control",
+        "Asesoramiento sobre consultas internas",
+        "Indicadores de protección de datos"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": "Rol interno, distinto del Consultor DPO (servicio de DPO externo a clientes).",
+      "origen_codigo_cargo": null,
+      "notas": "Misión y funciones en borrador, a validar en Fase 2."
+    },
+    {
+      "codigo_rol": "ROL-0005",
+      "titulo": "Jefa de Operaciones de Consultoría",
+      "nombre_estandarizado": "business services manager",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "1219",
+        "grupo_principal": "1 Directores y gerentes",
+        "subgrupo_principal": "12 Directores administradores y comerciales",
+        "grupo_menor": "121 Directores de administracion y servicios",
+        "grupo_unitario": "1219 Directores de servicios empresariales y de administracion no clasificados bajo otros epigrafes",
+        "confianza": "alta"
+      },
+      "perfiles_profesionales": [
+        {
+          "esquema": "UNE-EN 17740:2023",
+          "perfil": "Gerente de Protección de Datos",
+          "referencia": "5.3",
+          "primario": false
+        }
+      ],
+      "mision": "Supervisar la ejecución de proyectos de consultoría y el cumplimiento de procesos, estándares de calidad, presupuesto y objetivos financieros; incluye la coordinación de operaciones y la gerencia de servicios.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Supervisión de la ejecución de proyectos de consultoría y conformidad con procesos y estándares de calidad.",
+          "critica": true
+        },
+        {
+          "descripcion": "Formación y desarrollo de competencias de consultores.",
+          "critica": true
+        },
+        {
+          "descripcion": "Evaluación de calidad de servicios y análisis de satisfacción del cliente.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisión de resultados operativos y de cumplimiento de presupuesto y objetivos financieros de los proyectos.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Planificación y control de operaciones de servicios profesionales",
+          "Gestión de calidad del servicio y satisfacción del cliente",
+          "Gestión de presupuesto y márgenes de proyectos",
+          "Liderazgo y desarrollo de consultores",
+          "Gestión de procesos y estándares",
+          "Visión sofisticada de protección de datos, con competencias equiparables a un Gerente de Protección de Datos (coordinación del cumplimiento, gestión de riesgos E.3, gestión de la seguridad de la información E.8, gestión de contratos D.8)"
+        ],
+        "opcionales": [
+          "Metodologías de mejora continua",
+          "Desarrollo de personal (D.9)"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Administración, ingeniería o afín",
+        "experiencia": "Liderazgo de operaciones o proyectos de consultoría",
+        "certificaciones": "Deseable en gestión de proyectos o calidad; formación sólida en protección de datos"
+      },
+      "indicadores_desempeno": [
+        "Cumplimiento de presupuesto y margen por proyecto",
+        "Satisfacción del cliente",
+        "Cumplimiento de plazos y calidad de entregables"
+      ],
+      "entregables": [
+        "Plan y reportes operativos",
+        "Evaluaciones de calidad y satisfacción del cliente",
+        "Plan de desarrollo del equipo de consultoría"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": null,
+      "origen_codigo_cargo": "CRG-0005",
+      "notas": "Trazabilidad e-CF (revisión de alineamiento 2026-07-27, PA): mapeo parcial del perfil Gerente de Protección de Datos 5.3, con E.3 Gestión de riesgos, E.8 Gestión de la seguridad de la información y D.8 Gestión de contratos; se omiten A.4 Planificación de productos o servicios y A.5 Diseño de arquitectura por no ejercer arquitectura, y D.9 Desarrollo de personal (opcional) no pertenece a 5.3 (es del perfil Delegado 5.2), se conserva por la realidad del cargo. ISCO 1219 confirmado vía ESCO (business service manager 1219.1)."
+    },
+    {
+      "codigo_rol": "ROL-0013",
+      "titulo": "Gerente de Proyectos",
+      "nombre_estandarizado": "project manager",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "1219",
+        "grupo_principal": "1 Directores y gerentes",
+        "subgrupo_principal": "12 Directores administradores y comerciales",
+        "grupo_menor": "121 Directores de administracion y servicios",
+        "grupo_unitario": "1219 Directores de servicios empresariales y de administracion no clasificados bajo otros epigrafes",
+        "confianza": "alta"
+      },
+      "perfiles_profesionales": [],
+      "mision": "Planificar y coordinar la ejecución de proyectos de consultoría de principio a fin.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Planificar y coordinar la ejecución de proyectos de principio a fin.",
+          "critica": true
+        },
+        {
+          "descripcion": "Monitorear el cumplimiento de cronogramas, entregables y presupuestos en los proyectos asignados.",
+          "critica": true
+        },
+        {
+          "descripcion": "Liderar la comunicación con clientes y equipos internos en los proyectos asignados.",
+          "critica": true
+        },
+        {
+          "descripcion": "Informar a la Jefa de Operaciones de Consultoría sobre los resultados operativos y financieros de los proyectos asignados.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Planificación y control de alcance, cronograma y presupuesto",
+          "Gestión de riesgos del proyecto",
+          "Comunicación con cliente y equipo",
+          "Control de entregables",
+          "Conocimiento moderado de protección de datos (por debajo del nivel de un especialista)"
+        ],
+        "opcionales": [
+          "Metodologías ágiles"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Afín a la gestión de proyectos",
+        "experiencia": "Gestión de proyectos",
+        "certificaciones": "Deseable PMP o equivalente"
+      },
+      "indicadores_desempeno": [
+        "Cumplimiento de cronograma, alcance y presupuesto",
+        "Satisfacción del cliente del proyecto"
+      ],
+      "entregables": [
+        "Plan de proyecto",
+        "Reportes de avance",
+        "Acta de cierre"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": null,
+      "origen_codigo_cargo": "CRG-0013",
+      "notas": null
+    },
+    {
+      "codigo_rol": "ROL-0007",
+      "titulo": "Consultor DPO",
+      "nombre_estandarizado": "data protection officer",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "2619",
+        "grupo_principal": "2 Profesionales cientificos e intelectuales",
+        "subgrupo_principal": "26 Profesionales en derecho, en ciencias sociales y culturales",
+        "grupo_menor": "261 Profesionales en derecho",
+        "grupo_unitario": "2619 Profesionales en derecho no clasificados bajo otros epigrafes",
+        "confianza": "por confirmar"
+      },
+      "perfiles_profesionales": [
+        {
+          "esquema": "UNE-EN 17740:2023",
+          "perfil": "Delegado de Protección de Datos",
+          "referencia": "5.2",
+          "primario": true
+        }
+      ],
+      "mision": "Actuar como DPO externo de clientes y punto técnico-jurídico de referencia en protección de datos personales.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Asesoría técnica especializada: emitir pareceres jurídico-técnicos ante consultas de clientes sobre obligaciones de protección de datos personales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisión del cumplimiento: ejecutar actividades recurrentes de supervisión normativa y alertar sobre riesgos identificados.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión del riesgo en tratamiento de datos: supervisar y validar metodologías de gestión de riesgos en tratamientos de datos de clientes.",
+          "critica": true
+        },
+        {
+          "descripcion": "Interlocución con autoridades: actuar como punto de contacto con autoridades de protección de datos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Capacitación y cultura de privacidad: diseñar y ejecutar capacitaciones para clientes.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Gestión de riesgos (E.3)",
+          "Gestión de la seguridad de la información (E.8)",
+          "Gestión de relaciones e interlocución con autoridades e interesados (E.4)",
+          "Gestión de contratos (D.8)",
+          "Análisis de cumplimiento del tratamiento frente a la ley",
+          "Verificación de privacidad desde el diseño y por defecto",
+          "Identificación de roles y bases jurídicas"
+        ],
+        "opcionales": [
+          "Desarrollo de personal (D.9)",
+          "Técnicas de anonimización y seudonimización",
+          "Informática forense",
+          "Comunicación institucional"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Jurídica o afín en protección de datos",
+        "experiencia": "DPO o consultoría en protección de datos",
+        "certificaciones": "Certificación de DPO obligatoria"
+      },
+      "indicadores_desempeno": [
+        "Informes de cumplimiento basados en riesgo",
+        "Consultas atendidas en plazo",
+        "Incidentes gestionados"
+      ],
+      "entregables": [
+        "Informes periódicos basados en riesgo",
+        "Dictámenes sobre evaluaciones de impacto",
+        "Documentación de interlocución con la autoridad de control",
+        "Asesoramiento sobre consultas"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": "Rol de servicio de DPO externo a clientes. Ocupado por Pablo Arteaga.",
+      "origen_codigo_cargo": "CRG-0007",
+      "notas": "Trazabilidad e-CF (revisión de alineamiento 2026-07-27, PA): D.9 (Desarrollo de personal) es competencia e-CF del perfil Delegado 5.2; se conserva como opcional por tratarse de un DPO de servicio externo a clientes."
+    },
+    {
+      "codigo_rol": "ROL-0015",
+      "titulo": "Consultor Técnico",
+      "nombre_estandarizado": "ICT security consultant",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "2529",
+        "grupo_principal": "2 Profesionales cientificos e intelectuales",
+        "subgrupo_principal": "25 Profesionales de tecnologia de la informacion y las comunicaciones",
+        "grupo_menor": "252 Especialistas en bases de datos y en redes de computadores",
+        "grupo_unitario": "2529 Especialistas en bases de datos y en redes de computadores no clasificados bajo otros epigrafes",
+        "confianza": "alta"
+      },
+      "perfiles_profesionales": [
+        {
+          "esquema": "UNE-EN 17740:2023",
+          "perfil": "Ingeniero de Protección de Datos",
+          "referencia": "5.5",
+          "primario": true
+        },
+        {
+          "esquema": "ESCO",
+          "perfil": "ICT security consultant",
+          "referencia": null,
+          "primario": false
+        }
+      ],
+      "mision": "Evaluar el nivel de madurez en seguridad y riesgo de los proyectos de implementación de programas de protección de datos.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Evaluar nivel de madurez en seguridad y matriz de riesgos con su plan de tratamiento en los proyectos de implementación de PPDP, incluida la elaboración de informes.",
+          "critica": true
+        },
+        {
+          "descripcion": "Brindar soporte técnico de seguridad de datos personales y gestión del riesgo en proyectos.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Diseño de arquitectura (A.5, nivel 4)",
+          "Gestión de riesgos (E.3, nivel 4)",
+          "Planificación de productos o servicios (A.4, nivel 3)",
+          "Diseño de aplicaciones (A.6, nivel 3)",
+          "Gestión de la seguridad de la información (E.8)",
+          "Aplicar privacidad desde el diseño y por defecto a sistemas",
+          "Diseñar medidas técnicas y organizativas",
+          "Evaluar madurez de seguridad y matriz de riesgos"
+        ],
+        "opcionales": [
+          "Técnicas criptográficas",
+          "IoT, RFID y geolocalización",
+          "Informática forense"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Ingeniería, TI o seguridad",
+        "experiencia": "Seguridad de la información y protección de datos técnica",
+        "certificaciones": "Deseable certificación de seguridad"
+      },
+      "indicadores_desempeno": [
+        "Madurez de seguridad evaluada",
+        "Hallazgos y planes de tratamiento",
+        "Privacidad por diseño cumplida en proyectos"
+      ],
+      "entregables": [
+        "Documentación de protección de datos del sistema",
+        "Requisitos y procedimientos operativos",
+        "Medidas técnicas y organizativas",
+        "Contribución a evaluaciones de impacto"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": null,
+      "origen_codigo_cargo": "CRG-0015",
+      "notas": "Niveles e-CF asignados por criterio de PA (UNE-EN 17740 deja los niveles en blanco): A.4 Planificación de productos o servicios nivel 3, A.5 Diseño de arquitectura nivel 4, A.6 Diseño de aplicaciones nivel 3, E.3 Gestión de riesgos nivel 4. Revisión de alineamiento 2026-07-27. ISCO 2529 confirmado vía ESCO (ICT security consultant 2529.6)."
+    },
+    {
+      "codigo_rol": "ROL-0016",
+      "titulo": "Analista de Protección de Datos",
+      "nombre_estandarizado": "data protection assistant",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "2619",
+        "grupo_principal": "2 Profesionales cientificos e intelectuales",
+        "subgrupo_principal": "26 Profesionales en derecho, en ciencias sociales y culturales",
+        "grupo_menor": "261 Profesionales en derecho",
+        "grupo_unitario": "2619 Profesionales en derecho no clasificados bajo otros epigrafes",
+        "confianza": "media"
+      },
+      "perfiles_profesionales": [
+        {
+          "esquema": "UNE-EN 17740:2023",
+          "perfil": "Especialista en Protección de Datos",
+          "referencia": "5.4",
+          "primario": true
+        }
+      ],
+      "mision": "Dar soporte operativo a los proyectos de consultoría y a la elaboración de entregables en materia de protección de datos personales.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Preparar borradores de entregables (incluye la asistencia a reuniones asignadas en el proyecto).",
+          "critica": true
+        },
+        {
+          "descripcion": "Elaborar los boletines de novedades regulatorias.",
+          "critica": true
+        },
+        {
+          "descripcion": "Soporte en tareas del programa de protección de datos personales de clientes.",
+          "critica": true
+        },
+        {
+          "descripcion": "Ejecutar las tareas que se le asignen desde el área de consultoría.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Aplicar principios de protección de datos (enfoque jurídico)",
+          "Gestionar solicitudes de interesados que ejercen sus derechos",
+          "Redactar políticas y procedimientos",
+          "Soporte legal a proyectos y elaboración de entregables"
+        ],
+        "opcionales": [
+          "Gestión de riesgo (E.3), como formación",
+          "Transferencias internacionales de datos"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Jurídica (perfil junior)",
+        "experiencia": "Inicial en protección de datos",
+        "certificaciones": "Deseable formación específica en protección de datos"
+      },
+      "indicadores_desempeno": [
+        "Entregables preparados en plazo y calidad",
+        "Boletines regulatorios emitidos",
+        "Solicitudes de interesados atendidas"
+      ],
+      "entregables": [
+        "Borradores de entregables",
+        "Boletines de novedades regulatorias",
+        "Respuestas al ejercicio de derechos (apoyo)",
+        "Procedimientos operativos (apoyo)"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": null,
+      "origen_codigo_cargo": "CRG-0016",
+      "notas": "Renombrado desde 'Analista'."
+    },
+    {
+      "codigo_rol": "ROL-0014",
+      "titulo": "Consultor GRC",
+      "nombre_estandarizado": "compliance manager",
+      "terminos_alternativos": [
+        "governance, risk and compliance specialist",
+        "GRC consultant"
+      ],
+      "clasificacion_isco": {
+        "codigo": "2619",
+        "grupo_principal": "2 Profesionales cientificos e intelectuales",
+        "subgrupo_principal": "26 Profesionales en derecho, en ciencias sociales y culturales",
+        "grupo_menor": "261 Profesionales en derecho",
+        "grupo_unitario": "2619 Profesionales en derecho no clasificados bajo otros epigrafes",
+        "confianza": "media"
+      },
+      "perfiles_profesionales": [
+        {
+          "esquema": "UNE-EN 17740:2023",
+          "perfil": "Especialista en Protección de Datos (porción de riesgo y gobernanza)",
+          "referencia": "5.4",
+          "primario": true
+        }
+      ],
+      "mision": "Asesorar y ejecutar la gestión de gobierno, riesgo y cumplimiento (GRC) en protección de datos, más allá de las opiniones legales: diseño y seguimiento de controles, gestión de riesgos y gobernanza del cumplimiento.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Gestión de riesgos de tratamiento y de cumplimiento: identificar, evaluar y tratar riesgos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gobernanza y cumplimiento: diseñar, implementar y dar seguimiento a controles y políticas del programa.",
+          "critica": true
+        },
+        {
+          "descripcion": "Análisis jurídico aplicado a GRC: fundamentar las decisiones de cumplimiento en la normativa.",
+          "critica": true
+        },
+        {
+          "descripcion": "Elaboración de instrumentos (políticas, contratos de tratamiento, procedimientos).",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión de controversias regulatorias y due diligence.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Gestión de riesgo (E.3)",
+          "Gobernanza y cumplimiento (governance)",
+          "Diseño y seguimiento de controles",
+          "Análisis jurídico aplicado a GRC",
+          "Elaboración de políticas e instrumentos de cumplimiento"
+        ],
+        "opcionales": [
+          "Gestión de la seguridad de la información (E.8)",
+          "Litigio administrativo",
+          "Propiedad intelectual",
+          "Soporte multijurisdiccional"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Derecho o afín (puede ser abogado)",
+        "experiencia": "GRC, cumplimiento o protección de datos",
+        "certificaciones": "Deseable en GRC, cumplimiento o protección de datos"
+      },
+      "indicadores_desempeno": [
+        "Riesgos identificados y tratados",
+        "Controles diseñados y en seguimiento",
+        "Cumplimiento del programa"
+      ],
+      "entregables": [
+        "Matriz de riesgos y plan de tratamiento",
+        "Políticas y controles de cumplimiento",
+        "Instrumentos legales (políticas, contratos de tratamiento)",
+        "Gestión de procedimientos regulatorios"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": "Renombrado desde Consultor Legal (2026-07-27). Toma la porción de riesgo y gobernanza del perfil híbrido Especialista en Protección de Datos (UNE 5.4). Su núcleo es GRC, no solo opiniones legales.",
+      "origen_codigo_cargo": "CRG-0014",
+      "notas": "Un asiento, ocupado por Gabriela Villafuerte. Línea de reporte inferida (a validar)."
+    },
+    {
+      "codigo_rol": "ROL-0003",
+      "titulo": "Jefe de Tecnología y Seguridad de la Información",
+      "nombre_estandarizado": "ICT service manager",
+      "terminos_alternativos": [
+        "chief technology officer",
+        "chief information security officer"
+      ],
+      "clasificacion_isco": {
+        "codigo": "1330",
+        "grupo_principal": "1 Directores y gerentes",
+        "subgrupo_principal": "13 Directores y gerentes de produccion y operaciones",
+        "grupo_menor": "133 Directores de servicios de tecnologia de la informacion y las comunicaciones",
+        "grupo_unitario": "1330 Directores de servicios de tecnologia de la informacion y las comunicaciones",
+        "confianza": "alta"
+      },
+      "perfiles_profesionales": [
+        {
+          "esquema": "ESCO",
+          "perfil": "ICT service manager",
+          "referencia": null,
+          "primario": true
+        },
+        {
+          "esquema": "ESCO",
+          "perfil": "CISO / ICT security manager",
+          "referencia": null,
+          "primario": false
+        },
+        {
+          "esquema": "UNE-EN 17740:2023",
+          "perfil": "Ingeniero de Protección de Datos",
+          "referencia": "5.5",
+          "primario": false
+        }
+      ],
+      "mision": "Liderar la visión técnica y la arquitectura de la plataforma Datum (CTO), y sostener la seguridad de la información y el soporte de TI de la organización (CISO/TI).",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Definir y mantener la visión técnica y la arquitectura de la plataforma.",
+          "critica": true
+        },
+        {
+          "descripcion": "Liderar al equipo de desarrollo: contratación, desempeño, mentoría.",
+          "critica": true
+        },
+        {
+          "descripcion": "Priorizar el roadmap técnico y gestionar la deuda técnica.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisar calidad, seguridad de la información y cumplimiento técnico.",
+          "critica": true
+        },
+        {
+          "descripcion": "Garantizar escalabilidad, disponibilidad y desempeño del producto.",
+          "critica": true
+        },
+        {
+          "descripcion": "Evaluar decisiones de construir vs. comprar y selección de stack, proveedores e infraestructura.",
+          "critica": true
+        },
+        {
+          "descripcion": "Traducir objetivos de negocio en entregables técnicos y viceversa ante la dirección y stakeholders.",
+          "critica": true
+        },
+        {
+          "descripcion": "Dar soporte de TI y gestionar el mantenimiento de activos (hardware).",
+          "critica": true
+        },
+        {
+          "descripcion": "Sostener la seguridad de la información de la organización.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Definir la estrategia tecnológica y la arquitectura de la plataforma",
+          "Gestión de proyectos y del roadmap técnico, incluida la deuda técnica",
+          "Gestión de cambios en sistemas TIC y mejora de procesos",
+          "Liderazgo del equipo de desarrollo (gestión de recursos humanos técnicos)",
+          "Supervisión de calidad, disponibilidad, escalabilidad y desempeño del producto",
+          "Gestión de la seguridad de la información de la organización, como CISO (e-CF E.8, Gestión de la seguridad de la información)",
+          "Relación con proveedores y decisiones de construir vs. comprar, con gestión de presupuestos",
+          "Privacidad desde el diseño y por defecto y medidas técnicas y organizativas en los sistemas (e-CF A.5 Diseño de arquitectura y E.3 Gestión de riesgos, del perfil Ingeniero de Protección de Datos 5.5)"
+        ],
+        "opcionales": [
+          "Gestión de riesgos de las TIC (e-CF E.3, Gestión de riesgos)",
+          "Estrategia de externalización y gestión de contratos (e-CF D.8, Gestión de contratos)",
+          "Cumplimiento normativo técnico",
+          "Diseño de aplicaciones (e-CF A.6, Diseño de aplicaciones) e ingeniería de protección de datos más profunda"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Ingeniería, TI o seguridad de la información",
+        "experiencia": "Liderazgo técnico (CTO) y seguridad de la información (CISO)",
+        "certificaciones": "Deseable certificación de seguridad"
+      },
+      "indicadores_desempeno": [
+        "Disponibilidad y desempeño de la plataforma",
+        "Cumplimiento del roadmap técnico",
+        "Incidentes de seguridad gestionados",
+        "Madurez de seguridad de la información"
+      ],
+      "entregables": [
+        "Visión y arquitectura técnica",
+        "Roadmap técnico",
+        "Políticas y controles de seguridad de la información",
+        "Contribución a la documentación de protección de datos de los sistemas"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": "Cargo doble: CTO de Datum y CISO/TI de la organización.",
+      "origen_codigo_cargo": "CRG-0003",
+      "notas": null
+    },
+    {
+      "codigo_rol": "ROL-0012",
+      "titulo": "Desarrollador Senior",
+      "nombre_estandarizado": "software developer",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "2512",
+        "grupo_principal": "2 Profesionales cientificos e intelectuales",
+        "subgrupo_principal": "25 Profesionales de tecnologia de la informacion y las comunicaciones",
+        "grupo_menor": "251 Analistas de sistemas y desarrolladores de software y multimedios",
+        "grupo_unitario": "2512 Desarrolladores de software",
+        "confianza": "alta"
+      },
+      "perfiles_profesionales": [],
+      "mision": "Desarrollar y mantener los productos tecnológicos de la organización.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Desarrollo y mejora continua de productos tecnológicos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Investigación relacionada a producto.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión de proyectos tecnológicos, incluyendo pruebas piloto y lanzamientos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Documentar las hojas de ruta de desarrollo de soluciones.",
+          "critica": true
+        },
+        {
+          "descripcion": "Implementación de soluciones tecnológicas.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Programación informática",
+          "Uso de patrones y bibliotecas de software",
+          "Análisis e interpretación de especificaciones y requisitos técnicos",
+          "Depuración de software",
+          "Identificación de requisitos del cliente y prototipado",
+          "Elaboración de documentación técnica",
+          "Uso de IDE y de herramientas de gestión de la configuración del software"
+        ],
+        "opcionales": [
+          "Programación y diseño orientados a objetos",
+          "Aprendizaje automático",
+          "Integración de componentes del sistema",
+          "Diseño de interfaz de usuario",
+          "Lenguajes específicos según stack (por ejemplo Java, Python, JavaScript)"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Desarrollo de software o afín",
+        "experiencia": "Senior en desarrollo de software",
+        "certificaciones": "Deseables según stack"
+      },
+      "indicadores_desempeno": [
+        "Entregas de producto en calidad y plazo",
+        "Defectos en producción",
+        "Cumplimiento de la hoja de ruta de desarrollo"
+      ],
+      "entregables": [
+        "Soluciones y mejoras de producto implementadas",
+        "Documentación de hojas de ruta de desarrollo",
+        "Resultados de pruebas piloto y lanzamientos"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": null,
+      "origen_codigo_cargo": "CRG-0012",
+      "notas": "Renombrado desde 'Desarrollador de Software'."
+    },
+    {
+      "codigo_rol": "ROL-0006",
+      "titulo": "Jefa Administrativa Financiera",
+      "nombre_estandarizado": "financial manager",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "1211",
+        "grupo_principal": "1 Directores y gerentes",
+        "subgrupo_principal": "12 Directores administradores y comerciales",
+        "grupo_menor": "121 Directores de administracion y servicios",
+        "grupo_unitario": "1211 Directores financieros",
+        "confianza": "alta"
+      },
+      "perfiles_profesionales": [],
+      "mision": "Sostener el cumplimiento fiscal, el flujo de caja, el control interno y la coordinación de Recursos Humanos de la organización.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Cumplimiento y planificación fiscal.",
+          "critica": true
+        },
+        {
+          "descripcion": "Monitoreo del flujo de caja y optimización de recursos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Supervisión de cuentas por pagar y por cobrar.",
+          "critica": true
+        },
+        {
+          "descripcion": "Coordinación de Recursos Humanos (contrataciones, nómina, bienestar) y proveedores.",
+          "critica": true
+        },
+        {
+          "descripcion": "Control interno, auditorías y cumplimiento normativo.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Aplicar las políticas financieras y preparar el plan financiero",
+          "Análisis financiero y del rendimiento de la empresa, con estados financieros",
+          "Gestión del flujo de caja y del presupuesto",
+          "Cumplimiento y planificación fiscal, control interno y cumplimiento normativo",
+          "Coordinación de recursos humanos (contrataciones, nómina, bienestar) y de proveedores",
+          "Ejercer la interfaz de organización retenida (ISO 37500) sobre el Contador Chile (managed service) y las plazas de BMV (staff augmentation)",
+          "Comunicación con la dirección"
+        ],
+        "opcionales": [
+          "Gestión de costes",
+          "Evaluación de la viabilidad financiera",
+          "Asesoría sobre gestión de riesgos",
+          "Decisiones de inversión",
+          "Elaboración de procedimientos contables"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Finanzas, administración o contabilidad",
+        "experiencia": "Dirección administrativo-financiera",
+        "certificaciones": "Deseable (por ejemplo NIIF o tributación)"
+      },
+      "indicadores_desempeno": [
+        "Exactitud y oportunidad del reporte financiero",
+        "Cumplimiento fiscal sin contingencias",
+        "Salud del flujo de caja",
+        "Cierre contable en plazo"
+      ],
+      "entregables": [
+        "Plan financiero y presupuesto",
+        "Estados financieros y reportes de gestión",
+        "Cumplimiento fiscal",
+        "Supervisión del control interno"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": "Renombrada desde 'Jefa Administrativa Contable'. Ejerce la organización retenida (interfaz) sobre el managed service Contador Chile, y coordina las plazas administrativas provistas por BMV (staff augmentation).",
+      "origen_codigo_cargo": "CRG-0006",
+      "notas": null
+    },
+    {
+      "codigo_rol": "ROL-0019",
+      "titulo": "Analista Administrativo Contable",
+      "nombre_estandarizado": "accounting assistant",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "3313",
+        "grupo_principal": "3 Tecnicos y profesionales de nivel medio",
+        "subgrupo_principal": "33 Profesionales de nivel medio en operaciones financieras y administrativas",
+        "grupo_menor": "331 Profesionales de nivel medio en finanzas y matematicas",
+        "grupo_unitario": "3313 Profesionales de nivel medio en contabilidad",
+        "confianza": "media"
+      },
+      "perfiles_profesionales": [],
+      "mision": "Ejecutar las tareas administrativo-contables de registro, conciliación y apoyo operativo bajo la dirección de la Jefatura Administrativa Financiera.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Registro de operaciones contables conforme a la normativa.",
+          "critica": true
+        },
+        {
+          "descripcion": "Conciliaciones bancarias y balances de comprobación.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión operativa de cuentas por pagar y por cobrar.",
+          "critica": true
+        },
+        {
+          "descripcion": "Apoyo a la preparación de declaraciones e informes tributarios.",
+          "critica": false
+        },
+        {
+          "descripcion": "Apoyo operativo a nómina y a la documentación de recursos humanos.",
+          "critica": false
+        },
+        {
+          "descripcion": "Archivo y control de la documentación contable; tareas administrativas delegadas.",
+          "critica": false
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Técnicas de contabilidad y asientos contables",
+          "Gestión del libro mayor y preparación de balances de comprobación",
+          "Conservación de la documentación financiera y detección de errores contables",
+          "Uso de sistemas de contabilidad",
+          "Aplicación operativa de la normativa contable y la legislación fiscal"
+        ],
+        "opcionales": [
+          "Gestión de cuentas y de operaciones financieras",
+          "Emisión de facturas y seguimiento de cuentas por cobrar",
+          "Cálculo de impuestos",
+          "Elaboración de informes de nómina"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Técnica o de nivel medio en contabilidad",
+        "experiencia": "Inicial a media en el área contable",
+        "certificaciones": "No requeridas"
+      },
+      "indicadores_desempeno": [
+        "Registros contables al día y sin errores",
+        "Conciliaciones en plazo",
+        "Soporte oportuno a cierres y declaraciones"
+      ],
+      "entregables": [
+        "Registros y conciliaciones",
+        "Documentación contable ordenada",
+        "Insumos para declaraciones y cierres"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": "Renombrado desde 'Asistente administrativo'. Plaza provista por BMV (staff augmentation), hoy vacante. Solapamiento con la Jefa Administrativa Financiera resuelto en el Lote B (2026-07-27, PA): este cargo ejecuta el registro contable, las conciliaciones y el apoyo operativo; la dirección, el control interno, la planificación fiscal, la coordinación de RRHH y la interfaz de externalización quedan solo en la Jefa Administrativa Financiera.",
+      "origen_codigo_cargo": "CRG-0019",
+      "notas": null
+    },
+    {
+      "codigo_rol": "ROL-0018",
+      "titulo": "Asesor Legal Interno",
+      "nombre_estandarizado": "corporate lawyer",
+      "terminos_alternativos": [
+        "in-house counsel"
+      ],
+      "clasificacion_isco": {
+        "codigo": "2611",
+        "grupo_principal": "2 Profesionales cientificos e intelectuales",
+        "subgrupo_principal": "26 Profesionales en derecho, en ciencias sociales y culturales",
+        "grupo_menor": "261 Profesionales en derecho",
+        "grupo_unitario": "2611 Abogados",
+        "confianza": "alta"
+      },
+      "perfiles_profesionales": [],
+      "mision": "Dar soporte legal interno a la organización, incluyendo asesoría al Gerente General en decisiones con implicancias legales.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Revisión y validación jurídica de contratos con clientes, proveedores y aliados (servicios, encargo de tratamiento, NDA, SLA).",
+          "critica": true
+        },
+        {
+          "descripcion": "Soporte legal a operaciones multijurisdiccionales (Ecuador, Chile y expansión regional): constitución de entidades, habilitaciones, cumplimiento societario.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión de asuntos laborales y regulatorios internos: relaciones laborales, cumplimiento normativo, requerimientos de autoridades.",
+          "critica": true
+        },
+        {
+          "descripcion": "Asesoría en riesgos legales vinculados al negocio: propiedad intelectual de Datum y metodología de la organización, modelos de negocio nuevos.",
+          "critica": true
+        },
+        {
+          "descripcion": "Soporte al Gerente General en decisiones con implicancias legales: estructuras de alianza, acuerdos comerciales, escalamiento de conflictos.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Asesoramiento jurídico e interpretación de la ley",
+          "Investigación jurídica",
+          "Derecho de sociedades y cumplimiento societario",
+          "Revisión y gestión de contratos (servicios, encargo de tratamiento, NDA, SLA)",
+          "Protección de los intereses de la organización y gestión de la confidencialidad",
+          "Identificación de las necesidades legales del negocio"
+        ],
+        "opcionales": [
+          "Derecho mercantil",
+          "Derecho contractual",
+          "Propiedad intelectual (Datum y metodología)",
+          "Derecho de la competencia",
+          "Legislación fiscal",
+          "Derecho internacional (expansión regional)"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Título de abogado",
+        "experiencia": "Asesoría legal corporativa",
+        "certificaciones": "Habilitación o colegiatura según jurisdicción"
+      },
+      "indicadores_desempeno": [
+        "Contratos revisados en plazo",
+        "Riesgos legales mitigados",
+        "Soporte a operaciones multijurisdiccionales"
+      ],
+      "entregables": [
+        "Contratos revisados y validados",
+        "Opiniones legales",
+        "Soporte a constitución y cumplimiento societario"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": null,
+      "origen_codigo_cargo": "CRG-0018",
+      "notas": "Vacante."
+    },
+    {
+      "codigo_rol": "ROL-0021",
+      "titulo": "Contador Chile",
+      "nombre_estandarizado": "accountant",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "2411",
+        "grupo_principal": "2 Profesionales cientificos e intelectuales",
+        "subgrupo_principal": "24 Profesionales en finanzas y administracion",
+        "grupo_menor": "241 Profesionales en finanzas",
+        "grupo_unitario": "2411 Contadores",
+        "confianza": "alta"
+      },
+      "perfiles_profesionales": [],
+      "mision": "Proveer servicios contables externalizados para la operación en Chile.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Registrar operaciones contables conforme a normativa local.",
+          "critica": true
+        },
+        {
+          "descripcion": "Coordinar declaraciones tributarias y reportes mensuales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Brindar soporte a auditorías externas.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestionar conciliaciones bancarias y balances.",
+          "critica": true
+        },
+        {
+          "descripcion": "Proveer información financiera precisa y oportuna a la dirección.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Preparación de estados financieros y balances de comprobación",
+          "Normativa contable y cumplimiento de los convenios de contabilidad",
+          "Cálculo de impuestos y elaboración de procedimientos contables",
+          "Asientos contables y detección de errores",
+          "Interpretación de estados financieros"
+        ],
+        "opcionales": [
+          "Gestión de presupuestos",
+          "Normas Internacionales de Información Financiera (NIIF)",
+          "Contabilidad de costes",
+          "Auditorías financieras",
+          "Asesoría sobre asuntos financieros"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Contador titulado (Chile)",
+        "experiencia": "Normativa tributaria chilena",
+        "certificaciones": "Habilitación según corresponda"
+      },
+      "indicadores_desempeno": [
+        "Declaraciones tributarias en plazo",
+        "Reportes mensuales precisos",
+        "Soporte a auditorías"
+      ],
+      "entregables": [
+        "Registros contables locales",
+        "Declaraciones tributarias",
+        "Conciliaciones y balances",
+        "Información financiera para la dirección"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": "Managed service externalizado. La organización retenida (interfaz de control) es la Jefa Administrativa Financiera.",
+      "origen_codigo_cargo": "CRG-0021",
+      "notas": null
+    },
+    {
+      "codigo_rol": "ROL-0022",
+      "titulo": "Coordinador Comercial",
+      "nombre_estandarizado": "sales and marketing professional",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "2431",
+        "grupo_principal": "2 Profesionales cientificos e intelectuales",
+        "subgrupo_principal": "24 Profesionales en finanzas y administracion",
+        "grupo_menor": "243 Profesionales en ventas, comercializacion y relaciones publicas",
+        "grupo_unitario": "2431 Profesionales de la publicidad y la comercializacion",
+        "confianza": "por confirmar"
+      },
+      "perfiles_profesionales": [],
+      "mision": "Liderar la estrategia y la ejecución comercial de la organización, y sostener la relación con clientes y el análisis de mercado.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Diseñar y alinear la estrategia comercial.",
+          "critica": true
+        },
+        {
+          "descripcion": "Gestión de relaciones con clientes y postventa.",
+          "critica": true
+        },
+        {
+          "descripcion": "Análisis de mercado y competencia.",
+          "critica": true
+        },
+        {
+          "descripcion": "Creación de propuestas comerciales y cierre de ventas.",
+          "critica": true
+        },
+        {
+          "descripcion": "Preparación y regularización de contratos comerciales.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Diseñar y alinear la estrategia comercial, integrando el marketing en la estrategia global",
+          "Análisis de mercado y de factores externos, con identificación de mercados y nichos",
+          "Gestión de la relación con clientes y postventa",
+          "Elaboración de propuestas comerciales y cierre de ventas",
+          "Preparación y regularización de contratos comerciales"
+        ],
+        "opcionales": [
+          "Estrategias de venta",
+          "Estudios de mercado",
+          "Técnicas de marketing digital y gestión de redes sociales",
+          "Estrategia de precios",
+          "Decisiones estratégicas de negocio"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Comercial, marketing o administración",
+        "experiencia": "Ventas o gestión comercial (Ecuador y Chile)",
+        "certificaciones": "Deseables"
+      },
+      "indicadores_desempeno": [
+        "Cumplimiento de metas comerciales",
+        "Conversión de propuestas",
+        "Retención de clientes"
+      ],
+      "entregables": [
+        "Estrategia y plan comercial",
+        "Propuestas comerciales",
+        "Contratos comerciales",
+        "Reportes de pipeline"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": "Evoluciona del anterior Jefe de Growth y absorbe la función comercial y de ventas (Ecuador y Chile).",
+      "origen_codigo_cargo": null,
+      "notas": "Coordinador sin personas a cargo."
+    },
+    {
+      "codigo_rol": "ROL-0011",
+      "titulo": "Coordinadora de Marketing",
+      "nombre_estandarizado": "marketing coordinator",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "2431",
+        "grupo_principal": "2 Profesionales cientificos e intelectuales",
+        "subgrupo_principal": "24 Profesionales en finanzas y administracion",
+        "grupo_menor": "243 Profesionales en ventas, comercializacion y relaciones publicas",
+        "grupo_unitario": "2431 Profesionales de la publicidad y la comercializacion",
+        "confianza": "alta"
+      },
+      "perfiles_profesionales": [],
+      "mision": "Ejecutar la generación de demanda y el branding de la organización.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Gestión integral de eventos presenciales y virtuales.",
+          "critica": true
+        },
+        {
+          "descripcion": "Branding, y diseño y ejecución de campañas de marketing digital.",
+          "critica": true
+        },
+        {
+          "descripcion": "Generación de leads y desarrollo de estrategias de captación (campañas).",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Principios de marketing y combinación de marketing (marketing mix)",
+          "Planificación y ejecución de estrategias y campañas de marketing digital",
+          "Branding y técnicas de marca",
+          "Generación de demanda y leads, con análisis de mercado",
+          "Gestión integral de eventos presenciales y virtuales"
+        ],
+        "opcionales": [
+          "Estudios de mercado",
+          "Gestión de redes sociales",
+          "Estrategia de precios",
+          "Analítica de marketing",
+          "Planificación de campañas publicitarias"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Marketing o comunicación",
+        "experiencia": "Marketing digital y eventos",
+        "certificaciones": "Deseables"
+      },
+      "indicadores_desempeno": [
+        "Leads generados",
+        "Desempeño de campañas",
+        "Ejecución de eventos"
+      ],
+      "entregables": [
+        "Plan y campañas de marketing",
+        "Activos de marca",
+        "Reportes de generación de demanda"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": "Renombrada desde 'Marketing'. Función provista por Pellegrinello (staff augmentation).",
+      "origen_codigo_cargo": "CRG-0011",
+      "notas": null
+    },
+    {
+      "codigo_rol": "ROL-0017",
+      "titulo": "Coordinador de PDP Academy",
+      "nombre_estandarizado": "education programme coordinator",
+      "terminos_alternativos": [],
+      "clasificacion_isco": {
+        "codigo": "1345",
+        "grupo_principal": "1 Directores y gerentes",
+        "subgrupo_principal": "13 Directores y gerentes de produccion y operaciones",
+        "grupo_menor": "134 Directores y gerentes de servicios profesionales",
+        "grupo_unitario": "1345 Directores de servicios de educacion",
+        "confianza": "media"
+      },
+      "perfiles_profesionales": [],
+      "mision": "Coordinar la planificación y ejecución operativa de los cursos de PDP Academy.",
+      "funciones_esenciales": [
+        {
+          "descripcion": "Planificación de cursos de PDP Academy.",
+          "critica": true
+        },
+        {
+          "descripcion": "Ejecución de tareas administrativas con profesores, entidades de educación superior y otras partes interesadas.",
+          "critica": true
+        }
+      ],
+      "competencias": {
+        "esenciales": [
+          "Coordinación y planificación de programas educativos",
+          "Garantizar la adhesión al plan de estudios y supervisar su ejecución",
+          "Cooperación con profesionales de la educación y entidades de educación superior",
+          "Identificación de necesidades de formación y análisis del mercado de la formación",
+          "Principios presupuestarios del programa"
+        ],
+        "opcionales": [
+          "Asesoría sobre métodos de enseñanza y programas de estudio",
+          "Tecnologías del aprendizaje",
+          "Promoción de programas y elaboración de instrumentos promocionales"
+        ]
+      },
+      "requisitos": {
+        "formacion": "Afín a educación o administración",
+        "experiencia": "Coordinación académica o de programas",
+        "certificaciones": "No requeridas"
+      },
+      "indicadores_desempeno": [
+        "Cursos ejecutados en plazo y calidad",
+        "Satisfacción de participantes",
+        "Relación con profesores y entidades"
+      ],
+      "entregables": [
+        "Planificación de cursos",
+        "Coordinación operativa con profesores y entidades",
+        "Reportes de ejecución"
+      ],
+      "descriptivo_externo_ref": null,
+      "contexto": null,
+      "origen_codigo_cargo": "CRG-0017",
+      "notas": null
+    }
+  ],
+  "posiciones": [
+    {
+      "codigo_posicion": "POS-0002",
+      "rol_ref": "ROL-0024",
+      "titulo_posicion": "Gerente General",
+      "area_departamento": "Alta Dirección",
+      "nivel_jerarquico": "direccion",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": null,
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": "CRG-0001",
+      "notas": "Cúspide de la estructura. Funde los cargos previos Visionario e Integrador. Interfaz de organización retenida hacia las funciones externalizadas."
+    },
+    {
+      "codigo_posicion": "POS-0003",
+      "rol_ref": "ROL-0023",
+      "titulo_posicion": "DPO PDP Expert",
+      "area_departamento": "Alta Dirección",
+      "nivel_jerarquico": "coordinacion",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0002",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": null,
+      "notas": "Reporta directo al Gerente General."
+    },
+    {
+      "codigo_posicion": "POS-0004",
+      "rol_ref": "ROL-0005",
+      "titulo_posicion": "Jefa de Operaciones de Consultoría",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "jefatura",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0002",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": "CRG-0005",
+      "notas": null
+    },
+    {
+      "codigo_posicion": "POS-0005",
+      "rol_ref": "ROL-0003",
+      "titulo_posicion": "Jefe de Tecnología y Seguridad de la Información",
+      "area_departamento": "Tecnología",
+      "nivel_jerarquico": "jefatura",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0002",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": "CRG-0003",
+      "notas": null
+    },
+    {
+      "codigo_posicion": "POS-0006",
+      "rol_ref": "ROL-0006",
+      "titulo_posicion": "Jefa Administrativa Financiera",
+      "area_departamento": "Administración y Finanzas",
+      "nivel_jerarquico": "jefatura",
+      "estado": "ocupada",
+      "tipo_vinculo": "staff_augmentation",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0002",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": "BMV",
+      "origen_codigo_cargo": "CRG-0006",
+      "notas": "Plaza provista por BMV (staff augmentation)."
+    },
+    {
+      "codigo_posicion": "POS-0007",
+      "rol_ref": "ROL-0022",
+      "titulo_posicion": "Coordinador Comercial",
+      "area_departamento": "Comercial",
+      "nivel_jerarquico": "coordinacion",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0002",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": null,
+      "notas": "Coordinador sin personas a cargo."
+    },
+    {
+      "codigo_posicion": "POS-0008",
+      "rol_ref": "ROL-0011",
+      "titulo_posicion": "Coordinadora de Marketing",
+      "area_departamento": "Marketing",
+      "nivel_jerarquico": "coordinacion",
+      "estado": "ocupada",
+      "tipo_vinculo": "staff_augmentation",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0002",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": "Pellegrinello",
+      "origen_codigo_cargo": "CRG-0011",
+      "notas": "Plaza provista por Pellegrinello (staff augmentation). Interfaz de organización retenida: Gerente General."
+    },
+    {
+      "codigo_posicion": "POS-0009",
+      "rol_ref": "ROL-0017",
+      "titulo_posicion": "Coordinador de PDP Academy",
+      "area_departamento": "PDP Academy",
+      "nivel_jerarquico": "coordinacion",
+      "estado": "ocupada",
+      "tipo_vinculo": "staff_augmentation",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0002",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": "BMV",
+      "origen_codigo_cargo": "CRG-0017",
+      "notas": "Ocupado por Daniela Pérez (externa, provista vía BMV) por el momento."
+    },
+    {
+      "codigo_posicion": "POS-0010",
+      "rol_ref": "ROL-0013",
+      "titulo_posicion": "Gerente de Proyectos",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "coordinacion",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0004",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": "CRG-0013",
+      "notas": null
+    },
+    {
+      "codigo_posicion": "POS-0011",
+      "rol_ref": "ROL-0007",
+      "titulo_posicion": "Consultor DPO",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "coordinacion",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0004",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": "CRG-0007",
+      "notas": null
+    },
+    {
+      "codigo_posicion": "POS-0012",
+      "rol_ref": "ROL-0015",
+      "titulo_posicion": "Consultor Técnico (asiento 1)",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "operativo",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0004",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": "CRG-0015",
+      "notas": null
+    },
+    {
+      "codigo_posicion": "POS-0013",
+      "rol_ref": "ROL-0015",
+      "titulo_posicion": "Consultor Técnico (asiento 2)",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "operativo",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0004",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": "CRG-0015",
+      "notas": null
+    },
+    {
+      "codigo_posicion": "POS-0014",
+      "rol_ref": "ROL-0016",
+      "titulo_posicion": "Analista de Protección de Datos",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "operativo",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0004",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": "CRG-0016",
+      "notas": null
+    },
+    {
+      "codigo_posicion": "POS-0015",
+      "rol_ref": "ROL-0014",
+      "titulo_posicion": "Consultor GRC",
+      "area_departamento": "Consultoría",
+      "nivel_jerarquico": "operativo",
+      "estado": "ocupada",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0004",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "inferida",
+      "proveedor": null,
+      "origen_codigo_cargo": "CRG-0014",
+      "notas": "Un asiento, ocupado por Gabriela Villafuerte. Renombrado desde Consultor Legal. Línea de reporte inferida (a validar). Trazabilidad e-CF (revisión de alineamiento 2026-07-27, PA): de las competencias esenciales, solo E.3 Gestión de riesgos es e-CF del perfil Especialista 5.4 (E.8 Gestión de la seguridad de la información queda como opcional); gobernanza, diseño de controles, análisis jurídico y elaboración de instrumentos son competencias de dominio/ESCO, no e-CF. ISCO reasignado de 2422 a 2619 (alineación con ESCO compliance/regulatory)."
+    },
+    {
+      "codigo_posicion": "POS-0017",
+      "rol_ref": "ROL-0012",
+      "titulo_posicion": "Desarrollador Senior",
+      "area_departamento": "Tecnología",
+      "nivel_jerarquico": "operativo",
+      "estado": "ocupada",
+      "tipo_vinculo": "staff_augmentation",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0005",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": "Freelance (externo)",
+      "origen_codigo_cargo": "CRG-0012",
+      "notas": "Contratista freelancer externo (staff augmentation)."
+    },
+    {
+      "codigo_posicion": "POS-0018",
+      "rol_ref": "ROL-0019",
+      "titulo_posicion": "Analista Administrativo Contable",
+      "area_departamento": "Administración y Finanzas",
+      "nivel_jerarquico": "operativo",
+      "estado": "vacante",
+      "tipo_vinculo": "staff_augmentation",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0006",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": "BMV",
+      "origen_codigo_cargo": "CRG-0019",
+      "notas": "Plaza provista por BMV (staff augmentation), vacante."
+    },
+    {
+      "codigo_posicion": "POS-0019",
+      "rol_ref": "ROL-0018",
+      "titulo_posicion": "Asesor Legal Interno",
+      "area_departamento": "Administración y Finanzas",
+      "nivel_jerarquico": "operativo",
+      "estado": "vacante",
+      "tipo_vinculo": "interna",
+      "ubicacion": null,
+      "vinculo_superior": {
+        "ref": "POS-0006",
+        "tipo": "mando"
+      },
+      "rol_retenido_ref": null,
+      "confianza_vinculo": "alta",
+      "proveedor": null,
+      "origen_codigo_cargo": "CRG-0018",
+      "notas": "Vacante."
+    },
+    {
+      "codigo_posicion": "POS-0020",
+      "rol_ref": "ROL-0021",
+      "titulo_posicion": "Contador Chile",
+      "area_departamento": "Administración y Finanzas",
+      "nivel_jerarquico": "operativo",
+      "estado": "provista_externamente",
+      "tipo_vinculo": "managed_service",
+      "ubicacion": "CL",
+      "vinculo_superior": {
+        "ref": "POS-0006",
+        "tipo": "servicio"
+      },
+      "rol_retenido_ref": "POS-0006",
+      "confianza_vinculo": "alta",
+      "proveedor": "Externalizado (Chile)",
+      "origen_codigo_cargo": "CRG-0021",
+      "notas": "Managed service; organización retenida (interfaz de control): Jefa Administrativa Financiera."
+    }
+  ],
+  "asignaciones": [
+    {
+      "codigo_asignacion": "ASG-0002",
+      "posicion_ref": "POS-0002",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Pablo Arteaga",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0003",
+      "posicion_ref": "POS-0003",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Gabriela Villafuerte",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0004",
+      "posicion_ref": "POS-0004",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Milena Gross",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0005",
+      "posicion_ref": "POS-0005",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Fernando Balarezo",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0006",
+      "posicion_ref": "POS-0006",
+      "ocupante": {
+        "tipo": "persona_externa",
+        "nombre_o_iniciales": "Daniela Pérez",
+        "proveedor": "BMV"
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0007",
+      "posicion_ref": "POS-0007",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Fernando Balarezo",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0008",
+      "posicion_ref": "POS-0008",
+      "ocupante": {
+        "tipo": "persona_externa",
+        "nombre_o_iniciales": "Gabriela Pellegrinello",
+        "proveedor": "Pellegrinello"
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0009",
+      "posicion_ref": "POS-0009",
+      "ocupante": {
+        "tipo": "persona_externa",
+        "nombre_o_iniciales": "Daniela Pérez",
+        "proveedor": "BMV"
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0010",
+      "posicion_ref": "POS-0010",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Milena Gross",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0011",
+      "posicion_ref": "POS-0011",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Pablo Arteaga",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0012",
+      "posicion_ref": "POS-0012",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Luis Montenegro",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0013",
+      "posicion_ref": "POS-0013",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Fernando Balarezo",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0014",
+      "posicion_ref": "POS-0014",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Katrina Bustillos",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0015",
+      "posicion_ref": "POS-0017",
+      "ocupante": {
+        "tipo": "persona_externa",
+        "nombre_o_iniciales": "Henry Minta",
+        "proveedor": "Freelance (externo)"
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0017",
+      "posicion_ref": "POS-0015",
+      "ocupante": {
+        "tipo": "persona_interna",
+        "nombre_o_iniciales": "Gabriela Villafuerte",
+        "proveedor": null
+      }
+    },
+    {
+      "codigo_asignacion": "ASG-0016",
+      "posicion_ref": "POS-0020",
+      "ocupante": {
+        "tipo": "proveedor",
+        "nombre_o_iniciales": "Externalizado (Chile)",
+        "proveedor": "Externalizado (Chile)"
+      }
+    }
+  ],
+  "organos": [
+    {
+      "codigo_organo": "ORG-0001",
+      "titulo": "Comité de liderazgo",
+      "tipo": "organo_asesor",
+      "descripcion": "Órgano asesor del Gerente General para su toma de decisiones. No es un cargo.",
+      "miembros_ref": [
+        "POS-0004",
+        "POS-0005",
+        "POS-0006"
+      ],
+      "asesora_a_ref": "POS-0002",
+      "notas": "Miembros: Jefa de Operaciones de Consultoría, Jefe de Tecnología y Seguridad de la Información, Jefa Administrativa Financiera."
+    }
+  ],
+  "cambios_v2_4": "Registro de la Fase 2 Lote A (Consultoria). Se poblaron competencias (esenciales/opcionales), requisitos, indicadores y entregables de los 6 cargos de consultoria, anclados a las competencias e-CF de los perfiles UNE-EN 17740 donde aplica y a ESCO en el resto. Ajustes aprobados por PA: la Jefa de Operaciones de Consultoria lleva proteccion de datos como competencia esencial y se le mapea el perfil Gerente de Proteccion de Datos (UNE 5.3, secundario); el Gerente de Proyectos lleva conocimiento moderado de proteccion de datos; el Consultor DPO exige certificacion de DPO obligatoria; la Analista de Proteccion de Datos se reencuadra como junior juridico (sin seguridad ni tecnico como esenciales; gestion de riesgo opcional). Cambio de rol: Consultor Legal pasa a Consultor GRC (ESCO a compliance/GRC, ISCO a 2422 por confirmar, nucleo de riesgo y gobernanza, ocupa Gabriela Villafuerte). Criterio del reparto del perfil hibrido Especialista (5.4) entre cargos registrado en nota; detalle en la ficha MOD-org-002 v0.3.",
+  "cambios_v2_5": "Fase 2 Lote B (2026-07-27, aprobado por PA). Se poblaron competencias (esenciales/opcionales), requisitos, indicadores y entregables de los 11 cargos restantes: Gerente General, DPO PDP Expert, Jefe de Tecnologia y SI, Desarrollador Senior, Jefa Administrativa Financiera, Analista Administrativo Contable, Asesor Legal Interno, Contador Chile, Coordinador Comercial, Coordinadora de Marketing y Coordinador de PDP Academy. Fuentes: UNE-EN 17740 (archivo local) para los cargos del dominio PDP y ESCO (API) para el resto; codigos ISCO confirmados via API ESCO. Se resolvio el solapamiento Jefa Administrativa Financiera / Analista Administrativo Contable bajando el Analista a nivel de ejecucion (registro, conciliaciones, cuentas y apoyo a fiscal/nomina), dejando la direccion, el control interno, la planificacion fiscal, la coordinacion de RRHH y la interfaz de externalizacion solo en la Jefa. Decisiones de PA: DPO interno con certificacion deseable; Jefe de Tecnologia y SI sin niveles e-CF en su faceta PDP secundaria; Coordinador Comercial en ISCO 2431 (marketeer). Los codigos e-CF se expresan con su nombre completo. Trazabilidad de fuentes en el anexo Fuentes-y-trazabilidad-de-estandares. Precede la revision de alineamiento del Lote A registrada en los campos notas.",
+  "nota_reparto_perfil_hibrido": "El perfil Especialista en Proteccion de Datos (UNE-EN 17740 5.4) es hibrido (juridico, tecnico y de riesgo/gobernanza). La organizacion reparte esas competencias entre cargos: la Analista de Proteccion de Datos toma la porcion juridica, el Consultor Tecnico la porcion de ingenieria (mapeado como Ingeniero, 5.5), y el Consultor GRC la porcion de riesgo y gobernanza. Detalle en la ficha MOD-org-002 v0.3. Revisión de alineamiento 2026-07-27 (PA): las competencias C.1 (soporte al usuario) y C.2 (soporte al cambio) del perfil 5.4 quedan fuera del reparto por decisión consciente, dado que la organización no presta ese soporte operativo."
+}
