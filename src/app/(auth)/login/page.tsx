@@ -1,28 +1,41 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 
+function IconMicrosoft({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 23 23" className={className} aria-hidden="true">
+      <rect x="1" y="1" width="10" height="10" fill="#F25022" />
+      <rect x="12" y="1" width="10" height="10" fill="#7FBA00" />
+      <rect x="1" y="12" width="10" height="10" fill="#00A4EF" />
+      <rect x="12" y="12" width="10" height="10" fill="#FFB900" />
+    </svg>
+  );
+}
+
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function handleMicrosoftLogin() {
     setError(null);
     setLoading(true);
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+    const { error: signInError } = await supabase.auth.signInWithOAuth({
+      provider: 'azure',
+      options: {
+        // Al ser static export, la app no tiene servidor propio: se
+        // redirige de vuelta a la raíz del sitio y AuthGuard se encarga
+        // de resolver la sesión y, según el rol, dejar entrar o no.
+        redirectTo: typeof window !== 'undefined' ? window.location.origin : undefined,
+      },
     });
-    setLoading(false);
     if (signInError) {
-      setError('Credenciales inválidas. Intenta de nuevo.');
-      return;
+      setLoading(false);
+      setError('No se pudo iniciar el proceso de inicio de sesión. Intenta de nuevo.');
     }
-    // AuthGuard detecta la sesión y redirige a /
+    // Si no hay error, el navegador es redirigido a Microsoft. No hay
+    // nada más que hacer aquí: al volver, AuthGuard detecta la sesión.
   }
 
   return (
@@ -32,52 +45,28 @@ export default function LoginPage() {
           Iniciar sesión
         </h2>
         <p className="text-sm text-muted text-center mb-6">
-          Acceso exclusivo para consultores PDP Expert
+          Acceso exclusivo para el equipo de PDP Expert
         </p>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-primary mb-1"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              required
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 bg-surface text-neutral-dark border border-neutral rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-primary mb-1"
-            >
-              Contraseña
-            </label>
-            <input
-              id="password"
-              type="password"
-              required
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 bg-surface text-neutral-dark border border-neutral rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
-            />
-          </div>
-          {error && <p className="text-sm text-danger">{error}</p>}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2 px-4 bg-accent text-on-primary rounded-md hover:bg-accent-light disabled:opacity-50"
-          >
-            {loading ? 'Entrando…' : 'Entrar'}
-          </button>
-        </form>
+
+        <button
+          type="button"
+          onClick={handleMicrosoftLogin}
+          disabled={loading}
+          className="w-full flex items-center justify-center gap-3 py-2.5 px-4 bg-surface text-neutral-dark border border-neutral rounded-md hover:bg-accent-light/20 disabled:opacity-50"
+        >
+          <IconMicrosoft className="w-5 h-5 shrink-0" />
+          <span className="font-medium text-sm">
+            {loading ? 'Redirigiendo…' : 'Iniciar sesión con Microsoft'}
+          </span>
+        </button>
+
+        {error && (
+          <p className="text-sm text-danger text-center mt-4">{error}</p>
+        )}
+
+        <p className="text-xs text-muted text-center mt-6">
+          Usa tu cuenta corporativa @pdpexpert.com
+        </p>
       </div>
     </div>
   );

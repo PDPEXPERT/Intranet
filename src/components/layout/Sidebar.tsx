@@ -9,6 +9,7 @@ import type { ProcedureSummary } from '@/lib/types';
 import { TOPICS } from '@/content/excellence/registry';
 import { ABOUT_SECTIONS } from '@/content/sobre-nosotros/sections';
 import { useSidebar } from './SidebarContext';
+import { useUserRoles, type AppRole } from '@/lib/useUserRoles';
 
 type SectionKey = 'sobre' | 'procesos' | 'excellence';
 
@@ -73,11 +74,31 @@ function IconLogout({ className }: { className?: string }) {
   );
 }
 
+function IconLeadership({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
+      <path d="M4 20v-1a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v1" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="12" cy="7" r="3" />
+    </svg>
+  );
+}
+
 const TOP_NAV: NavItem[] = [
   { href: '/', label: 'Inicio', icon: IconHome },
   { href: '/sobre-nosotros', label: 'Sobre nosotros', icon: IconAbout, section: 'sobre' },
   { href: '/procesos', label: 'Procedimientos', icon: IconProcedures, section: 'procesos' },
   { href: '/excellence', label: 'Excellence Wiki', icon: IconWiki, section: 'excellence' },
+];
+
+// Ítems visibles solo para ciertos roles. Se agregan al final del nav
+// principal cuando el usuario logueado tiene alguno de los roles listados.
+const RESTRICTED_NAV: (NavItem & { allow: AppRole[] })[] = [
+  {
+    href: '/liderazgo',
+    label: 'Liderazgo',
+    icon: IconLeadership,
+    allow: ['gerente', 'admin'],
+  },
 ];
 
 function isActive(pathname: string, href: string): boolean {
@@ -95,6 +116,7 @@ function sectionOf(pathname: string): SectionKey | null {
 export function Sidebar() {
   const pathname = usePathname() ?? '/';
   const { collapsed, toggle } = useSidebar();
+  const { roles, hasRole } = useUserRoles();
   const [email, setEmail] = useState<string>('');
   const [procedures, setProcedures] = useState<ProcedureSummary[]>([]);
   const [openSections, setOpenSections] = useState<Set<SectionKey>>(new Set());
@@ -108,6 +130,10 @@ export function Sidebar() {
     });
     return () => sub.subscription.unsubscribe();
   }, []);
+
+  const visibleRestrictedNav = RESTRICTED_NAV.filter((item) =>
+    hasRole(item.allow)
+  );
 
   // Al entrar a una seccion, se abre su subnav; el usuario puede colapsarla.
   useEffect(() => {
@@ -271,11 +297,44 @@ export function Sidebar() {
             </div>
           );
         })}
+
+        {visibleRestrictedNav.length > 0 && (
+          <div className="pt-2 mt-2 border-t border-on-primary/10 space-y-1">
+            {visibleRestrictedNav.map((item) => {
+              const active = isActive(pathname, item.href);
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={`${item.href}/`}
+                  title={collapsed ? item.label : undefined}
+                  className={`flex items-center gap-3 rounded-md font-body text-sm font-medium ${
+                    collapsed ? 'justify-center px-0 py-2' : 'px-3 py-2'
+                  } ${
+                    active
+                      ? 'bg-accent text-on-primary'
+                      : 'text-on-primary/70 hover:bg-accent hover:text-on-primary'
+                  }`}
+                >
+                  <Icon className="w-4 h-4 shrink-0" />
+                  {!collapsed && <span className="truncate">{item.label}</span>}
+                </Link>
+              );
+            })}
+          </div>
+        )}
       </nav>
 
       <div className="p-4 border-t border-on-primary/10 space-y-2">
         {!collapsed && (
-          <div className="font-body text-xs text-on-primary/70 truncate">{email}</div>
+          <div className="min-w-0">
+            <div className="font-body text-xs text-on-primary/70 truncate">{email}</div>
+            {roles.length > 0 && (
+              <div className="font-body text-[10px] text-on-primary/50 truncate">
+                {roles.join(', ')}
+              </div>
+            )}
+          </div>
         )}
         <button
           type="button"
