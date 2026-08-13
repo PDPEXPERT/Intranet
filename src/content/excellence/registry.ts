@@ -16,6 +16,11 @@ export const TOPICS: TopicMeta[] = [
     label: 'Qué es la gestión del conocimiento',
     category: 'Gestión del conocimiento',
   },
+  {
+    slug: 'arquitectura-empresarial-y-negocio',
+    label: 'Arquitectura empresarial y arquitectura de negocio',
+    category: 'Arquitectura Empresarial',
+  },
 ];
 
 export function getTopicMeta(slug: string): TopicMeta | undefined {
