@@ -7,11 +7,12 @@ import { supabase } from '@/lib/supabase';
 import { listProcedures } from '@/lib/procedures';
 import type { ProcedureSummary } from '@/lib/types';
 import { TOPICS } from '@/content/excellence/registry';
+import { CATEGORIES as KM_CATEGORIES } from '@/content/conocimiento/registry';
 import { ABOUT_SECTIONS } from '@/content/sobre-nosotros/sections';
 import { useSidebar } from './SidebarContext';
 import { useUserRoles, type AppRole } from '@/lib/useUserRoles';
 
-type SectionKey = 'sobre' | 'procesos' | 'excellence';
+type SectionKey = 'sobre' | 'procesos' | 'excellence' | 'conocimiento';
 
 interface NavItem {
   href: string;
@@ -83,6 +84,16 @@ function IconLeadership({ className }: { className?: string }) {
   );
 }
 
+function IconKnowledge({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
+      <path d="M9 18h6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10 21h4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 3a6 6 0 0 0-3.5 10.9c.6.44.9 1.15.9 1.9v.2h5.2v-.2c0-.75.3-1.46.9-1.9A6 6 0 0 0 12 3Z" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 const TOP_NAV: NavItem[] = [
   { href: '/', label: 'Inicio', icon: IconHome },
   { href: '/sobre-nosotros', label: 'Sobre nosotros', icon: IconAbout, section: 'sobre' },
@@ -99,6 +110,13 @@ const RESTRICTED_NAV: (NavItem & { allow: AppRole[] })[] = [
     icon: IconLeadership,
     allow: ['gerente', 'admin'],
   },
+  {
+    href: '/conocimiento',
+    label: 'Gestión del Conocimiento',
+    icon: IconKnowledge,
+    section: 'conocimiento',
+    allow: ['gerente', 'admin'],
+  },
 ];
 
 function isActive(pathname: string, href: string): boolean {
@@ -110,6 +128,7 @@ function sectionOf(pathname: string): SectionKey | null {
   if (pathname.startsWith('/sobre-nosotros')) return 'sobre';
   if (pathname.startsWith('/procesos')) return 'procesos';
   if (pathname.startsWith('/excellence')) return 'excellence';
+  if (pathname.startsWith('/conocimiento')) return 'conocimiento';
   return null;
 }
 
@@ -303,22 +322,64 @@ export function Sidebar() {
             {visibleRestrictedNav.map((item) => {
               const active = isActive(pathname, item.href);
               const Icon = item.icon;
+              const hasChildren = !!item.section;
+              const isOpen = hasChildren && item.section ? openSections.has(item.section) : false;
+              const showSub = !collapsed && hasChildren && isOpen;
               return (
-                <Link
-                  key={item.href}
-                  href={`${item.href}/`}
-                  title={collapsed ? item.label : undefined}
-                  className={`flex items-center gap-3 rounded-md font-body text-sm font-medium ${
-                    collapsed ? 'justify-center px-0 py-2' : 'px-3 py-2'
-                  } ${
-                    active
-                      ? 'bg-accent text-on-primary'
-                      : 'text-on-primary/70 hover:bg-accent hover:text-on-primary'
-                  }`}
-                >
-                  <Icon className="w-4 h-4 shrink-0" />
-                  {!collapsed && <span className="truncate">{item.label}</span>}
-                </Link>
+                <div key={item.href}>
+                  <div
+                    className={`flex items-center rounded-md ${
+                      active
+                        ? 'bg-accent text-on-primary'
+                        : 'text-on-primary/70 hover:bg-accent hover:text-on-primary'
+                    }`}
+                  >
+                    <Link
+                      href={`${item.href}/`}
+                      title={collapsed ? item.label : undefined}
+                      className={`flex items-center gap-3 font-body text-sm font-medium flex-1 min-w-0 ${
+                        collapsed ? 'justify-center px-0 py-2' : 'px-3 py-2'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4 shrink-0" />
+                      {!collapsed && <span className="truncate">{item.label}</span>}
+                    </Link>
+                    {hasChildren && !collapsed && item.section && (
+                      <button
+                        type="button"
+                        onClick={() => toggleSection(item.section as SectionKey)}
+                        aria-label={isOpen ? `Colapsar ${item.label}` : `Expandir ${item.label}`}
+                        aria-expanded={isOpen}
+                        className="px-2 py-2 shrink-0 opacity-70 hover:opacity-100"
+                      >
+                        <IconChevron
+                          className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+                        />
+                      </button>
+                    )}
+                  </div>
+
+                  {showSub && item.section === 'conocimiento' && (
+                    <div className="mt-1 mb-2 space-y-0.5">
+                      {KM_CATEGORIES.map((cat) => {
+                        const subActive = pathname.includes(`/conocimiento/${cat.slug}`);
+                        return (
+                          <Link
+                            key={cat.slug}
+                            href={`/conocimiento/${cat.slug}/`}
+                            className={
+                              subActive
+                                ? 'block pl-8 pr-3 py-1.5 font-body text-xs text-on-primary border-l-2 border-accent'
+                                : 'block pl-8 pr-3 py-1.5 font-body text-xs text-on-primary/60 hover:text-on-primary'
+                            }
+                          >
+                            <span className="block text-on-primary/50 truncate">{cat.label}</span>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
