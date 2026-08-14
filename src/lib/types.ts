@@ -112,3 +112,71 @@ export interface ProcedureSummary {
   sort_order: number;
   activity_count: number;
 }
+
+// ============================================================
+// Modulo Operaciones: Clientes
+// Columnas exactas de supabase/migrations/003_create_clientes.sql
+// ============================================================
+
+export type Moneda = 'USD' | 'CLP';
+export type EstadoCliente = 'Activo' | 'Cancelado';
+
+export interface EmpresaHolding {
+  id: string;
+  razon_social: string;
+  pais: string;
+}
+
+export interface Cliente {
+  id: string;
+  razon_social: string;
+  nombre_comercial: string;
+  tax_id: string | null;
+  pais: string | null;
+  id_empresa: string | null;
+  moneda: Moneda;
+  estado: EstadoCliente;
+  es_aliado: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ClienteInput {
+  razon_social: string;
+  nombre_comercial: string;
+  tax_id: string | null;
+  pais: string | null;
+  id_empresa: string | null;
+  moneda: Moneda;
+  estado: EstadoCliente;
+  es_aliado: boolean;
+}
+
+export interface TipoContacto {
+  id: string;
+  nombre: string;
+}
+
+export interface ContactoCliente {
+  id: string;
+  id_cliente: string;
+  nombre: string;
+  cargo: string | null;
+  email: string | null;
+  telefono: string | null;
+  id_tipo_contacto: string;
+  es_principal: boolean;
+  notas: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ContactoClienteInput {
+  nombre: string;
+  cargo: string | null;
+  email: string | null;
+  telefono: string | null;
+  id_tipo_contacto: string;
+  es_principal: boolean;
+  notas: string | null;
+}

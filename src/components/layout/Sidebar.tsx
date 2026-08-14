@@ -66,6 +66,17 @@ function IconChevron({ className }: { className?: string }) {
   );
 }
 
+function IconClientes({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
+      <path d="M3 21h18" strokeLinecap="round" />
+      <path d="M5 21V7l7-4 7 4v14" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 21v-6h6v6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 11h.01M15 11h.01M9 7h.01M15 7h.01" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function IconLogout({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
@@ -98,6 +109,7 @@ const TOP_NAV: NavItem[] = [
   { href: '/', label: 'Inicio', icon: IconHome },
   { href: '/sobre-nosotros', label: 'Sobre nosotros', icon: IconAbout, section: 'sobre' },
   { href: '/procesos', label: 'Procedimientos', icon: IconProcedures, section: 'procesos' },
+  { href: '/clientes', label: 'Clientes', icon: IconClientes },
   { href: '/excellence', label: 'Excellence Wiki', icon: IconWiki, section: 'excellence' },
 ];
 
