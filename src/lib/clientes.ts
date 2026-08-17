@@ -1,10 +1,14 @@
 import { supabase } from './supabase';
 import type {
+  CatalogoServicio,
   Cliente,
   ClienteInput,
   ContactoCliente,
   ContactoClienteInput,
   EmpresaHolding,
+  ServicioCliente,
+  ServicioClienteConCatalogo,
+  ServicioClienteInput,
   TipoContacto,
 } from './types';
 
@@ -13,6 +17,9 @@ const CLIENTE_COLUMNS =
 
 const CONTACTO_COLUMNS =
   'id, id_cliente, nombre, cargo, email, telefono, id_tipo_contacto, es_principal, notas, created_at, updated_at';
+
+const SERVICIO_CLIENTE_COLUMNS =
+  'id, id_cliente, id_servicio_tipo, estado, fecha_inicio, fecha_fin, notas, created_at, updated_at';
 
 export async function listClientes(): Promise<Cliente[]> {
   const { data, error } = await supabase
@@ -133,11 +140,80 @@ export async function deleteContactoCliente(id: string): Promise<void> {
   if (error) throw error;
 }
 
+// ============================================================
+// Servicios contratados (migración 004)
+// ============================================================
+
+export async function listCatalogoServicios(): Promise<CatalogoServicio[]> {
+  const { data, error } = await supabase
+    .from('catalogo_servicios')
+    .select('id, nombre, modo, activo')
+    .order('nombre', { ascending: true });
+
+  if (error) throw error;
+  return (data as CatalogoServicio[] | null) ?? [];
+}
+
+export async function listServiciosByCliente(
+  clienteId: string,
+): Promise<ServicioClienteConCatalogo[]> {
+  const { data, error } = await supabase
+    .from('servicios_cliente')
+    .select(
+      `${SERVICIO_CLIENTE_COLUMNS}, catalogo_servicios ( nombre, modo )`,
+    )
+    .eq('id_cliente', clienteId)
+    .order('estado', { ascending: true })
+    .order('created_at', { ascending: true });
+
+  if (error) throw error;
+  return ((data as unknown[] | null) ?? []).map((row) => {
+    const r = row as ServicioCliente & {
+      catalogo_servicios: { nombre: string; modo: 'Recurrente' | 'Proyecto' } | null;
+    };
+    return {
+      ...r,
+      nombre_servicio: r.catalogo_servicios?.nombre ?? r.id_servicio_tipo,
+      modo: r.catalogo_servicios?.modo ?? 'Proyecto',
+    };
+  });
+}
+
+export async function createServicioCliente(
+  clienteId: string,
+  input: ServicioClienteInput,
+): Promise<ServicioCliente> {
+  const { data, error } = await supabase
+    .from('servicios_cliente')
+    .insert({ ...input, id_cliente: clienteId })
+    .select(SERVICIO_CLIENTE_COLUMNS)
+    .single();
+
+  if (error) throw error;
+  return data as ServicioCliente;
+}
+
+export async function updateServicioCliente(
+  id: string,
+  input: ServicioClienteInput,
+): Promise<ServicioCliente> {
+  const { data, error } = await supabase
+    .from('servicios_cliente')
+    .update(input)
+    .eq('id', id)
+    .select(SERVICIO_CLIENTE_COLUMNS)
+    .single();
+
+  if (error) throw error;
+  return data as ServicioCliente;
+}
+
 /**
  * Traduce errores de Postgres/PostgREST del modulo Clientes a mensajes
  * legibles en español. Cubre los casos probados en la migracion 003:
  * constraint de moneda, tax_id duplicado y bloqueo por RLS (rol sin
- * permiso de escritura).
+ * permiso de escritura). Migracion 004 (servicios_cliente) agrega el
+ * caso de servicio activo duplicado.
  */
 export function friendlyClienteError(error: unknown): string {
   const err = error as {
@@ -160,6 +236,9 @@ export function friendlyClienteError(error: unknown): string {
     if (/tax_id/i.test(message) || /uq_clientes_tax_id/i.test(message)) {
       return 'Ya existe un cliente registrado con ese numero de identificacion tributaria (RUC/RUT/NIT).';
     }
+    if (/uq_servicios_cliente_activo/i.test(message)) {
+      return 'Este cliente ya tiene ese servicio activo. Cancela el existente antes de crear uno nuevo, o edita el registro actual.';
+    }
     return 'Ya existe un registro con ese valor unico.';
   }
 
@@ -170,6 +249,9 @@ export function friendlyClienteError(error: unknown): string {
     }
     if (/clientes_estado_check|estado/i.test(message)) {
       return 'El estado debe ser Activo o Cancelado.';
+    }
+    if (/catalogo_servicios_modo_check|modo/i.test(message)) {
+      return 'El modo del servicio debe ser Recurrente o Proyecto.';
     }
     return 'Uno de los valores ingresados no es valido.';
   }
@@ -182,6 +264,9 @@ export function friendlyClienteError(error: unknown): string {
     }
     if (/id_tipo_contacto/i.test(message)) {
       return 'El tipo de contacto seleccionado no es valido.';
+    }
+    if (/id_servicio_tipo/i.test(message)) {
+      return 'El servicio seleccionado no es valido.';
     }
     return 'Esta operacion hace referencia a un registro relacionado que no existe o no se puede modificar.';
   }

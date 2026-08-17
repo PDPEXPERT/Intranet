@@ -180,3 +180,44 @@ export interface ContactoClienteInput {
   es_principal: boolean;
   notas: string | null;
 }
+
+// ============================================================
+// Modulo Operaciones: Clientes — Servicios contratados
+// Columnas exactas de supabase/migrations/004_create_servicios_cliente.sql
+// ============================================================
+
+export type ModoServicio = 'Recurrente' | 'Proyecto';
+export type EstadoServicioCliente = 'Activo' | 'Cancelado';
+
+export interface CatalogoServicio {
+  id: string;
+  nombre: string;
+  modo: ModoServicio;
+  activo: boolean;
+}
+
+export interface ServicioCliente {
+  id: string;
+  id_cliente: string;
+  id_servicio_tipo: string;
+  estado: EstadoServicioCliente;
+  fecha_inicio: string | null;
+  fecha_fin: string | null;
+  notas: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ServicioClienteInput {
+  id_servicio_tipo: string;
+  estado: EstadoServicioCliente;
+  fecha_inicio: string | null;
+  fecha_fin: string | null;
+  notas: string | null;
+}
+
+/** Servicio contratado enriquecido con el nombre/modo del catálogo, para mostrar directo en la ficha de cliente. */
+export interface ServicioClienteConCatalogo extends ServicioCliente {
+  nombre_servicio: string;
+  modo: ModoServicio;
+}

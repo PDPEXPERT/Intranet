@@ -4,17 +4,25 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   createContactoCliente,
+  createServicioCliente,
   deleteContactoCliente,
   friendlyClienteError,
   getClienteById,
+  listCatalogoServicios,
   listContactosByCliente,
+  listServiciosByCliente,
   listTiposContacto,
   updateContactoCliente,
+  updateServicioCliente,
 } from '@/lib/clientes';
 import type {
+  CatalogoServicio,
   Cliente,
   ContactoCliente,
   ContactoClienteInput,
+  EstadoServicioCliente,
+  ServicioClienteConCatalogo,
+  ServicioClienteInput,
   TipoContacto,
 } from '@/lib/types';
 import { useUserRoles } from '@/lib/useUserRoles';
@@ -30,6 +38,8 @@ interface State {
   cliente: Cliente | null;
   contactos: ContactoCliente[];
   tiposContacto: TipoContacto[];
+  servicios: ServicioClienteConCatalogo[];
+  catalogoServicios: CatalogoServicio[];
   loading: boolean;
   error: string | null;
 }
@@ -43,6 +53,8 @@ export function ClienteDetail({ id }: { id: string }) {
     cliente: null,
     contactos: [],
     tiposContacto: [],
+    servicios: [],
+    catalogoServicios: [],
     loading: true,
     error: null,
   });
@@ -55,11 +67,22 @@ export function ClienteDetail({ id }: { id: string }) {
         setState((s) => ({ ...s, loading: false, error: 'Cliente no encontrado.' }));
         return;
       }
-      const [contactos, tiposContacto] = await Promise.all([
-        listContactosByCliente(cliente.id),
-        listTiposContacto(),
-      ]);
-      setState({ cliente, contactos, tiposContacto, loading: false, error: null });
+      const [contactos, tiposContacto, servicios, catalogoServicios] =
+        await Promise.all([
+          listContactosByCliente(cliente.id),
+          listTiposContacto(),
+          listServiciosByCliente(cliente.id),
+          listCatalogoServicios(),
+        ]);
+      setState({
+        cliente,
+        contactos,
+        tiposContacto,
+        servicios,
+        catalogoServicios,
+        loading: false,
+        error: null,
+      });
     } catch (e) {
       setState((s) => ({
         ...s,
@@ -137,6 +160,16 @@ export function ClienteDetail({ id }: { id: string }) {
             <Field label="Estado" value={c.estado} />
             <Field label="Es aliado" value={c.es_aliado ? 'Si' : 'No'} />
           </dl>
+        </CollapsibleSection>
+
+        <CollapsibleSection id="sec-servicios" title="Servicios contratados">
+          <ServiciosSection
+            clienteId={c.id}
+            servicios={state.servicios}
+            catalogoServicios={state.catalogoServicios}
+            canWrite={canWrite}
+            onChanged={load}
+          />
         </CollapsibleSection>
 
         <CollapsibleSection id="sec-contactos" title="Contactos">
@@ -474,6 +507,275 @@ function ContactoForm({
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={saving}>
           {saving ? 'Guardando...' : 'Guardar contacto'}
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          disabled={saving}
+          onClick={onCancel}
+        >
+          Cancelar
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+function ServiciosSection({
+  clienteId,
+  servicios,
+  catalogoServicios,
+  canWrite,
+  onChanged,
+}: {
+  clienteId: string;
+  servicios: ServicioClienteConCatalogo[];
+  catalogoServicios: CatalogoServicio[];
+  canWrite: boolean;
+  onChanged: () => void;
+}) {
+  const [showForm, setShowForm] = useState(false);
+  const [editingServicio, setEditingServicio] =
+    useState<ServicioClienteConCatalogo | null>(null);
+
+  const columns: TableColumn<ServicioClienteConCatalogo>[] = [
+    {
+      key: 'nombre_servicio',
+      header: 'Servicio',
+      cell: (row) => (
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="font-medium text-primary">{row.nombre_servicio}</span>
+          <Badge tone="neutral">{row.modo}</Badge>
+        </div>
+      ),
+    },
+    {
+      key: 'estado',
+      header: 'Estado',
+      width: '120px',
+      cell: (row) => (
+        <Badge tone={row.estado === 'Activo' ? 'success' : 'danger'}>
+          {row.estado}
+        </Badge>
+      ),
+    },
+    {
+      key: 'fecha_inicio',
+      header: 'Inicio',
+      width: '120px',
+      cell: (row) => <span>{row.fecha_inicio ?? 'Sin dato'}</span>,
+    },
+    {
+      key: 'fecha_fin',
+      header: 'Fin',
+      width: '120px',
+      cell: (row) => <span>{row.fecha_fin ?? 'Sin dato'}</span>,
+    },
+  ];
+
+  if (canWrite) {
+    columns.push({
+      key: 'acciones',
+      header: 'Acciones',
+      width: '100px',
+      cell: (row) => (
+        <button
+          type="button"
+          onClick={() => setEditingServicio(row)}
+          className="font-body text-xs text-accent hover:text-primary"
+        >
+          Editar
+        </button>
+      ),
+    });
+  }
+
+  return (
+    <div className="space-y-4">
+      <Table
+        columns={columns}
+        rows={servicios}
+        rowKey={(row) => row.id}
+        emptyMessage="Este cliente no tiene servicios contratados registrados."
+      />
+
+      {canWrite && !showForm && !editingServicio && (
+        <Button variant="ghost" onClick={() => setShowForm(true)}>
+          Agregar servicio
+        </Button>
+      )}
+
+      {canWrite && (showForm || editingServicio) && (
+        <ServicioForm
+          clienteId={clienteId}
+          catalogoServicios={catalogoServicios}
+          servicio={editingServicio ?? undefined}
+          onSaved={() => {
+            setShowForm(false);
+            setEditingServicio(null);
+            onChanged();
+          }}
+          onCancel={() => {
+            setShowForm(false);
+            setEditingServicio(null);
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+function ServicioForm({
+  clienteId,
+  catalogoServicios,
+  servicio,
+  onSaved,
+  onCancel,
+}: {
+  clienteId: string;
+  catalogoServicios: CatalogoServicio[];
+  servicio?: ServicioClienteConCatalogo;
+  onSaved: () => void;
+  onCancel: () => void;
+}) {
+  const [idServicioTipo, setIdServicioTipo] = useState(
+    servicio?.id_servicio_tipo ?? catalogoServicios[0]?.id ?? '',
+  );
+  const [estado, setEstado] = useState<EstadoServicioCliente>(
+    servicio?.estado ?? 'Activo',
+  );
+  const [fechaInicio, setFechaInicio] = useState(servicio?.fecha_inicio ?? '');
+  const [fechaFin, setFechaFin] = useState(servicio?.fecha_fin ?? '');
+  const [notas, setNotas] = useState(servicio?.notas ?? '');
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fieldError, setFieldError] = useState<string | null>(null);
+
+  const inputClass =
+    'w-full px-3 py-2 text-sm border border-neutral rounded-md bg-surface text-neutral-dark placeholder:text-neutral focus:outline-none focus:border-accent';
+  const labelClass =
+    'font-body text-xs font-medium text-neutral-dark/70 uppercase tracking-wide';
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!idServicioTipo) {
+      setFieldError('Selecciona un servicio del catalogo.');
+      return;
+    }
+    setFieldError(null);
+    setSaving(true);
+    setError(null);
+
+    const input: ServicioClienteInput = {
+      id_servicio_tipo: idServicioTipo,
+      estado,
+      fecha_inicio: fechaInicio.trim() ? fechaInicio.trim() : null,
+      fecha_fin: fechaFin.trim() ? fechaFin.trim() : null,
+      notas: notas.trim() ? notas.trim() : null,
+    };
+
+    try {
+      if (servicio) {
+        await updateServicioCliente(servicio.id, input);
+      } else {
+        await createServicioCliente(clienteId, input);
+      }
+      setSaving(false);
+      onSaved();
+    } catch (e) {
+      setSaving(false);
+      setError(friendlyClienteError(e));
+    }
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="border border-neutral/40 rounded-md p-4 space-y-4"
+    >
+      <h3 className="font-heading text-lg font-semibold text-primary">
+        {servicio ? 'Editar servicio' : 'Nuevo servicio'}
+      </h3>
+
+      {error && <p className="font-body text-xs text-danger">{error}</p>}
+      {fieldError && <p className="font-body text-xs text-danger">{fieldError}</p>}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className={labelClass} htmlFor="servicio_tipo">
+            Servicio
+          </label>
+          <select
+            id="servicio_tipo"
+            value={idServicioTipo}
+            onChange={(e) => setIdServicioTipo(e.target.value)}
+            disabled={!!servicio}
+            className={`${inputClass} mt-1 ${servicio ? 'opacity-60' : ''}`}
+          >
+            {catalogoServicios.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.nombre} ({s.modo})
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className={labelClass} htmlFor="servicio_estado">
+            Estado
+          </label>
+          <select
+            id="servicio_estado"
+            value={estado}
+            onChange={(e) => setEstado(e.target.value as EstadoServicioCliente)}
+            className={`${inputClass} mt-1`}
+          >
+            <option value="Activo">Activo</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+        </div>
+        <div>
+          <label className={labelClass} htmlFor="servicio_fecha_inicio">
+            Fecha de inicio
+          </label>
+          <input
+            id="servicio_fecha_inicio"
+            type="date"
+            value={fechaInicio}
+            onChange={(e) => setFechaInicio(e.target.value)}
+            className={`${inputClass} mt-1`}
+          />
+        </div>
+        <div>
+          <label className={labelClass} htmlFor="servicio_fecha_fin">
+            Fecha de fin
+          </label>
+          <input
+            id="servicio_fecha_fin"
+            type="date"
+            value={fechaFin}
+            onChange={(e) => setFechaFin(e.target.value)}
+            placeholder="Opcional"
+            className={`${inputClass} mt-1`}
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <label className={labelClass} htmlFor="servicio_notas">
+            Notas
+          </label>
+          <input
+            id="servicio_notas"
+            type="text"
+            value={notas}
+            onChange={(e) => setNotas(e.target.value)}
+            placeholder="Opcional"
+            className={`${inputClass} mt-1`}
+          />
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <Button type="submit" disabled={saving}>
+          {saving ? 'Guardando...' : 'Guardar servicio'}
         </Button>
         <Button
           type="button"
