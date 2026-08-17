@@ -15,12 +15,16 @@ import {
   updateContactoCliente,
   updateServicioCliente,
 } from '@/lib/clientes';
+import { createPlan, friendlyPlanError, listPlanesByCliente } from '@/lib/planes';
 import type {
   CatalogoServicio,
   Cliente,
   ContactoCliente,
   ContactoClienteInput,
+  EstadoPlan,
   EstadoServicioCliente,
+  Plan,
+  PlanInput,
   ServicioClienteConCatalogo,
   ServicioClienteInput,
   TipoContacto,
@@ -40,6 +44,7 @@ interface State {
   tiposContacto: TipoContacto[];
   servicios: ServicioClienteConCatalogo[];
   catalogoServicios: CatalogoServicio[];
+  planes: Plan[];
   loading: boolean;
   error: string | null;
 }
@@ -55,6 +60,7 @@ export function ClienteDetail({ id }: { id: string }) {
     tiposContacto: [],
     servicios: [],
     catalogoServicios: [],
+    planes: [],
     loading: true,
     error: null,
   });
@@ -67,12 +73,13 @@ export function ClienteDetail({ id }: { id: string }) {
         setState((s) => ({ ...s, loading: false, error: 'Cliente no encontrado.' }));
         return;
       }
-      const [contactos, tiposContacto, servicios, catalogoServicios] =
+      const [contactos, tiposContacto, servicios, catalogoServicios, planes] =
         await Promise.all([
           listContactosByCliente(cliente.id),
           listTiposContacto(),
           listServiciosByCliente(cliente.id),
           listCatalogoServicios(),
+          listPlanesByCliente(cliente.id),
         ]);
       setState({
         cliente,
@@ -80,6 +87,7 @@ export function ClienteDetail({ id }: { id: string }) {
         tiposContacto,
         servicios,
         catalogoServicios,
+        planes,
         loading: false,
         error: null,
       });
@@ -167,6 +175,16 @@ export function ClienteDetail({ id }: { id: string }) {
             clienteId={c.id}
             servicios={state.servicios}
             catalogoServicios={state.catalogoServicios}
+            canWrite={canWrite}
+            onChanged={load}
+          />
+        </CollapsibleSection>
+
+        <CollapsibleSection id="sec-planes" title="Plan de implementación y cumplimiento">
+          <PlanesSection
+            clienteId={c.id}
+            servicios={state.servicios}
+            planes={state.planes}
             canWrite={canWrite}
             onChanged={load}
           />
@@ -783,6 +801,249 @@ function ServicioForm({
           disabled={saving}
           onClick={onCancel}
         >
+          Cancelar
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+function PlanesSection({
+  clienteId,
+  servicios,
+  planes,
+  canWrite,
+  onChanged,
+}: {
+  clienteId: string;
+  servicios: ServicioClienteConCatalogo[];
+  planes: Plan[];
+  canWrite: boolean;
+  onChanged: () => void;
+}) {
+  const router = useRouter();
+  const [showForm, setShowForm] = useState(false);
+
+  const columns: TableColumn<Plan>[] = [
+    {
+      key: 'nombre',
+      header: 'Plan',
+      cell: (row) => (
+        <span className="font-medium text-primary">{row.nombre}</span>
+      ),
+    },
+    {
+      key: 'estado',
+      header: 'Estado',
+      width: '120px',
+      cell: (row) => (
+        <Badge
+          tone={
+            row.estado === 'Activo'
+              ? 'success'
+              : row.estado === 'Completado'
+                ? 'accent'
+                : row.estado === 'Pausado'
+                  ? 'warning'
+                  : 'danger'
+          }
+        >
+          {row.estado}
+        </Badge>
+      ),
+    },
+    {
+      key: 'fecha_inicio',
+      header: 'Inicio',
+      width: '120px',
+      cell: (row) => <span>{row.fecha_inicio ?? 'Sin dato'}</span>,
+    },
+    {
+      key: 'fecha_fin_estimada',
+      header: 'Fin estimado',
+      width: '120px',
+      cell: (row) => <span>{row.fecha_fin_estimada ?? 'Sin dato'}</span>,
+    },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <Table
+        columns={columns}
+        rows={planes}
+        rowKey={(row) => row.id}
+        onRowClick={(row) => router.push(`/planes/detalle/?id=${row.id}`)}
+        emptyMessage="Este cliente no tiene planes de implementación registrados."
+      />
+
+      {canWrite && !showForm && (
+        <Button variant="ghost" onClick={() => setShowForm(true)}>
+          Nuevo plan
+        </Button>
+      )}
+
+      {canWrite && showForm && (
+        <PlanForm
+          clienteId={clienteId}
+          servicios={servicios}
+          onSaved={(plan) => {
+            setShowForm(false);
+            onChanged();
+            router.push(`/planes/detalle/?id=${plan.id}`);
+          }}
+          onCancel={() => setShowForm(false)}
+        />
+      )}
+    </div>
+  );
+}
+
+function PlanForm({
+  clienteId,
+  servicios,
+  onSaved,
+  onCancel,
+}: {
+  clienteId: string;
+  servicios: ServicioClienteConCatalogo[];
+  onSaved: (plan: Plan) => void;
+  onCancel: () => void;
+}) {
+  const [nombre, setNombre] = useState('');
+  const [idServicioCliente, setIdServicioCliente] = useState<string>('');
+  const [fechaInicio, setFechaInicio] = useState('');
+  const [fechaFinEstimada, setFechaFinEstimada] = useState('');
+  const [estado, setEstado] = useState<EstadoPlan>('Activo');
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fieldError, setFieldError] = useState<string | null>(null);
+
+  const inputClass =
+    'w-full px-3 py-2 text-sm border border-neutral rounded-md bg-surface text-neutral-dark placeholder:text-neutral focus:outline-none focus:border-accent';
+  const labelClass =
+    'font-body text-xs font-medium text-neutral-dark/70 uppercase tracking-wide';
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!nombre.trim()) {
+      setFieldError('El nombre del plan es obligatorio.');
+      return;
+    }
+    setFieldError(null);
+    setSaving(true);
+    setError(null);
+
+    const input: PlanInput = {
+      id_cliente: clienteId,
+      id_servicio_cliente: idServicioCliente || null,
+      nombre: nombre.trim(),
+      fecha_inicio: fechaInicio.trim() ? fechaInicio.trim() : null,
+      fecha_fin_estimada: fechaFinEstimada.trim() ? fechaFinEstimada.trim() : null,
+      estado,
+    };
+
+    try {
+      const plan = await createPlan(input);
+      setSaving(false);
+      onSaved(plan);
+    } catch (e) {
+      setSaving(false);
+      setError(friendlyPlanError(e));
+    }
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="border border-neutral/40 rounded-md p-4 space-y-4"
+    >
+      <h3 className="font-heading text-lg font-semibold text-primary">
+        Nuevo plan de implementación
+      </h3>
+
+      {error && <p className="font-body text-xs text-danger">{error}</p>}
+      {fieldError && <p className="font-body text-xs text-danger">{fieldError}</p>}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="sm:col-span-2">
+          <label className={labelClass} htmlFor="plan_nombre">
+            Nombre del plan
+          </label>
+          <input
+            id="plan_nombre"
+            type="text"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            placeholder="Ej. Plan de implementación PDP 2026"
+            className={`${inputClass} mt-1`}
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <label className={labelClass} htmlFor="plan_servicio">
+            Servicio contratado vinculado
+          </label>
+          <select
+            id="plan_servicio"
+            value={idServicioCliente}
+            onChange={(e) => setIdServicioCliente(e.target.value)}
+            className={`${inputClass} mt-1`}
+          >
+            <option value="">Sin vincular por ahora</option>
+            {servicios.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.nombre_servicio} ({s.estado})
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className={labelClass} htmlFor="plan_estado">
+            Estado
+          </label>
+          <select
+            id="plan_estado"
+            value={estado}
+            onChange={(e) => setEstado(e.target.value as EstadoPlan)}
+            className={`${inputClass} mt-1`}
+          >
+            <option value="Activo">Activo</option>
+            <option value="Pausado">Pausado</option>
+            <option value="Completado">Completado</option>
+            <option value="Cancelado">Cancelado</option>
+          </select>
+        </div>
+        <div>
+          <label className={labelClass} htmlFor="plan_fecha_inicio">
+            Fecha de inicio
+          </label>
+          <input
+            id="plan_fecha_inicio"
+            type="date"
+            value={fechaInicio}
+            onChange={(e) => setFechaInicio(e.target.value)}
+            className={`${inputClass} mt-1`}
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <label className={labelClass} htmlFor="plan_fecha_fin_estimada">
+            Fecha de fin estimada
+          </label>
+          <input
+            id="plan_fecha_fin_estimada"
+            type="date"
+            value={fechaFinEstimada}
+            onChange={(e) => setFechaFinEstimada(e.target.value)}
+            placeholder="Opcional"
+            className={`${inputClass} mt-1`}
+          />
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <Button type="submit" disabled={saving}>
+          {saving ? 'Guardando...' : 'Guardar plan'}
+        </Button>
+        <Button type="button" variant="ghost" disabled={saving} onClick={onCancel}>
           Cancelar
         </Button>
       </div>

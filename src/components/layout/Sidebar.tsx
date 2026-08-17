@@ -77,6 +77,15 @@ function IconClientes({ className }: { className?: string }) {
   );
 }
 
+function IconTareas({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
+      <rect x="4" y="4" width="16" height="16" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8.5 12.5 11 15l4.5-5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function IconLogout({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
@@ -110,6 +119,7 @@ const TOP_NAV: NavItem[] = [
   { href: '/sobre-nosotros', label: 'Sobre nosotros', icon: IconAbout, section: 'sobre' },
   { href: '/procesos', label: 'Procedimientos', icon: IconProcedures, section: 'procesos' },
   { href: '/clientes', label: 'Clientes', icon: IconClientes },
+  { href: '/mis-tareas', label: 'Mis tareas', icon: IconTareas },
   { href: '/excellence', label: 'Excellence Wiki', icon: IconWiki, section: 'excellence' },
 ];
 
