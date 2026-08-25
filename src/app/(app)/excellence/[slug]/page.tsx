@@ -4,6 +4,9 @@ import QueEsCalidad from '@/content/excellence/topics/que-es-calidad';
 import PDLC from '@/content/excellence/topics/pdlc';
 import GestionConocimiento from '@/content/excellence/topics/gestion-conocimiento';
 import ArquitecturaEmpresarialYNegocio from '@/content/excellence/topics/arquitectura-empresarial-y-negocio';
+import ProcesosPDP from '@/content/excellence/topics/procesos-pdp';
+import InformacionEInformacionDocumentada from '@/content/excellence/topics/informacion-e-informacion-documentada';
+import ErroresComunes from '@/content/excellence/topics/errores-comunes';
 import type { FC } from 'react';
 
 const COMPONENTS: Record<string, FC> = {
@@ -11,6 +14,9 @@ const COMPONENTS: Record<string, FC> = {
   pdlc: PDLC,
   'gestion-conocimiento': GestionConocimiento,
   'arquitectura-empresarial-y-negocio': ArquitecturaEmpresarialYNegocio,
+  'procesos-pdp': ProcesosPDP,
+  'informacion-e-informacion-documentada': InformacionEInformacionDocumentada,
+  'errores-comunes': ErroresComunes,
 };
 
 export function generateStaticParams() {

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
   WikiCallout,
   WikiEyebrow,
@@ -319,64 +320,31 @@ export default function ArquitecturaEmpresarialYNegocio() {
         </WikiCallout>
       </WikiSection>
 
-      <WikiSection title="Procesos">
+      <WikiSection title="Procesos e información documentada">
         <WikiP>
-          Hay dos tipos de procesos relevantes para protección de datos: los que tratan datos
-          personales y los que dan soporte a su protección. Dentro de estos últimos, algunos son
-          específicos de protección de datos y otros pertenecen a otra función (que da soporte a la
-          protección de datos) pero actualizan algunos de sus componentes: es el caso de la gestión
-          de incidentes, que sigue siendo un proceso de seguridad de la información al que se le
-          añaden controles de protección de datos.
+          A partir de esta ontología de capacidades se derivan los procesos concretos de protección
+          de datos personales (propios y los que se integran en capacidades existentes), y la forma
+          en que esos procesos se documentan. Ambos temas se desarrollan en artículos propios:
         </WikiP>
-        <WikiCallout label="Protección de datos desde el diseño">
-          <p>
-            La normativa de protección de datos personales se transforma en una política a partir
-            de la cual se dan especificaciones para el diseño de los procesos de la organización:
-            eso es la protección de datos desde el diseño.
-          </p>
-        </WikiCallout>
-
-        <WikiP>
-          <strong>Procesos propios de gestión de protección de datos.</strong> A nivel de gestión,
-          para el cumplimiento de la normativa:
-        </WikiP>
-        <WikiTable
-          headers={['#', 'Proceso']}
-          widths={['8%', '92%']}
-          rows={[
-            ['1', 'Gestión de requisitos del tratamiento de datos personales.'],
-            ['2', 'Gestión de no conformidades y acciones correctivas.'],
-            ['3', 'Gestión del consentimiento y deber de transparencia e información.'],
-            ['4', 'Gestión del encargo del tratamiento de datos personales.'],
-            [
-              '5',
-              'Gestión de solicitudes de ejercicio de derechos y consultas de titulares de datos personales.',
-            ],
-            ['6', 'Gestión de consultas internas y requerimientos.'],
-          ]}
-        />
-
-        <WikiP>
-          <strong>Procesos que se integran en capacidades existentes.</strong> Generalmente a cargo
-          de otra función, a la que se le actualizan algunos componentes:
-        </WikiP>
-        <WikiTable
-          headers={['#', 'Proceso']}
-          widths={['8%', '92%']}
-          rows={[
-            ['1', 'Gestión de controles de protección de datos en la relación con terceros.'],
-            ['2', 'Gestión de incidentes de seguridad.'],
-            ['3', 'Gestión de riesgos en el tratamiento de datos personales.'],
-            ['4', 'Gestión de requisitos de protección de datos sobre activos.'],
-            ['5', 'Gestión de requisitos de protección de datos en desarrollo.'],
-            ['6', 'Gestión de la retención y disposición final de datos personales.'],
-            ['7', 'Gestión de auditoría interna en protección de datos personales.'],
-            ['8', 'Gestión de monitoreo del entorno regulatorio y cambios en la normativa.'],
-            ['9', 'Gestión de información documentada.'],
-            ['10', 'Reporte a la alta dirección.'],
-            ['11', 'Formación en materia de protección de datos personales.'],
-          ]}
-        />
+        <WikiUL>
+          <li>
+            <Link href="/excellence/procesos-pdp/" className="text-accent hover:underline">
+              Procesos de protección de datos personales
+            </Link>
+            : el listado completo de procesos propios y de procesos que se integran en capacidades
+            existentes.
+          </li>
+          <li>
+            <Link
+              href="/excellence/informacion-e-informacion-documentada/"
+              className="text-accent hover:underline"
+            >
+              Información e información documentada
+            </Link>
+            : qué es información documentada según ISO 9000, la distinción entre mantener y
+            conservar, y cómo PDP Expert gestiona esta capacidad de soporte en la práctica.
+          </li>
+        </WikiUL>
       </WikiSection>
 
       <WikiSources>

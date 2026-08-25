@@ -21,6 +21,21 @@ export const TOPICS: TopicMeta[] = [
     label: 'Arquitectura empresarial y arquitectura de negocio',
     category: 'Arquitectura Empresarial',
   },
+  {
+    slug: 'procesos-pdp',
+    label: 'Procesos de protección de datos personales',
+    category: 'Arquitectura Empresarial',
+  },
+  {
+    slug: 'informacion-e-informacion-documentada',
+    label: 'Información e información documentada',
+    category: 'Arquitectura Empresarial',
+  },
+  {
+    slug: 'errores-comunes',
+    label: 'Errores comunes',
+    category: 'Arquitectura Empresarial',
+  },
 ];
 
 export function getTopicMeta(slug: string): TopicMeta | undefined {
